@@ -1,39 +1,56 @@
 import * as React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import {IconScreen} from "./app/views/IconScreen";
+import {Platform, StyleSheet, Text, View} from 'react-native';
+import {NavigationContainer} from "@react-navigation/native";
+import {createStackNavigator} from "@react-navigation/stack";
+import LoginScreen from "./app/views/Login/LoginScreen";
+import HomeScreen from "./app/views/Tab/HomeScreen";
 
+// 自定义变量
 const instructions = Platform.select({
   ios: `这里是iOS看到的文字`,
   android: `这里是Android看到的文字`,
 });
 
-export default function App() {
+// 自定义常量
+
+//  路由
+const Stack = createStackNavigator();
+const TabStack = createBottomTabNavigator();
+
+// 路由分级
+function TabStackScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>欢迎您，开发者！</Text>
-      <Text style={styles.instructions}>{instructions}</Text>
-      <View>
-        <IconScreen />
-      </View>
-    </View>
-  );
+    <TabStack.Navigator initialRouteName={HomeScreen}>
+      <TabStack.Screen name={'HomeScreen'} component={HomeScreen} />
+      <TabStack.Screen name={'ProFileScreen'} component={ProFileScreen} />
+    </TabStack.Navigator>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+
+// 导出App
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true
+    };
+  }
+
+  render() {
+    if (this.state.isLoading) {
+      return (
+        <NavigationContainer>
+          <TabStackScreen />
+        </NavigationContainer>
+      );
+    }
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={'LoginScreen'} headerMode={'none'}>
+          <Stack.Screen name="LoginScreen" component={LoginScreen}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    )
+  }
+}
