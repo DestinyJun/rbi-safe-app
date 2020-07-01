@@ -6,8 +6,9 @@
 import React, {Component} from 'react';
 import {Text,View, BackHandler, ToastAndroid, Platform} from 'react-native';
 import {HomeStyle as styles} from "./HomeStyle";
+import {FocusStatusBar} from "../../components/FocusStatusBar";
 
-export default class HomeScreen extends Component {
+export class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -16,6 +17,7 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={[styles.home, c_styles.pr_3, c_styles.pl_3]}>
+        <FocusStatusBar backgroundColor={'red'}/>
         <Text style={[c_styles.text_danger]}>我是主页</Text>
       </View>
     );

@@ -7,14 +7,15 @@ import * as React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
 export function TabButton({state, descriptors, navigation}) {
+  // 设置tab切换栏是否可见
   const focusedOptions = descriptors[state.routes[state.index].key].options;
-  console.log(focusedOptions);
   if (focusedOptions.tabBarVisible === false) {
     return null;
   }
   return (
     <View style={{flexDirection: 'row',height: 60,backgroundColor: 'red'}}>
       {state.routes.map((route, index) => {
+        // 获取tab按钮标签文字
         const {options} = descriptors[route.key];
         const label =
           options.tabBarLabel !== undefined
@@ -22,27 +23,28 @@ export function TabButton({state, descriptors, navigation}) {
             : options.title !== undefined
             ? options.title
             : route.name;
-
         const isFocused = state.index === index;
-
+        // tab栏点击事件
         const onPress = () => {
           const event = navigation.emit({
             type: 'tabPress',
             target: route.key,
             canPreventDefault: true,
           });
-
+          console.log(event);
           if (!isFocused && !event.defaultPrevented) {
             navigation.navigate(route.name);
           }
         };
-
+        // tab栏长按事件
         const onLongPress = () => {
           navigation.emit({
             type: 'tabLongPress',
             target: route.key,
           });
         };
+
+        // 返回tabBar的element元素
         return (
           <TouchableOpacity
             key={index}

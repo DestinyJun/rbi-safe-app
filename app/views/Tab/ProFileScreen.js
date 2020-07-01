@@ -10,8 +10,9 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {Store} from "../../redux/store";
 import {isLoading} from "../../redux/actions";
 import {ISLOADING} from "../../redux/actionTypes";
+import {FocusStatusBar} from "../../components/FocusStatusBar";
 
-export default class ProFileScreen extends Component {
+export class ProFileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -20,6 +21,7 @@ export default class ProFileScreen extends Component {
   render() {
     return (
       <View style={[c_styles.pt_3,c_styles.cell]}>
+        <FocusStatusBar backgroundColor={'blue'}/>
         <Text style={[c_styles.text_info]}>我是个人中心</Text>
         <TouchableOpacity onPress={this.loginOut}>
           <Text>点击退出登录</Text>

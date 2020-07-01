@@ -3,11 +3,9 @@
  */
 import axios from 'axios'
 import {Alert, ToastAndroid} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 
 // 设置全局请求的地址
-// axios.defaults.baseURL = 'http://192.168.28.28:8999';
-axios.defaults.baseURL = 'http://139.9.225.98:8999';
+axios.defaults.baseURL = 'http://192.168.1.1:8999';
 
 //设置的请求次数，请求的间隙
 axios.defaults.retry = 4;
@@ -20,10 +18,10 @@ axios.defaults.timeout = 3000;
 axios.interceptors.request.use(
   async function (config) {
     const str = config.url;
+    // 配置请求头参数
     // 判断那些接口需要添加token，那些接口需要添加请求类型，判断APPKEY是否存在
     if (!(str.includes('/user'))) {
-      config.headers.post['APPKEY'] = await AsyncStorage.getItem('APPKEY');
-      config.headers.post['userId'] = await AsyncStorage.getItem('userId');
+      // config.headers.post['APPKEY'] = await AsyncStorage.getItem('APPKEY');
     }
     return config;
   },
@@ -37,6 +35,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   function (response){
     // 处理200响应数据错误
+    // 处理后端各种状态码信息
     if (response.status === 200) {
       switch (response.data.code) {
         case '1000':

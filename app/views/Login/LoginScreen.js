@@ -5,7 +5,7 @@ import {Store} from "../../redux/store";
 import {isLoading} from "../../redux/actions";
 import {ISLOADING} from "../../redux/actionTypes";
 
-export default class LoginScreen extends Component {
+export class LoginScreen extends Component {
   constructor(props) {
     super(props);
   }
