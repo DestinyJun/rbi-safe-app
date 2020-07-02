@@ -5,4 +5,15 @@
  */
 import {StyleSheet} from 'react-native';
 
-export const TroubleShootStyles = StyleSheet.create({});
+export const TroubleShootStyles = StyleSheet.create({
+  TroubleShoot: {
+    flex: 1,
+  },
+  buttons: {
+    flexDirection: 'row',
+  },
+  buttons_touch: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  }
+});

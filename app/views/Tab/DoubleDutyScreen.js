@@ -6,6 +6,7 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {DoubleDutyStyles as styles} from "./DoubleDutyStyles";
+import {TabHeader} from "../../components/TabHeader";
 
 export class DoubleDutyScreen extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ export class DoubleDutyScreen extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.DoubleDuty}>
+        <TabHeader />
         <Text>DoubleDuty</Text>
       </View>
     );

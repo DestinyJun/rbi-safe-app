@@ -5,12 +5,13 @@
  */
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
+import {ProFileStyles as styles} from "./ProFileStyles";
 
 // 自定义工具
 import {Store} from "../../redux/store";
 import {isLoading} from "../../redux/actions";
 import {ISLOADING} from "../../redux/actionTypes";
-import {FocusStatusBar} from "../../components/FocusStatusBar";
+import {TabHeader} from "../../components/TabHeader";
 
 export class ProFileScreen extends Component {
   constructor(props) {
@@ -20,8 +21,8 @@ export class ProFileScreen extends Component {
 
   render() {
     return (
-      <View style={[c_styles.pt_3,c_styles.cell]}>
-        <FocusStatusBar backgroundColor={'blue'}/>
+      <View style={styles.ProFile}>
+        <TabHeader />
         <Text style={[c_styles.text_info]}>我是个人中心</Text>
         <TouchableOpacity onPress={this.loginOut}>
           <Text>点击退出登录</Text>

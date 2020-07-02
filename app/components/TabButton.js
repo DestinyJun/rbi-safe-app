@@ -4,7 +4,8 @@
  * date：  2020/6/30 22:01
  */
 import * as React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {Icon} from "react-native-elements";
 
 export function TabButton({state, descriptors, navigation}) {
   // 设置tab切换栏是否可见
@@ -13,8 +14,10 @@ export function TabButton({state, descriptors, navigation}) {
     return null;
   }
   return (
-    <View style={{flexDirection: 'row',height: 60,backgroundColor: 'red'}}>
+    <View style={{flexDirection: 'row',height: 60}}>
       {state.routes.map((route, index) => {
+        // 颜色面板定义
+        // const colors = ['red','blue','pink','orange','skyblue'];
         // 获取tab按钮标签文字
         const {options} = descriptors[route.key];
         const label =
@@ -31,7 +34,6 @@ export function TabButton({state, descriptors, navigation}) {
             target: route.key,
             canPreventDefault: true,
           });
-          console.log(event);
           if (!isFocused && !event.defaultPrevented) {
             navigation.navigate(route.name);
           }
@@ -43,7 +45,31 @@ export function TabButton({state, descriptors, navigation}) {
             target: route.key,
           });
         };
-
+        // 字体颜色
+        const textColor = isFocused ? '#3B86FF' : '#BABABA';
+        // 字体图标
+        const icons = [
+          {
+            type: 'ionic',
+            name: 'home'
+          },
+          {
+            type: 'ionic',
+            name: 'tv'
+          },
+          {
+            type: 'ionic',
+            name: 'pageview'
+          },
+          {
+            type: 'ionic',
+            name: 'dns'
+          },
+          {
+            type: 'ionic',
+            name: 'person'
+          },
+        ];
         // 返回tabBar的element元素
         return (
           <TouchableOpacity
@@ -56,12 +82,25 @@ export function TabButton({state, descriptors, navigation}) {
             onLongPress={onLongPress}
             style={{flex: 1}}
           >
-            <Text style={{color: isFocused ? '#673ab7' : '#222'}}>
-              {label}
-            </Text>
+            <View style={[styles.tabBar]}>
+              <Icon name={icons[index].name} size={20} color={textColor} />
+              <Text style={{color: textColor,fontSize: 14}}>
+                {label}
+              </Text>
+            </View>
           </TouchableOpacity>
         );
       })}
     </View>
   );
 }
+const styles = StyleSheet.create({
+  tabBar: {
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingBottom: 6,
+    paddingTop: 6,
+    backgroundColor: '#FFFFFF'
+  }
+});

@@ -267,6 +267,9 @@ global.c_styles = StyleSheet.create({
   dim_height: {
     height: Dimensions.get('window').height
   },
+  dim_width: {
+    width: Dimensions.get('window').width
+  },
   row: {
     flex: 1,
     flexDirection: 'row',

@@ -8,36 +8,30 @@ import {ProFileScreen} from "./app/views/Tab/ProFileScreen";
 import {SafeEducationScreen} from "./app/views/Tab/SafeEducationScreen";
 import {TroubleShootScreen} from "./app/views/Tab/TroubleShootScreen";
 import {DoubleDutyScreen} from "./app/views/Tab/DoubleDutyScreen";
-import {Icon} from 'react-native-elements'
 // 自定义工具
 import {Store} from "./app/redux/store";
 
 // 自定义组件
 import {TabButton} from "./app/components/TabButton";
+import {FocusStatusBar} from "./app/components/FocusStatusBar";
+import {EducationExamScreen} from "./app/views/Education/EducationExamScreen";
+import {EducationTrainScreen} from "./app/views/Education/EducationTrainScreen";
 
 //  路由
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// 路由分级
+// tab路由
 function TabBarScreen() {
   return (
     <Tab.Navigator
-      initialRouteName={'SafeEducation'}
+      initialRouteName={'TroubleShoot'}
       backBehavior={'none'}
       lazy={true}
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home';
-          } else if (route.name === 'ProFile') {
-            iconName = focused ? 'user-o' : 'user-o';
-          }
-          return <Icon name={iconName} size={26} color={color}/>;
-        },
-      })}
-      tabBar={props => <TabButton {...props} />}
+      tabBar={props =>{
+        <FocusStatusBar backgroundColor={'#226AD5'}/>;
+        return <TabButton {...props} />
+      }}
     >
       <Tab.Screen name={'Home'} options={{title: '首页'}} component={HomeScreen} />
       <Tab.Screen name={'SafeEducation'} options={{title: '安全教育'}} component={SafeEducationScreen}  />
@@ -47,7 +41,6 @@ function TabBarScreen() {
     </Tab.Navigator>
   )
 }
-
 
 // 导出App
 export default class App extends React.Component {
@@ -67,7 +60,11 @@ export default class App extends React.Component {
     if (this.state.isLoading) {
       return (
         <NavigationContainer>
-          <TabBarScreen />
+          <Stack.Navigator initialRouteName={'TabBarScreen'}>
+            <Stack.Screen name={'TabBarScreen'} component={TabBarScreen} options={{headerShown: false}} />
+            <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen} />
+            <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen} />
+          </Stack.Navigator>
         </NavigationContainer>
       );
     }

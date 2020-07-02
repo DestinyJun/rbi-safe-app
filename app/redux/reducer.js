@@ -6,7 +6,7 @@
 import { ISLOADING } from "./actionTypes";
 
 const defaultState = {
-  isLoading: false
+  isLoading: true
 };
 
 export function Reducer(state = defaultState, action) {

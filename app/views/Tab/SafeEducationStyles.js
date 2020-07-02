@@ -5,4 +5,8 @@
  */
 import {StyleSheet} from 'react-native';
 
-export const SafeEducationStyles = StyleSheet.create({});
+export const SafeEducationStyles = StyleSheet.create({
+  SafeEducation: {
+    flex: 1,
+  }
+});
