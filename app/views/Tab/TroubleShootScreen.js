@@ -22,20 +22,25 @@ export class TroubleShootScreen extends Component {
             backgroundColor: '#226AD5',
             justifyContent: 'space-around',
           }}
-          centerComponent={{ text: '隐患排查', style: { color: '#fff',fontSize: 20 } }}
+          centerComponent={{ text: '隐患排查', style: { color: '#fff',fontSize: 18 } }}
         />
         <View style={styles.buttons}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {this.props.navigation.navigate('TroubleShortlyScreen')}}>
             <View style={styles.buttons_touch}>
               <Icon name={'add'} />
               <Text>立即整改</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {this.props.navigation.navigate('TroubleReportScreen')}}>
             <View style={styles.buttons_touch}>
               <Icon name={'add'} />
               <Text>上报整改</Text>
             </View>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity onPress={() => {this.props.navigation.navigate('TroubleHandleScreen')}}>
+            <Text>待处理隐患</Text>
           </TouchableOpacity>
         </View>
       </View>

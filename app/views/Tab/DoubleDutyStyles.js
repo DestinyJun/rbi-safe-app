@@ -8,6 +8,5 @@ import {StyleSheet} from 'react-native';
 export const DoubleDutyStyles = StyleSheet.create({
   DoubleDuty: {
     flex: 1,
-    paddingTop: 50
   }
 });

@@ -7,6 +7,5 @@ import {StyleSheet} from 'react-native';
 export const ProFileStyles = StyleSheet.create({
   ProFile: {
     flex: 1,
-    paddingTop: 50
   }
 });

@@ -23,7 +23,7 @@ export class HomeScreen extends Component {
             justifyContent: 'space-around',
           }}
           leftComponent={{ icon: 'menu', color: '#fff' }}
-          centerComponent={{ text: '首页', style: { color: '#fff',fontSize: 20} }}
+          centerComponent={{ text: '首页', style: { color: '#fff',fontSize: 18} }}
           rightComponent={{ icon: 'home', color: '#fff' }}
         />
         <Text style={[c_styles.text_danger]}>我是主页</Text>

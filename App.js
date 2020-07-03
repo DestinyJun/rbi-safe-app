@@ -2,20 +2,31 @@ import * as React from 'react';
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import {LoginScreen} from "./app/views/Login/LoginScreen";
-import {HomeScreen} from "./app/views/Tab/HomeScreen";
-import {ProFileScreen} from "./app/views/Tab/ProFileScreen";
-import {SafeEducationScreen} from "./app/views/Tab/SafeEducationScreen";
-import {TroubleShootScreen} from "./app/views/Tab/TroubleShootScreen";
-import {DoubleDutyScreen} from "./app/views/Tab/DoubleDutyScreen";
+
 // 自定义工具
 import {Store} from "./app/redux/store";
 
 // 自定义组件
 import {TabButton} from "./app/components/TabButton";
 import {FocusStatusBar} from "./app/components/FocusStatusBar";
+
+// 路由屏幕
+import {LoginScreen} from "./app/views/Login/LoginScreen";
+import {HomeScreen} from "./app/views/Tab/HomeScreen";
+import {ProFileScreen} from "./app/views/Tab/ProFileScreen";
+import {SafeEducationScreen} from "./app/views/Tab/SafeEducationScreen";
+import {TroubleShootScreen} from "./app/views/Tab/TroubleShootScreen";
+import {DoubleDutyScreen} from "./app/views/Tab/DoubleDutyScreen";
 import {EducationExamScreen} from "./app/views/Education/EducationExamScreen";
 import {EducationTrainScreen} from "./app/views/Education/EducationTrainScreen";
+import {TroubleShortlyScreen} from "./app/views/Trouble/TroubleShortlyScreen";
+import {TroubleReportScreen} from "./app/views/Trouble/TroubleReportScreen";
+import {TroubleHandleScreen} from "./app/views/Trouble/TroubleHandleScreen";
+import {DoubleInventoryMakeScreen} from "./app/views/Double/DoubleInventoryMakeScreen";
+import {DoubleInventoryFillScreen} from "./app/views/Double/DoubleInventoryFillScreen";
+import {DoubleInventoryCheckScreen} from "./app/views/Double/DoubleInventoryCheckScreen";
+
+
 
 //  路由
 const Stack = createStackNavigator();
@@ -64,6 +75,12 @@ export default class App extends React.Component {
             <Stack.Screen name={'TabBarScreen'} component={TabBarScreen} options={{headerShown: false}} />
             <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen} />
             <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen} />
+            <Stack.Screen name={'TroubleShortlyScreen'} component={TroubleShortlyScreen} />
+            <Stack.Screen name={'TroubleReportScreen'} component={TroubleReportScreen} />
+            <Stack.Screen name={'TroubleHandleScreen'} component={TroubleHandleScreen} />
+            <Stack.Screen name={'DoubleInventoryMakeScreen'} component={DoubleInventoryMakeScreen} />
+            <Stack.Screen name={'DoubleInventoryFillScreen'} component={DoubleInventoryFillScreen} />
+            <Stack.Screen name={'DoubleInventoryCheckScreen'} component={DoubleInventoryCheckScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       );

@@ -4,7 +4,7 @@
  * date：  2020/7/2 21:26
  */
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text} from 'react-native';
 import {TroubleShootStyles as styles} from "../Tab/TroubleShootStyles";
 
 export class TroubleShortlyScreen extends Component {
