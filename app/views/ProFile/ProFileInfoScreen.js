@@ -15,7 +15,7 @@ export class ProFileInfoScreen extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.Info}>
         <Text>个人信息详情</Text>
       </View>
     );

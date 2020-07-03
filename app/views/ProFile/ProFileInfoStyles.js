@@ -5,4 +5,8 @@
  */
 import {StyleSheet} from 'react-native';
 
-export const ProFileInfoStyles = StyleSheet.create({});
+export const ProFileInfoStyles = StyleSheet.create({
+  Info: {
+    flex: 1
+  }
+});
