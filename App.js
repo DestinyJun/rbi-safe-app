@@ -25,10 +25,13 @@ import {TroubleHandleScreen} from "./app/views/Trouble/TroubleHandleScreen";
 import {DoubleInventoryMakeScreen} from "./app/views/Double/DoubleInventoryMakeScreen";
 import {DoubleInventoryFillScreen} from "./app/views/Double/DoubleInventoryFillScreen";
 import {DoubleInventoryCheckScreen} from "./app/views/Double/DoubleInventoryCheckScreen";
+import {ProFileRecordScreen} from "./app/views/ProFile/ProFileRecordScreen";
+import {ProFileArchivesScreen} from "./app/views/ProFile/ProFileArchivesScreen";
+import {ProFileInventoryScreen} from "./app/views/ProFile/ProFileInventoryScreen";
+import {ProFileInfoScreen} from "./app/views/ProFile/ProFileInfoScreen";
+import {ProFileSafeScreen} from "./app/views/ProFile/ProFileSafeScreen";
 
-
-
-//  路由
+// 创建路由对象
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +39,7 @@ const Tab = createBottomTabNavigator();
 function TabBarScreen() {
   return (
     <Tab.Navigator
-      initialRouteName={'TroubleShoot'}
+      initialRouteName={'ProFile'}
       backBehavior={'none'}
       lazy={true}
       tabBar={props =>{
@@ -81,6 +84,11 @@ export default class App extends React.Component {
             <Stack.Screen name={'DoubleInventoryMakeScreen'} component={DoubleInventoryMakeScreen} />
             <Stack.Screen name={'DoubleInventoryFillScreen'} component={DoubleInventoryFillScreen} />
             <Stack.Screen name={'DoubleInventoryCheckScreen'} component={DoubleInventoryCheckScreen} />
+            <Stack.Screen name={'ProFileRecordScreen'} component={ProFileRecordScreen} />
+            <Stack.Screen name={'ProFileArchivesScreen'} component={ProFileArchivesScreen} />
+            <Stack.Screen name={'ProFileInventoryScreen'} component={ProFileInventoryScreen} />
+            <Stack.Screen name={'ProFileInfoScreen'} component={ProFileInfoScreen} />
+            <Stack.Screen name={'ProFileSafeScreen'} component={ProFileSafeScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       );

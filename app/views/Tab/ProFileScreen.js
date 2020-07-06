@@ -12,6 +12,7 @@ import {Store} from "../../redux/store";
 import {isLoading} from "../../redux/actions";
 import {ISLOADING} from "../../redux/actionTypes";
 import {Header, ListItem} from "react-native-elements";
+import {PROFILE_TOP_MENU_LIST, PROFILE_BOTTOM_MENU_LIST} from "../../util/Constant";
 
 export class ProFileScreen extends Component {
   constructor(props) {
@@ -20,30 +21,6 @@ export class ProFileScreen extends Component {
   }
 
   render() {
-    const list = [
-      {
-        title: '隐患排查记录',
-        icon: 'av-timer'
-      },
-      {
-        title: '我的培训档案',
-        icon: 'flight-takeoff'
-      },
-      {
-        title: '我的培训档案',
-        icon: 'flight-takeoff'
-      },
-    ];
-    const safeList = [
-      {
-        title: '我的信息',
-        icon: 'av-timer'
-      },
-      {
-        title: '账号与安全',
-        icon: 'flight-takeoff'
-      },
-    ];
     return (
       <View style={styles.ProFile}>
         <Header
@@ -56,8 +33,9 @@ export class ProFileScreen extends Component {
         <Text style={[c_styles.text_info]}>我是个人中心</Text>
         <View>
           {
-            list.map((item, i) => (
+            PROFILE_TOP_MENU_LIST.map((item, i) => (
               <ListItem
+                onPress={this.routerOnPress.bind(this,item)}
                 key={i}
                 title={item.title}
                 leftIcon={{ name: item.icon }}
@@ -69,8 +47,9 @@ export class ProFileScreen extends Component {
         </View>
         <View style={[c_styles.mt_2]}>
           {
-            safeList.map((item, i) => (
+            PROFILE_BOTTOM_MENU_LIST.map((item, i) => (
               <ListItem
+                onPress={this.routerOnPress.bind(this,item)}
                 key={i}
                 title={item.title}
                 leftIcon={{ name: item.icon }}
@@ -80,13 +59,16 @@ export class ProFileScreen extends Component {
             ))
           }
         </View>
-        <TouchableOpacity onPress={this.loginOut}>
+        <TouchableOpacity onPress={this.loginOut.bind(this)}>
           <Text>点击退出登录</Text>
         </TouchableOpacity>
       </View>
     );
   }
-  loginOut = () => {
+  routerOnPress (item) {
+    this.props.navigation.navigate(item.routerName)
+  }
+  loginOut() {
     Store.dispatch(isLoading({type: ISLOADING, isLoading: false}))
   }
 }

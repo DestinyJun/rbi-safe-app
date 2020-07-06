@@ -5,5 +5,19 @@ export const LoginStyles = StyleSheet.create({
     backgroundColor: 'white',
     position: 'absolute',
   },
+  imageBgc: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
+  },
+  header: {
+
+  },
+  forms: {
+
+  },
+  button: {
+
+  }
 });
 
