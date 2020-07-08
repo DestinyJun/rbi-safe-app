@@ -7,17 +7,21 @@ export const LoginStyles = StyleSheet.create({
   },
   imageBgc: {
     flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center"
   },
   header: {
-
+    flex: 2,
+    justifyContent: 'center',
+    paddingLeft: 30
   },
   forms: {
-
+    flex: 2,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   button: {
-
+    flex: 2,
+    paddingLeft: 20,
+    paddingRight: 20,
   }
 });
 
