@@ -67,7 +67,7 @@ export default class App extends React.Component {
       this.setState({
         isLoading: Store.getState().isLoading
       })
-    })
+    });
   }
 
   render() {
@@ -101,4 +101,6 @@ export default class App extends React.Component {
       </NavigationContainer>
     )
   }
+
+  componentDidMount(): void {}
 }

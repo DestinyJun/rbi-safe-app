@@ -1,6 +1,7 @@
 {
   "main": "index.js",
   "scripts": {
+    "expoStart": "expo start --clear",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
@@ -8,6 +9,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.6.0",
     "@react-navigation/drawer": "^5.8.3",

@@ -2,10 +2,14 @@
  * axios拦截器
  */
 import axios from 'axios'
-import {Alert, ToastAndroid} from 'react-native';
+import {Alert} from 'react-native';
+
+const skipUrl = [
+  `/login`,
+]; // 无需验证的请求地址
 
 // 设置全局请求的地址
-axios.defaults.baseURL = 'http://192.168.1.1:8999';
+axios.defaults.baseURL = 'http://120.77.171.73:8090/security-platform';
 
 //设置的请求次数，请求的间隙
 axios.defaults.retry = 4;
@@ -17,10 +21,10 @@ axios.defaults.timeout = 3000;
 // 请求拦截
 axios.interceptors.request.use(
   async function (config) {
-    const str = config.url;
     // 配置请求头参数
     // 判断那些接口需要添加token，那些接口需要添加请求类型，判断APPKEY是否存在
-    if (!(str.includes('/user'))) {
+    if (!(isSkipUrl(config.url))) {
+      console.log('需要验证');
       // config.headers.post['APPKEY'] = await AsyncStorage.getItem('APPKEY');
     }
     return config;
@@ -31,62 +35,81 @@ axios.interceptors.request.use(
   }
 );
 
+// url跳过验证
+function isSkipUrl(url: string) {
+  return skipUrl.includes(url);
+}
+
 // 响应拦截
 axios.interceptors.response.use(
-  function (response){
-    // 处理200响应数据错误
-    // 处理后端各种状态码信息
+  function (response) {
+    // 处理200响应数据错误,处理后端各种状态码信息
     if (response.status === 200) {
-      switch (response.data.code) {
-        case '1000':
-          return Promise.resolve(response.data);
-          break;
-        case '1005':
-          ToastAndroid.show(response.data.msg, 1000);
-          return Promise.reject(response.data);
-          break;
-        default:
-          ToastAndroid.show(response.data.msg, 1000);
-          return Promise.reject(response.data);
-          break;
+      if (response.data.status === '1000') {
+        return Promise.resolve(response.data);
+      } else {
+        // 不是1000状态码，一律抛出异常
+        switch (response.data.status) {
+          case '1005':
+            break;
+          default:
+            break;
+        }
+        return Promise.reject(response.data);
       }
-    } else {
-      ToastAndroid.show('连接网络失败，请检查网络！', 1000);
+    }
+    else {
       return Promise.reject(response.data);
     }
   },
-  function (error){
-    // 请求超时处理,判断请求异常信息中是否含有超时timeout字符串
+  function (error) {
     const str = error.message;
-    if(str.includes('timeout')){
-      Alert.alert('','网络请求超时，是否重试？',[
-        {
-          text: '确定',onPress: () => {
-            location.reload();
-            return Promise.resolve(error);
-          }},
-        {
-          text: '取消',onPress: () => {
-            location.reload();
-            return Promise.reject(error);
-          }},
-      ]);
+    if (error.response.status) {
+      // 请求超时处理,判断请求异常信息中是否含有超时timeout字符串
+      if (str.includes('timeout')) {
+        Alert.alert('', '网络请求超时，是否重试？', [
+          {
+            text: '确定', onPress: () => {
+              location.reload();
+            }
+          },
+          {
+            text: '取消', onPress: () => {
+              location.reload();
+            }
+          },
+        ]);
+      }
+      else {
+        switch (error.response.status) {
+          // 404请求不存在
+          case 404:
+            Alert.alert('', '网络错误，请检查网络！', [
+              {text: "关闭", onPress: () =>{}, style: "cancel"},
+              {text: "重新加载", onPress: () => {location.reload();}}
+            ],{cancelable: false});
+            break;
+          // 其他错误，直接抛出错误提示
+          default:
+            break;
+        }
+      }
     }
     // 处理响应失败
-    return Promise.reject(error);
+   return Promise.reject(error);
   }
 );
 
 // 封装get请求
-export function get(url, params){
-  return new Promise((resolve, reject) =>{
+export function get(url, params) {
+  return new Promise((resolve, reject) => {
     axios.get(url, {params: params})
       .then(res => {
         resolve(res);
       })
-      .catch(err =>{
+      .catch(err => {
         reject(err)
-    })
+      })
   });
 }
 
