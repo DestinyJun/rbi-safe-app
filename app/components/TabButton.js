@@ -79,7 +79,6 @@ export function TabButton({state, descriptors, navigation}) {
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
             onPress={onPress}
-            onLongPress={onLongPress}
             style={{flex: 1}}
           >
             <View style={[styles.tabBar]}>

@@ -4,8 +4,8 @@ import {LoginStyles as styles} from './LoginStyles';
 import AsyncStorage from '@react-native-community/async-storage';
 // reducer
 import {Store} from "../../redux/store";
-import {isLoading} from "../../redux/actions";
-import {ISLOADING} from "../../redux/actionTypes";
+import {isLoading, isLogin} from "../../redux/actions";
+import {ISLOADING, ISLOGIN} from "../../redux/actionTypes";
 // 常量
 import {IMAGE_FILE_LIST} from "../../util/Constant";
 import {Button, Icon, Input} from "react-native-elements";
@@ -31,7 +31,6 @@ export class LoginScreen extends Component {
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{flex: 1}}>
           <ImageBackground style={[styles.imageBgc]} source={IMAGE_FILE_LIST} resizeMode={'cover'}>
             <View style={[styles.header]}>
-              <FullScreenLoading />
               <Text style={[c_styles.h2, c_styles.mb_3]}>
                 欢迎登陆
               </Text>
@@ -84,6 +83,7 @@ export class LoginScreen extends Component {
                 titleStyle={{letterSpacing: 5, fontSize: 18}}
               />
             </View>
+            <FullScreenLoading/>
           </ImageBackground>
         </KeyboardAvoidingView>
       </View>
@@ -99,27 +99,31 @@ export class LoginScreen extends Component {
   }
 
   // 登录操作
-   login() {
+  login() {
+    Store.dispatch(isLoading({type: ISLOADING, isLoading: true}));
     Keyboard.dismiss();
     post(Api.LOGIN_URL, {username: this.state.username, password: this.state.password})
       .then(async (res) => {
-        console.log(res);
         await AsyncStorage.setItem('accessToken', res.token);
-        // Store.dispatch(isLoading({type: ISLOADING, isLoading: true}))
+        Store.dispatch(isLoading({type: ISLOADING, isLoading: false}));
+        Store.dispatch(isLogin({type: ISLOGIN, isLogin: true}))
       })
       .catch(err => {
+        Store.dispatch(isLoading({type: ISLOADING, isLoading: false}));
         Alert.alert('', err.message, [
           {text: "关闭", onPress: () => console.log("Cancel Pressed"), style: "cancel"},
-          {text: "重新输入", onPress: () => {
-            this.myUsernameRef.current.clear();
-            this.myPasswordRef.current.clear();
-            this.myUsernameRef.current.focus();
-            this.setState({
-              username: null,
-              password: null
-            })
-          }}
-        ],{cancelable: false});
+          {
+            text: "重新输入", onPress: () => {
+              this.myUsernameRef.current.clear();
+              this.myPasswordRef.current.clear();
+              this.myUsernameRef.current.focus();
+              this.setState({
+                username: null,
+                password: null
+              })
+            }
+          }
+        ], {cancelable: false});
       });
   }
 

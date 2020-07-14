@@ -3,25 +3,50 @@
  * author：DestinyJun
  * date：  2020/7/10 20:54
  */
-import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, ActivityIndicator} from 'react-native';
 import Modal from 'react-native-translucent-modal';
+import {Store} from "../redux/store";
 
-export function FullScreenLoading(props) {
-  const [modalShow, setModalShow] = useState(true);
+export function FullScreenLoading() {
+  const [modalShow, setModalShow] = useState(Store.getState().isLoading);
+  useEffect(() => {
+    const subscription = Store.subscribe(() => {
+      setModalShow(Store.getState().isLoading)
+    });
+    return () => {
+      subscription();
+    }
+  });
   return (
-   <Modal visible={modalShow}  onRequestClose={() => {
-     console.log(123);
-   }}>
+    <Modal
+      visible={modalShow}
+      transparent={true}
+      onRequestClose={() => {
+        setModalShow(false);
+      }}
+    >
       <View style={styles.container}>
-         <Text>刚刚</Text>
+        <View style={styles.loading}>
+          <ActivityIndicator animating={true} size="large" color="#fff" />
+        </View>
       </View>
-   </Modal>
+    </Modal>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'blue'
+    backgroundColor: 'rgba(51,51,51,0.3)',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  loading: {
+    paddingTop: 40,
+    paddingBottom: 40,
+    paddingLeft: 60,
+    paddingRight: 60,
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    borderRadius: 10
   }
 });

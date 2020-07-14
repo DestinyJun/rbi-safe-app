@@ -3,14 +3,18 @@
  * author：DestinyJun
  * date：  2020/6/30 17:03
  */
-import { ISLOADING } from "./actionTypes";
+import {ISLOADING, ISLOGIN} from "./actionTypes";
 
 const defaultState = {
-  isLoading: false
+  isLogin: false,
+  isLoading: false,
 };
 
 export function Reducer(state = defaultState, action) {
   switch (action.type) {
+    case ISLOGIN:
+      state.isLogin = action.value.isLogin;
+      return state;
     case ISLOADING:
       state.isLoading = action.value.isLoading;
       return state;

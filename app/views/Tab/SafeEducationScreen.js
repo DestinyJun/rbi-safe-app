@@ -17,17 +17,19 @@ export class SafeEducationScreen extends Component {
 
   render() {
     return (
-      <View style={styles.SafeEducation}>
+      <View style={[styles.SafeEducation]}>
         <Header
           containerStyle={{
             backgroundColor: '#226AD5',
             justifyContent: 'space-around',
+            marginBottom: 10
           }}
           centerComponent={{ text: '安全教育培训', style: { color: '#fff', fontSize: 18 } }}
           rightComponent={{ icon: 'search', color: '#fff' }}
         />
-        <Text>SafeEducationScreen</Text>
-        <ExamCard {...this.props} />
+        <View style={[c_styles.pl_3,c_styles.pr_3]}>
+          <ExamCard {...this.props} />
+        </View>
       </View>
     );
   }

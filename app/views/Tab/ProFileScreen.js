@@ -9,8 +9,8 @@ import {ProFileStyles as styles} from "./ProFileStyles";
 
 // 自定义工具
 import {Store} from "../../redux/store";
-import {isLoading} from "../../redux/actions";
-import {ISLOADING} from "../../redux/actionTypes";
+import {isLoading, isLogin} from "../../redux/actions";
+import {ISLOADING, ISLOGIN} from "../../redux/actionTypes";
 import {Header, ListItem} from "react-native-elements";
 import {PROFILE_TOP_MENU_LIST, PROFILE_BOTTOM_MENU_LIST} from "../../util/Constant";
 
@@ -69,6 +69,6 @@ export class ProFileScreen extends Component {
     this.props.navigation.navigate(item.routerName)
   }
   loginOut() {
-    Store.dispatch(isLoading({type: ISLOADING, isLoading: false}))
+    Store.dispatch(isLogin({type: ISLOGIN, isLoading: false}))
   }
 }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import AsyncStorage from "@react-native-community/async-storage";
 
 // 自定义工具
 import {Store} from "./app/redux/store";
@@ -30,6 +31,7 @@ import {ProFileArchivesScreen} from "./app/views/ProFile/ProFileArchivesScreen";
 import {ProFileInventoryScreen} from "./app/views/ProFile/ProFileInventoryScreen";
 import {ProFileInfoScreen} from "./app/views/ProFile/ProFileInfoScreen";
 import {ProFileSafeScreen} from "./app/views/ProFile/ProFileSafeScreen";
+import {initIsLoginState} from "./app/redux/actions";
 
 // 创建路由对象
 const Stack = createStackNavigator();
@@ -39,7 +41,7 @@ const Tab = createBottomTabNavigator();
 function TabBarScreen() {
   return (
     <Tab.Navigator
-      initialRouteName={'ProFile'}
+      initialRouteName={'SafeEducation'}
       backBehavior={'none'}
       lazy={true}
       tabBar={props =>{
@@ -61,17 +63,19 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: Store.getState().isLoading
+      isLogin: Store.getState().isLogin
     };
-    Store.subscribe(() => {
+    const isLogin = initIsLoginState();
+    Store.dispatch(isLogin);
+    this.subscription = Store.subscribe(() => {
       this.setState({
-        isLoading: Store.getState().isLoading
+        isLogin: Store.getState().isLogin
       })
     });
   }
 
   render() {
-    if (this.state.isLoading) {
+    if (this.state.isLogin) {
       return (
         <NavigationContainer>
           <Stack.Navigator initialRouteName={'TabBarScreen'}>
@@ -102,5 +106,9 @@ export default class App extends React.Component {
     )
   }
 
-  componentDidMount(): void {}
+  componentDidMount() {}
+
+  componentWillUnmount() {
+    this.subscription();
+  }
 }
