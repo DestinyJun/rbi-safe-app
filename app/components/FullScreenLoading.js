@@ -4,8 +4,8 @@
  * date：  2020/7/10 20:54
  */
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, ActivityIndicator} from 'react-native';
-import Modal from 'react-native-translucent-modal';
+import {StyleSheet, View, ActivityIndicator, Modal} from 'react-native';
+// import Modal from 'react-native-translucent-modal';
 import {Store} from "../redux/store";
 
 export function FullScreenLoading() {
