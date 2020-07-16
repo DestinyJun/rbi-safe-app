@@ -6,21 +6,34 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {EducationExamStyles as styles} from "./EducationExamStyles";
+import {Header, Icon} from "react-native-elements";
+import {SingleTopicComponent} from "../../components/SingleTopicComponent";
 
 export class EducationExamScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.props.navigation.setOptions({
-      title: `${this.props.route.params.title}  ${this.props.route.params.name}`
-    })
   }
 
   render() {
     return (
       <View style={styles.Exam}>
-        <Text>开始考试/模拟考试</Text>
+        <Header
+          statusBarProps={{backgroundColor: '#226AD5'}}
+          backgroundColor={'#226AD5'}
+          leftComponent={<Icon type='font-awesome' name={'angle-left'} color={'#fff'} size={30} onPress={this.headerLeftOnPress.bind(this)} />}
+          centerComponent={{text: `${this.props.route.params.title}  ${this.props.route.params.name}`,style: {fontSize: 20,color: '#fff'}}}
+        />
+        <View style={styles.timer}>
+          <Text style={[styles.timerText,c_styles.pl_3,c_styles.pr_3]}>模拟考试倒计时     00:35:09</Text>
+        </View>
+        <View style={[styles.topic]}>
+          <SingleTopicComponent />
+        </View>
       </View>
     );
+  }
+  headerLeftOnPress() {
+    this.props.navigation.goBack();
   }
 }

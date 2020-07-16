@@ -7,7 +7,7 @@ import * as React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {Icon} from "react-native-elements";
 
-export function TabButton({state, descriptors, navigation}) {
+export function TabButtonComponent({state, descriptors, navigation}) {
   // 设置tab切换栏是否可见
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   if (focusedOptions.tabBarVisible === false) {

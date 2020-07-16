@@ -8,7 +8,7 @@ import {StyleSheet, View, ActivityIndicator, Modal} from 'react-native';
 // import Modal from 'react-native-translucent-modal';
 import {Store} from "../redux/store";
 
-export function FullScreenLoading() {
+export function FullScreenLoadingComponent() {
   const [modalShow, setModalShow] = useState(Store.getState().isLoading);
   useEffect(() => {
     const subscription = Store.subscribe(() => {

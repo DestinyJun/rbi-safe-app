@@ -11,7 +11,7 @@ import {IMAGE_FILE_LIST} from "../../util/Constant";
 import {Button, Icon, Input} from "react-native-elements";
 import {post} from "../../service/Interceptor";
 import {Api} from "../../service/Api";
-import {FullScreenLoading} from "../../components/FullScreenLoading";
+import {FullScreenLoadingComponent} from "../../components/FullScreenLoadingComponent";
 
 export class LoginScreen extends Component {
   constructor(props) {
@@ -83,7 +83,7 @@ export class LoginScreen extends Component {
                 titleStyle={{letterSpacing: 5, fontSize: 18}}
               />
             </View>
-            <FullScreenLoading/>
+            <FullScreenLoadingComponent/>
           </ImageBackground>
         </KeyboardAvoidingView>
       </View>

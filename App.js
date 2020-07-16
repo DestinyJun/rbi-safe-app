@@ -2,14 +2,13 @@ import * as React from 'react';
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import AsyncStorage from "@react-native-community/async-storage";
 
 // 自定义工具
 import {Store} from "./app/redux/store";
 
 // 自定义组件
-import {TabButton} from "./app/components/TabButton";
-import {FocusStatusBar} from "./app/components/FocusStatusBar";
+import {TabButtonComponent} from "./app/components/TabButtonComponent";
+import {FocusStatusBarComponent} from "./app/components/FocusStatusBarComponent";
 
 // 路由屏幕
 import {LoginScreen} from "./app/views/Login/LoginScreen";
@@ -36,6 +35,9 @@ import {initIsLoginState} from "./app/redux/actions";
 // 创建路由对象
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const StackOptions = {
+  headerShown: false
+};
 
 // tab路由
 function TabBarScreen() {
@@ -45,8 +47,8 @@ function TabBarScreen() {
       backBehavior={'none'}
       lazy={true}
       tabBar={props =>{
-        <FocusStatusBar backgroundColor={'#226AD5'}/>;
-        return <TabButton {...props} />
+        <FocusStatusBarComponent backgroundColor={'#226AD5'}/>;
+        return <TabButtonComponent {...props} />
       }}
     >
       <Tab.Screen name={'Home'} options={{title: '首页'}} component={HomeScreen} />
@@ -80,8 +82,8 @@ export default class App extends React.Component {
         <NavigationContainer>
           <Stack.Navigator initialRouteName={'TabBarScreen'}>
             <Stack.Screen name={'TabBarScreen'} component={TabBarScreen} options={{headerShown: false}} />
-            <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen} />
-            <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen} />
+            <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen} options={StackOptions} />
+            <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen} options={StackOptions} />
             <Stack.Screen name={'TroubleShortlyScreen'} component={TroubleShortlyScreen} />
             <Stack.Screen name={'TroubleReportScreen'} component={TroubleReportScreen} />
             <Stack.Screen name={'TroubleHandleScreen'} component={TroubleHandleScreen} />

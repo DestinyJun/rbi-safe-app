@@ -7,7 +7,7 @@ import React, {useState} from 'react';
 import {View,StyleSheet,TouchableOpacity} from 'react-native';
 import {Icon, Slider, Text, Button,} from "react-native-elements";
 
-export function ExamCard(props) {
+export function ExamCardComponent(props) {
   const [isExam,setIsExam] = useState(false);
   const {navigation} = {...props};
   const examStart = () => {

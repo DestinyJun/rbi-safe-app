@@ -7,7 +7,7 @@ import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {SafeEducationStyles as styles} from "./SafeEducationStyles";
 import {Header, Icon} from "react-native-elements";
-import {ExamCard} from "../../components/ExamCard";
+import {ExamCardComponent} from "../../components/ExamCardComponent";
 
 export class SafeEducationScreen extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ export class SafeEducationScreen extends Component {
           <Text style={{color: '#FF7700',fontSize: 14,marginLeft: 5}}>1项培训计划考试中</Text>
         </View>
         <View style={[c_styles.pl_3,c_styles.pr_3]}>
-          <ExamCard {...this.props} />
+          <ExamCardComponent {...this.props} />
         </View>
       </View>
     );
