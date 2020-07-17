@@ -56,13 +56,13 @@ export function ExamCardComponent(props) {
           <Text style={[c_styles.h5]}>学习进度</Text>
           <Text style={[c_styles.h5,{color: '#307AEC'}]}>60%</Text>
         </View>
-        <Slider
+      {/*  <Slider
           thumbStyle={{backgroundColor: 'transparent'}}
           disabled={true}
           trackStyle={{height: 8,borderRadius: 5}}
           maximumTrackTintColor={'#F2F2F2'}
           minimumTrackTintColor={'#3883FA'}
-          value={0.6}/>
+          value={0.6}/>*/}
       </View>
       <View style={[styles.buttons]}>
         {

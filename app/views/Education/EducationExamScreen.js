@@ -27,7 +27,7 @@ export class EducationExamScreen extends Component {
         <View style={styles.timer}>
           <Text style={[styles.timerText,c_styles.pl_3,c_styles.pr_3]}>模拟考试倒计时     00:35:09</Text>
         </View>
-        <View style={[styles.topic]}>
+        <View style={[styles.topic,c_styles.mt_2]}>
           <SingleTopicComponent />
         </View>
       </View>
