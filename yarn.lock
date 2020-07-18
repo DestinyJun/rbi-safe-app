@@ -1432,6 +1432,11 @@
     wcwidth "^1.0.1"
     ws "^1.1.0"
 
+"@react-native-community/hooks@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.npm.taobao.org/@react-native-community/hooks/download/@react-native-community/hooks-2.6.0.tgz#dd5f19601eb3684c6bcdd3df3d0c04cf44c24cff"
+  integrity sha1-3V8ZYB6zaExrzdPfPQwEz0TCTP8=
+
 "@react-native-community/masked-view@^0.1.10":
   version "0.1.10"
   resolved "https://registry.npm.taobao.org/@react-native-community/masked-view/download/@react-native-community/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"

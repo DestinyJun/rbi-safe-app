@@ -26,6 +26,6 @@ export const EducationExamStyles = StyleSheet.create({
     borderRadius: 20
   },
   topic: {
-
+    flex: 1
   }
 });

@@ -24,6 +24,8 @@ export class ProFileScreen extends Component {
     return (
       <View style={styles.ProFile}>
         <Header
+          statusBarProps={{backgroundColor: '#226AD5'}}
+          backgroundColor={'#226AD5'}
           containerStyle={{
             backgroundColor: '#226AD5',
             justifyContent: 'space-around',

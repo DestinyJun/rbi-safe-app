@@ -18,6 +18,8 @@ export class DoubleDutyScreen extends Component {
     return (
       <View style={styles.DoubleDuty}>
         <Header
+          statusBarProps={{backgroundColor: '#226AD5'}}
+          backgroundColor={'#226AD5'}
           containerStyle={{backgroundColor: '#226AD5', justifyContent: 'space-around',}}
           centerComponent={{ text: '一岗双责', style: { color: '#fff', fontSize: 18 } }}
         />

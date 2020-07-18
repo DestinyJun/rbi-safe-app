@@ -19,6 +19,8 @@ export class SafeEducationScreen extends Component {
     return (
       <View style={[styles.SafeEducation]}>
         <Header
+          statusBarProps={{backgroundColor: '#226AD5'}}
+          backgroundColor={'#226AD5'}
           containerStyle={{
             backgroundColor: '#226AD5',
             justifyContent: 'space-around',

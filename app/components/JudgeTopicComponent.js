@@ -1,17 +1,17 @@
 /**
- * desc：  单选题组件
+ * desc：  判断题组件
  * author：DestinyJun
  * date：  2020/7/16 16:15
  */
 import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {CheckBox} from "react-native-elements";
-export function SingleTopicComponent(props) {
-  let arr = [false,false,false];
-  const arrAnswer = ['选项一','选项二','选项三'];
+import {CheckBox, Icon} from "react-native-elements";
+export function JudgeTopicComponent(props) {
+  let arr = [false,false];
+  const arrAnswer = ['正确','错误'];
   const [checked,setChecked] = useState(arr);
   const checkOnPress = (index) => {
-    arr = [false,false,false];
+    arr = [false,false];
     arr[index] = true;
     setChecked(arr);
   };
@@ -19,12 +19,11 @@ export function SingleTopicComponent(props) {
     <View style={[styles.container,c_styles.p_4]}>
       <View style={styles.title}>
         <View style={[styles.titleTag]}>
-          <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>单选</Text>
+          <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>判断</Text>
         </View>
         <View style={[styles.titleContent,c_styles.pl_3]} >
           <Text style={[c_styles.h6]}>
-            01.题目名称 题目名称 题目名称 题目名称 题目名称 题目名称
-            01.题目名称 题目名称 题目名称 题目名称 题目名称 题目名称
+            02.题目名称 题目名称 题目名称 题目名称 题目名称 题目名称
           </Text>
         </View>
       </View>
@@ -32,7 +31,7 @@ export function SingleTopicComponent(props) {
         {
           checked.map((item,index) => (
             <CheckBox
-              key={`checkBox${index}`}
+              key={`judge${index}`}
               title={arrAnswer[index]}
               titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
               size={20}
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleTagText: {
-    backgroundColor: '#226AD5',
+    backgroundColor: '#47CF04',
     borderRadius: 5,
     paddingLeft: 8,
     paddingRight: 8,
