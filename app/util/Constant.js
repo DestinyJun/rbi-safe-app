@@ -18,29 +18,34 @@ export const HEADER_IMAGE = {
 export const PROFILE_TOP_MENU_LIST = [
   {
     title: '隐患排查记录',
-    icon: 'av-timer',
+    icon: 'server',
+    type: 'font-awesome',
     routerName: 'ProFileRecordScreen'
   },
   {
     title: '我的培训档案',
-    icon: 'flight-takeoff',
+    icon: 'clone',
+    type: 'font-awesome',
     routerName: 'ProFileArchivesScreen'
   },
   {
     title: '一岗双责检查清单',
-    icon: 'flight-takeoff',
+    icon: 'calendar-minus-o',
+    type: 'font-awesome',
     routerName: 'ProFileInventoryScreen'
   },
 ];
 export const PROFILE_BOTTOM_MENU_LIST = [
   {
     title: '我的信息',
-    icon: 'av-timer',
+    icon: 'person-outline',
+    type: 'material',
     routerName: 'ProFileInfoScreen'
   },
   {
     title: '账号与安全',
-    icon: 'flight-takeoff',
+    icon: 'lock',
+    type: 'material',
     routerName: 'ProFileSafeScreen'
   },
 ];

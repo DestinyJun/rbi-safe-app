@@ -4,9 +4,10 @@
  * date：  2020/6/17 17:32
  */
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import {TroubleShootStyles as styles} from './TroubleShootStyles'
-import {Header, Icon} from "react-native-elements";
+import {Header, Button} from "react-native-elements";
+import {TroubleListComponent} from "../../components/TroubleListComponent";
 
 export class TroubleShootScreen extends Component {
   constructor(props) {
@@ -26,24 +27,33 @@ export class TroubleShootScreen extends Component {
           }}
           centerComponent={{ text: '隐患排查', style: { color: '#fff',fontSize: 18 } }}
         />
-        <View style={styles.buttons}>
-          <TouchableOpacity onPress={() => {this.props.navigation.navigate('TroubleShortlyScreen')}}>
-            <View style={styles.buttons_touch}>
-              <Icon name={'add'} />
-              <Text>立即整改</Text>
+        <View style={{flex: 1}}>
+          <ScrollView style={{flex: 1}}>
+            <View style={styles.buttons}>
+              <Button
+                containerStyle={{flex: 1}}
+                buttonStyle={{backgroundColor: '#FFFFFF'}}
+                title={'立即整改'}
+                titleStyle={{color: '#4F93FF'}}
+                icon={{name: 'add',color: '#4F93FF'}}
+                onPress={() => {this.props.navigation.navigate('TroubleShortlyScreen')}}
+              />
+              <Button
+                containerStyle={[styles.borderLeft,{flex: 1}]}
+                buttonStyle={[{backgroundColor: '#FFFFFF'}]}
+                title={'上报整改'}
+                titleStyle={{color: '#4F93FF'}}
+                icon={{name: 'add',color: '#4F93FF'}}
+                onPress={() => {this.props.navigation.navigate('TroubleReportScreen')}}
+              />
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {this.props.navigation.navigate('TroubleReportScreen')}}>
-            <View style={styles.buttons_touch}>
-              <Icon name={'add'} />
-              <Text>上报整改</Text>
+            <View>
+              <TroubleListComponent />
+             {/* <TouchableOpacity onPress={() => {this.props.navigation.navigate('TroubleHandleScreen')}}>
+                <Text>待处理隐患</Text>
+              </TouchableOpacity>*/}
             </View>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity onPress={() => {this.props.navigation.navigate('TroubleHandleScreen')}}>
-            <Text>待处理隐患</Text>
-          </TouchableOpacity>
+          </ScrollView>
         </View>
       </View>
     );

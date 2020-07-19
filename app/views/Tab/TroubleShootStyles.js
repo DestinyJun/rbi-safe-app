@@ -11,9 +11,14 @@ export const TroubleShootStyles = StyleSheet.create({
   },
   buttons: {
     flexDirection: 'row',
+    marginBottom: 10,
   },
   buttons_touch: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  borderLeft: {
+    borderLeftColor: '#F0F0F0',
+    borderLeftWidth: 1
   }
 });

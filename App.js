@@ -43,7 +43,7 @@ const StackOptions = {
 function TabBarScreen() {
   return (
     <Tab.Navigator
-      initialRouteName={'SafeEducation'}
+      initialRouteName={'TroubleShoot'}
       backBehavior={'none'}
       lazy={true}
       tabBar={props =>{
