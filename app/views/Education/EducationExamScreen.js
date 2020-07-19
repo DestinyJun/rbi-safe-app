@@ -3,14 +3,15 @@
  * author：DestinyJun
  * date：  2020/7/2 14:51
  */
-import React, {Component, useEffect} from 'react';
-import {View, Text, ScrollView, Alert, BackHandler} from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, ScrollView, Alert} from 'react-native';
 import {EducationExamStyles as styles} from "./EducationExamStyles";
 import {Header} from "react-native-elements";
 import {SingleTopicComponent} from "../../components/SingleTopicComponent";
 import {JudgeTopicComponent} from "../../components/JudgeTopicComponent";
 import {FillTopicComponent} from "../../components/FillTopicComponent";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
+import {useBackHandler} from "@react-native-community/hooks";
 
 function MyCustomLeftComponent(props) {
   const headerLeftOnPress = () => {
@@ -27,13 +28,10 @@ function MyCustomLeftComponent(props) {
           onPress: () => {props.navigation.goBack();}
         }
       ]);
-    return true
   };
-  BackHandler.addEventListener('hardwareBackPress', headerLeftOnPress);
-  useEffect(() => {
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', headerLeftOnPress)
-    }
+  useBackHandler(() => {
+    headerLeftOnPress();
+    return true;
   });
   return(
    <HeaderLeftComponent headerLeftOnPress={headerLeftOnPress} />

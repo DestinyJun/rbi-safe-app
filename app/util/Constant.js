@@ -6,6 +6,8 @@
 
 // 加载图片
 export const IMAGE_FILE_LIST = require('../assets/images/login_bg.png');
+export const IMAGE_VIDEO_1= require('../assets/images/video1.png');
+
 
 // 加载头像
 export const HEADER_IMAGE = {
