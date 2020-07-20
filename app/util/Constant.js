@@ -7,12 +7,7 @@
 // 加载图片
 export const IMAGE_FILE_LIST = require('../assets/images/login_bg.png');
 export const IMAGE_VIDEO_1= require('../assets/images/video1.png');
-
-
-// 加载头像
-export const HEADER_IMAGE = {
-  img: require('../assets/images/秀智1.jpg'),
-};
+export const HEADER_IMAGE = require('../assets/images/秀智1.jpg');
 
 // 个人信息导航菜单
 export const PROFILE_TOP_MENU_LIST = [

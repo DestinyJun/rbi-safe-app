@@ -2,6 +2,7 @@ import * as React from 'react';
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {useBackHandler} from "@react-native-community/hooks";
 
 // 自定义工具
 import {Store} from "./app/redux/store";
@@ -31,6 +32,7 @@ import {ProFileInventoryScreen} from "./app/views/ProFile/ProFileInventoryScreen
 import {ProFileInfoScreen} from "./app/views/ProFile/ProFileInfoScreen";
 import {ProFileSafeScreen} from "./app/views/ProFile/ProFileSafeScreen";
 import {initIsLoginState} from "./app/redux/actions";
+import {BackHandler, ToastAndroid} from "react-native";
 
 // 创建路由对象
 const Stack = createStackNavigator();
@@ -43,19 +45,19 @@ const StackOptions = {
 function TabBarScreen() {
   return (
     <Tab.Navigator
-      initialRouteName={'TroubleShoot'}
+      initialRouteName={'Home'}
       backBehavior={'none'}
       lazy={true}
-      tabBar={props =>{
+      tabBar={props => {
         <FocusStatusBarComponent backgroundColor={'#226AD5'}/>;
         return <TabButtonComponent {...props} />
       }}
     >
-      <Tab.Screen name={'Home'} options={{title: '首页'}} component={HomeScreen} />
-      <Tab.Screen name={'SafeEducation'} options={{title: '安全教育'}} component={SafeEducationScreen}  />
-      <Tab.Screen name={'TroubleShoot'} options={{title: '隐患排查'}} component={TroubleShootScreen}  />
-      <Tab.Screen name={'DoubleDuty'} options={{title: '一岗双责'}} component={DoubleDutyScreen}  />
-      <Tab.Screen name={'ProFile'} options={{title: '我的'}} component={ProFileScreen}  />
+      <Tab.Screen name={'Home'} options={{title: '首页'}} component={HomeScreen}/>
+      <Tab.Screen name={'SafeEducation'} options={{title: '安全教育'}} component={SafeEducationScreen}/>
+      <Tab.Screen name={'TroubleShoot'} options={{title: '隐患排查'}} component={TroubleShootScreen}/>
+      <Tab.Screen name={'DoubleDuty'} options={{title: '一岗双责'}} component={DoubleDutyScreen}/>
+      <Tab.Screen name={'ProFile'} options={{title: '我的'}} component={ProFileScreen}/>
     </Tab.Navigator>
   )
 }
@@ -81,20 +83,20 @@ export default class App extends React.Component {
       return (
         <NavigationContainer>
           <Stack.Navigator initialRouteName={'TabBarScreen'}>
-            <Stack.Screen name={'TabBarScreen'} component={TabBarScreen} options={{headerShown: false}} />
-            <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen} options={StackOptions} />
-            <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen} options={StackOptions} />
-            <Stack.Screen name={'TroubleShortlyScreen'} component={TroubleShortlyScreen} />
-            <Stack.Screen name={'TroubleReportScreen'} component={TroubleReportScreen} />
-            <Stack.Screen name={'TroubleHandleScreen'} component={TroubleHandleScreen} />
-            <Stack.Screen name={'DoubleInventoryMakeScreen'} component={DoubleInventoryMakeScreen} />
-            <Stack.Screen name={'DoubleInventoryFillScreen'} component={DoubleInventoryFillScreen} />
-            <Stack.Screen name={'DoubleInventoryCheckScreen'} component={DoubleInventoryCheckScreen} />
-            <Stack.Screen name={'ProFileRecordScreen'} component={ProFileRecordScreen} />
-            <Stack.Screen name={'ProFileArchivesScreen'} component={ProFileArchivesScreen} />
-            <Stack.Screen name={'ProFileInventoryScreen'} component={ProFileInventoryScreen} />
-            <Stack.Screen name={'ProFileInfoScreen'} component={ProFileInfoScreen} />
-            <Stack.Screen name={'ProFileSafeScreen'} component={ProFileSafeScreen} />
+            <Stack.Screen name={'TabBarScreen'} component={TabBarScreen} options={{headerShown: false}}/>
+            <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen} options={StackOptions}/>
+            <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen} options={StackOptions}/>
+            <Stack.Screen name={'TroubleShortlyScreen'} component={TroubleShortlyScreen}/>
+            <Stack.Screen name={'TroubleReportScreen'} component={TroubleReportScreen}/>
+            <Stack.Screen name={'TroubleHandleScreen'} component={TroubleHandleScreen}/>
+            <Stack.Screen name={'DoubleInventoryMakeScreen'} component={DoubleInventoryMakeScreen}/>
+            <Stack.Screen name={'DoubleInventoryFillScreen'} component={DoubleInventoryFillScreen}/>
+            <Stack.Screen name={'DoubleInventoryCheckScreen'} component={DoubleInventoryCheckScreen}/>
+            <Stack.Screen name={'ProFileRecordScreen'} component={ProFileRecordScreen}/>
+            <Stack.Screen name={'ProFileArchivesScreen'} component={ProFileArchivesScreen}/>
+            <Stack.Screen name={'ProFileInventoryScreen'} component={ProFileInventoryScreen}/>
+            <Stack.Screen name={'ProFileInfoScreen'} component={ProFileInfoScreen}/>
+            <Stack.Screen name={'ProFileSafeScreen'} component={ProFileSafeScreen}/>
           </Stack.Navigator>
         </NavigationContainer>
       );
@@ -108,7 +110,8 @@ export default class App extends React.Component {
     )
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+  }
 
   componentWillUnmount() {
     this.subscription();

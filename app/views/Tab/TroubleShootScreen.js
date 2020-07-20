@@ -16,6 +16,11 @@ export class TroubleShootScreen extends Component {
   }
 
   render() {
+    const list = [
+      {title: '矿业公司隐患排查',pendingState: true,issuedState: true,verifyState: false,subtitle: '隐患内容',date: '2020.03.08'},
+      {title: '电工部门隐患排查',pendingState: true,issuedState: false,verifyState: false,subtitle: '隐患内容',date: '2020.03.08'},
+      {title: '合金化事业部隐患排查',pendingState: false,issuedState: false,verifyState: true,subtitle: '隐患内容',date: '2020.03.08'},
+    ];
     return (
       <View style={styles.TroubleShoot}>
         <Header
@@ -47,11 +52,21 @@ export class TroubleShootScreen extends Component {
                 onPress={() => {this.props.navigation.navigate('TroubleReportScreen')}}
               />
             </View>
-            <View>
-              <TroubleListComponent />
-             {/* <TouchableOpacity onPress={() => {this.props.navigation.navigate('TroubleHandleScreen')}}>
-                <Text>待处理隐患</Text>
-              </TouchableOpacity>*/}
+            <View style={styles.content}>
+              {
+                list.map((item,i) => (
+                  <TroubleListComponent
+                    key={`TroubleListComponent${i}`}
+                    title={item.title}
+                    onPress={() => {this.props.navigation.navigate('TroubleHandleScreen')}}
+                    subtitle={item.subtitle}
+                    rightTitle={item.date}
+                    pendingFlag={item.pendingState}
+                    issuedFlag={item.issuedState}
+                    verifyFlag={item.verifyState}
+                  />
+                ))
+              }
             </View>
           </ScrollView>
         </View>

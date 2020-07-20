@@ -4,9 +4,10 @@
  * date：  2020/3/16 20:25
  */
 import React, {Component} from 'react';
-import {Text,View, BackHandler, ToastAndroid, Platform} from 'react-native';
+import {Text, View, BackHandler, ToastAndroid, Platform, ScrollView} from 'react-native';
 import {HomeStyle as styles} from "./HomeStyle";
 import {Header} from "react-native-elements";
+import { WebView } from 'react-native-webview';
 
 export class HomeScreen extends Component {
   constructor(props) {
@@ -26,7 +27,15 @@ export class HomeScreen extends Component {
           }}
           centerComponent={{ text: '安全生产信息化', style: { color: '#fff',fontSize: 18} }}
         />
-        <Text style={[c_styles.text_danger]}>我是主页</Text>
+        <View style={{flex: 1}}>
+          <WebView
+            source={{ uri: 'https://www.baidu.com' }}
+            style={{height: 500}}
+          />
+          {/*<ScrollView style={{flex: 1}}>
+
+          </ScrollView>*/}
+        </View>
       </View>
     );
   }

@@ -3,6 +3,9 @@ global.c_styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  text_dark:{
+    color: '#393939'
+  },
   text_danger:{
     color: 'red'
   },

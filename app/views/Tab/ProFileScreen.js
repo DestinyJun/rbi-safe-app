@@ -12,8 +12,7 @@ import {Store} from "../../redux/store";
 import {isLogin} from "../../redux/actions";
 import {ISLOGIN} from "../../redux/actionTypes";
 import {Avatar, Header, Icon, ListItem, Button } from "react-native-elements";
-import {PROFILE_TOP_MENU_LIST, PROFILE_BOTTOM_MENU_LIST} from "../../util/Constant";
-import {ListItemSubtitleComponent} from "../../components/ListItemSubtitleComponent";
+import {PROFILE_TOP_MENU_LIST, PROFILE_BOTTOM_MENU_LIST, HEADER_IMAGE,} from "../../util/Constant";
 
 export class ProFileScreen extends Component {
   constructor(props) {
@@ -37,8 +36,9 @@ export class ProFileScreen extends Component {
           <ScrollView style={{flex: 1}}>
             <View style={[styles.baseInfo]}>
               <Avatar
-                size={"large"}
-                source={{uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg'}}
+                size={'large'}
+                icon={{name: 'account-circle',type: 'material',color: '#2289DC',size: 76}}
+                iconStyle={{backgroundColor: '#fff'}}
                 rounded={true}/>
               <View style={[styles.baseInfoText]}>
                 <Text style={[c_styles.h5,{color:'#353535'}]}>王建国</Text>

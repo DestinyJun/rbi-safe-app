@@ -17,6 +17,11 @@ export const TroubleShootStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  content: {
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  // 公共样式
   borderLeft: {
     borderLeftColor: '#F0F0F0',
     borderLeftWidth: 1
