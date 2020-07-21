@@ -15,8 +15,16 @@ export const TroubleShortlyStyles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10
   },
-  siteBefore: {
-
+  siteBox: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    alignItems: 'flex-start',
+    padding: 10
+  },
+  siteBoxTitle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10
   },
   // 公共样式
   title: {

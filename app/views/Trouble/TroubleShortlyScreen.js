@@ -61,7 +61,11 @@ export class TroubleShortlyScreen extends Component {
                 <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>隐患现场情况</Text>
               </View>
               <View>
-                <View style={[styles.siteBefore]}>
+                <View style={[styles.siteBox]}>
+                  <View style={[styles.siteBoxTitle]}>
+                    <Text>整改前</Text>
+                    <Text style={[{backgroundColor: '#3B86FF',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
+                  </View>
                   <ImagePickerComponent />
                 </View>
               </View>
