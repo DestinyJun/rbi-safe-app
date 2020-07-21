@@ -45,7 +45,7 @@ const StackOptions = {
 function TabBarScreen() {
   return (
     <Tab.Navigator
-      initialRouteName={'Home'}
+      initialRouteName={'TroubleShoot'}
       backBehavior={'none'}
       lazy={true}
       tabBar={props => {
@@ -82,10 +82,10 @@ export default class App extends React.Component {
     if (this.state.isLogin) {
       return (
         <NavigationContainer>
-          <Stack.Navigator initialRouteName={'TabBarScreen'}>
-            <Stack.Screen name={'TabBarScreen'} component={TabBarScreen} options={{headerShown: false}}/>
-            <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen} options={StackOptions}/>
-            <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen} options={StackOptions}/>
+          <Stack.Navigator initialRouteName={'TabBarScreen'} screenOptions={{headerShown: false}}>
+            <Stack.Screen name={'TabBarScreen'} component={TabBarScreen}/>
+            <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen}/>
+            <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen}/>
             <Stack.Screen name={'TroubleShortlyScreen'} component={TroubleShortlyScreen}/>
             <Stack.Screen name={'TroubleReportScreen'} component={TroubleReportScreen}/>
             <Stack.Screen name={'TroubleHandleScreen'} component={TroubleHandleScreen}/>

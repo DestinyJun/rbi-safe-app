@@ -8,5 +8,25 @@ import {StyleSheet} from 'react-native';
 export const TroubleShortlyStyles = StyleSheet.create({
   TroubleShortly: {
     flex: 1
+  },
+  infoList:{
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  siteBefore: {
+
+  },
+  // 公共样式
+  title: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 15,
+    paddingBottom: 10
+  },
+  borderBottom: {
+    borderBottomColor: '#E6E6E8',
+    borderBottomWidth: 1
   }
 });
