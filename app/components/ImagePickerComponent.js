@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import ImagePicker from 'react-native-image-picker';
+// import ImagePicker from 'react-native-image-picker';
 import {Icon} from "react-native-elements";
 
 export function ImagePickerComponent(props) {
@@ -18,7 +18,7 @@ export function ImagePickerComponent(props) {
     },
   };
   const handleCamera = () => {
-    ImagePicker.showImagePicker(options, (response) => {
+    /*ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -36,12 +36,12 @@ export function ImagePickerComponent(props) {
           avatarSource: source,
         });
       }
-    });
+    });*/
   };
   return (
     <TouchableOpacity>
       <View  style={styles.container}>
-        <Icon type={'material'} name={'add'} color={'#E0E0E0'} size={100} />
+        <Icon type={'material'} name={'add'} color={'#E0E0E0'} size={80} />
       </View>
     </TouchableOpacity>
   );
@@ -52,6 +52,8 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderColor: '#E5E5E5',
-    borderWidth: 1
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });

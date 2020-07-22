@@ -104,7 +104,6 @@ export class EducationTrainScreen extends Component {
                   subtitleStyle={{paddingTop: 20,color: '#C5C5C5'}}
                   leftElement={<Image source={IMAGE_VIDEO_1} style={{width: 100,height: 60}} resizeMode={'cover'} />}
                   rightIcon={l.isRead?{type: 'font-awesome', name: 'check-circle',color: '#3B86FF',size: 18}:<ListItemRightIconComponent />}
-                  rightContentContainerStyle={{paddingTop: 20,backgroundColor: 'red'}}
                 />
               ))
             }

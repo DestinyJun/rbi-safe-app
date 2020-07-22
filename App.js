@@ -45,7 +45,7 @@ const StackOptions = {
 function TabBarScreen() {
   return (
     <Tab.Navigator
-      initialRouteName={'TroubleShoot'}
+      initialRouteName={'DoubleDuty'}
       backBehavior={'none'}
       lazy={true}
       tabBar={props => {

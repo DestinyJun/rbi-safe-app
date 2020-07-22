@@ -4,13 +4,10 @@
  * date：  2020/6/17 17:37
  */
 import React, {Component} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, TouchableHighlight, TouchableOpacity} from 'react-native';
 import {DoubleDutyStyles as styles} from "./DoubleDutyStyles";
-import {Button, Header, Icon, Image, ListItem} from "react-native-elements";
+import {Button, Header, Icon, ListItem} from "react-native-elements";
 import {IMAGE_VIDEO_1} from "../../util/Constant";
-import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
-import {ListItemSubtitleComponent} from "../../components/ListItemSubtitleComponent";
-import {ListItemRightIconComponent} from "../../components/ListItemRightIconComponent";
 import {ListItemTitleComponent} from "../../components/ListItemTitleComponent";
 
 export class DoubleDutyScreen extends Component {
@@ -23,7 +20,15 @@ export class DoubleDutyScreen extends Component {
     const fileList = [
       {
         title: '责任清单  待审核',
-        isRead: true,
+        isState: 1,
+      },
+      {
+        title: '责任清单  待填写',
+        isState: 2,
+      },
+      {
+        title: '责任清单  已完成',
+        isState: 3,
       },
     ];
     const videoList = [
@@ -66,13 +71,25 @@ export class DoubleDutyScreen extends Component {
             {
               fileList.map((l, i) => (
                 <ListItem
+                  Component={TouchableOpacity}
                   key={i}
                   containerStyle={{marginTop: 10,borderRadius: 10}}
                   title={l.title}
                   titleStyle={{color: '#5A5A5A'}}
                   titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
-                  leftElement={<Text style={[{backgroundColor: '#3CBCFF',color: '#fff',borderRadius: 20,fontSize: 14},c_styles.pl_1,c_styles.pr_1]}>我方</Text>}
+                  leftElement={<Text style={[
+                    {backgroundColor: l.isState === 1?'#FFC06A':l.isState === 2?'#3DBCFF': '#63DCAF',
+                      color: '#fff',
+                      borderRadius: 20,
+                      fontSize: 14},c_styles.pl_1,c_styles.pr_1]}>我方</Text>}
                   rightTitle={'2020.06.18'}
+                  onPress={() => {
+                    if (l.isState === 1) {
+                      this.props.navigation.navigate('DoubleInventoryCheckScreen',l)
+                    } else if(l.isState === 2) {
+                      this.props.navigation.navigate('DoubleInventoryFillScreen',l)
+                    }
+                  }}
                   rightTitleStyle={{color:'#BABABA', fontSize: 16}}
                 />
               ))
@@ -89,6 +106,7 @@ export class DoubleDutyScreen extends Component {
               videoList.map((l, i) => (
                 <ListItem
                   key={i}
+                  onPress={() => {this.props.navigation.navigate('DoubleInventoryCheckScreen',l)}}
                   containerStyle={{marginTop: 10,borderRadius: 10}}
                   title={<ListItemTitleComponent title={l.title} />}
                   titleStyle={{color: '#AFAFAF'}}
@@ -103,21 +121,5 @@ export class DoubleDutyScreen extends Component {
         </View>
       </View>
     );
-   /* return (
-      <View style={styles.DoubleDuty}>
-        <View>
-          <TouchableOpacity >
-            <Icon name={'add'} size={18} />
-            <Text>责任清单制定</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {this.props.navigation.navigate('DoubleInventoryFillScreen')}}>
-            <Text>责任清单填写定</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {this.props.navigation.navigate('DoubleInventoryCheckScreen')}}>
-            <Text>责任清单填检查</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );*/
   }
 }

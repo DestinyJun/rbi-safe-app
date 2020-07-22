@@ -6,7 +6,7 @@
 import React, {Component} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import {TroubleShortlyStyles as styles} from "./TroubleShortlyStyles";
-import {Header, Icon, Input, ListItem} from "react-native-elements";
+import {Button, Header, Icon, Input, ListItem} from "react-native-elements";
 import {HeaderLeftBackComponent} from "../../components/HeaderLeftBackComponent";
 import {CheckBoxGroupsComponent} from "../../components/CheckBoxGroupsComponent";
 import {ImagePickerComponent} from "../../components/ImagePickerComponent";
@@ -61,15 +61,23 @@ export class TroubleShortlyScreen extends Component {
                 <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>隐患现场情况</Text>
               </View>
               <View>
+                <View style={[styles.siteBox,c_styles.mb_3]}>
+                  <View style={[styles.siteBoxTitle]}>
+                    <Text style={[{color: '#858585'}]}>整改前</Text>
+                    <Text style={[{backgroundColor: '#3B86FF',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
+                  </View>
+                  <ImagePickerComponent />
+                </View>
                 <View style={[styles.siteBox]}>
                   <View style={[styles.siteBoxTitle]}>
-                    <Text>整改前</Text>
+                    <Text style={[{color: '#858585'}]}>整改后</Text>
                     <Text style={[{backgroundColor: '#3B86FF',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
                   </View>
                   <ImagePickerComponent />
                 </View>
               </View>
             </View>
+            <Button title={'提交'} buttonStyle={styles.button}/>
           </ScrollView>
         </View>
       </View>

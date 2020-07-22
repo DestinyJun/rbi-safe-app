@@ -58,7 +58,7 @@ export class TroubleShootScreen extends Component {
                   <TroubleListComponent
                     key={`TroubleListComponent${i}`}
                     title={item.title}
-                    onPress={() => {this.props.navigation.navigate('TroubleHandleScreen')}}
+                    onPress={() => {this.props.navigation.navigate('TroubleHandleScreen',item)}}
                     subtitle={item.subtitle}
                     rightTitle={item.date}
                     pendingFlag={item.pendingState}

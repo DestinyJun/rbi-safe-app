@@ -26,6 +26,14 @@ export const TroubleShortlyStyles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10
   },
+  button: {
+    borderRadius: 20,
+    marginTop: 30,
+    marginBottom: 30,
+    backgroundColor: '#3B86FF',
+    marginRight: 30,
+    marginLeft: 30
+  },
   // 公共样式
   title: {
     flexDirection: 'row',
@@ -36,5 +44,5 @@ export const TroubleShortlyStyles = StyleSheet.create({
   borderBottom: {
     borderBottomColor: '#E6E6E8',
     borderBottomWidth: 1
-  }
+  },
 });
