@@ -106,6 +106,7 @@ export class DoubleDutyScreen extends Component {
               videoList.map((l, i) => (
                 <ListItem
                   key={i}
+                  Component={TouchableOpacity}
                   onPress={() => {this.props.navigation.navigate('DoubleInventoryCheckScreen',l)}}
                   containerStyle={{marginTop: 10,borderRadius: 10}}
                   title={<ListItemTitleComponent title={l.title} />}

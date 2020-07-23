@@ -8,5 +8,11 @@ import {StyleSheet} from 'react-native';
 export const ProFileRecordStyles = StyleSheet.create({
   Record: {
     flex: 1
+  },
+  content: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 10
   }
 });

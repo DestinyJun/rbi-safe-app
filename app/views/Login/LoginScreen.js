@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, Keyboard, KeyboardAvoidingView, Platform, Alert} from 'react-native';
+import {ImageBackground, Text, View, Keyboard, KeyboardAvoidingView, Platform, Alert, StatusBar} from 'react-native';
 import {LoginStyles as styles} from './LoginStyles';
 import AsyncStorage from '@react-native-community/async-storage';
 // reducer
@@ -8,10 +8,11 @@ import {isLoading, isLogin} from "../../redux/actions";
 import {ISLOADING, ISLOGIN} from "../../redux/actionTypes";
 // 常量
 import {IMAGE_FILE_LIST} from "../../util/Constant";
-import {Button, Icon, Input} from "react-native-elements";
+import {Button, Header, Icon, Input} from "react-native-elements";
 import {post} from "../../service/Interceptor";
 import {Api} from "../../service/Api";
 import {FullScreenLoadingComponent} from "../../components/FullScreenLoadingComponent";
+import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
 
 export class LoginScreen extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ export class LoginScreen extends Component {
       <View style={[styles.login, c_styles.w_100, c_styles.dim_height]}>
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{flex: 1}}>
           <ImageBackground style={[styles.imageBgc]} source={IMAGE_FILE_LIST} resizeMode={'cover'}>
+            <StatusBar backgroundColor="#fff" barStyle={'dark-content'} />
             <View style={[styles.header]}>
               <Text style={[c_styles.h2, c_styles.mb_3]}>
                 欢迎登陆

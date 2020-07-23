@@ -4,15 +4,21 @@
  * date：  2020/7/3 11:18
  */
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import {DoubleInventoryFillStyles as styles} from "./DoubleInventoryFillStyles";
-import {Header} from "react-native-elements";
+import {Button, Header, Icon, Input} from "react-native-elements";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
+import {CardInputComponent} from "../../components/CardInputComponent";
 
 export class DoubleInventoryFillScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      list: [
+        {title: '(10分）啊就是的哈德和大家都阿坎德拉速度快可视对讲卡里的动画',number: '10'},
+        {title: '(10分）啊就是的哈德和大家都阿坎德拉速度快可视对讲卡里的动画',number: '0'},
+      ]
+    };
   }
 
   render() {
@@ -22,9 +28,16 @@ export class DoubleInventoryFillScreen extends Component {
           statusBarProps={{backgroundColor: '#226AD5'}}
           backgroundColor={'#226AD5'}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
-          centerComponent={{text: `一岗双责清单制定`, style: {fontSize: 20, color: '#fff'}}}
+          centerComponent={{text: `一岗双责清单待填写`, style: {fontSize: 20, color: '#fff'}}}
         />
-        <Text>一岗双责清单待填写</Text>
+        <View style={[styles.content]}>
+          <ScrollView style={{flex: 1}}>
+            {
+              this.state.list.map((item,i) => (<CardInputComponent {...item} index={i} key={i} />))
+            }
+            <Button title={'提交'} buttonStyle={c_styles.button}/>
+          </ScrollView>
+        </View>
       </View>
     );
   }

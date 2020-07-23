@@ -8,5 +8,10 @@ import {StyleSheet} from 'react-native';
 export const ProFileArchivesStyles = StyleSheet.create({
   Archives: {
     flex: 1
+  },
+  content: {
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10
   }
 });

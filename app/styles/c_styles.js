@@ -297,5 +297,14 @@ global.c_styles = StyleSheet.create({
   },
   rounded_circle: {
     borderRadius: 50
-  }
+  },
+  // 公共样式
+  button: {
+    borderRadius: 20,
+    marginTop: 30,
+    marginBottom: 30,
+    backgroundColor: '#3B86FF',
+    marginRight: 30,
+    marginLeft: 30
+  },
 });

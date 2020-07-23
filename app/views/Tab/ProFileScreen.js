@@ -4,7 +4,7 @@
  * date：  2020/3/16 20:25
  */
 import React, {Component} from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {ProFileStyles as styles} from "./ProFileStyles";
 
 // 自定义工具
@@ -52,6 +52,7 @@ export class ProFileScreen extends Component {
               {
                 PROFILE_TOP_MENU_LIST.map((item, i) => (
                   <ListItem
+                    Component={TouchableOpacity}
                     containerStyle={{backgroundColor: 'unset'}}
                     onPress={this.routerOnPress.bind(this,item)}
                     key={i}

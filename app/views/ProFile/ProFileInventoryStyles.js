@@ -8,5 +8,10 @@ import {StyleSheet} from 'react-native';
 export const ProFileInventoryStyles = StyleSheet.create({
   Inventory: {
     flex: 1
+  },
+  content: {
+    flex: 1,
+    paddingRight: 10,
+    paddingLeft: 10,
   }
 });

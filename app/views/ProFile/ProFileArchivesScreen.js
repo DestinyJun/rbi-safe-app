@@ -6,6 +6,9 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {ProFileArchivesStyles as styles} from "./ProFileArchivesStyles";
+import {Header} from "react-native-elements";
+import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
+import {ExamCardComponent} from "../../components/ExamCardComponent";
 
 
 export class ProFileArchivesScreen extends Component {
@@ -17,7 +20,15 @@ export class ProFileArchivesScreen extends Component {
   render() {
     return (
       <View style={styles.Archives}>
-        <Text>我的培训档案</Text>
+        <Header
+          statusBarProps={{backgroundColor: '#226AD5'}}
+          backgroundColor={'#226AD5'}
+          leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
+          centerComponent={{text: `我的培训档案`, style: {fontSize: 20, color: '#fff'}}}
+        />
+        <View style={styles.content}>
+          <ExamCardComponent {...this.props} />
+        </View>
       </View>
     );
   }

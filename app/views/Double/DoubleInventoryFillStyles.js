@@ -8,5 +8,20 @@ import {StyleSheet} from 'react-native';
 export const DoubleInventoryFillStyles = StyleSheet.create({
   InventoryFill: {
     flex: 1
-  }
+  },
+  content: {
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    flex: 1
+  },
+  // 公共样式
+  textArea: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 15,
+    marginBottom: 10,
+  },
 });
