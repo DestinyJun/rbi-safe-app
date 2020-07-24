@@ -8,11 +8,9 @@ import {isLoading, isLogin} from "../../redux/actions";
 import {ISLOADING, ISLOGIN} from "../../redux/actionTypes";
 // 常量
 import {IMAGE_FILE_LIST} from "../../util/Constant";
-import {Button, Header, Icon, Input} from "react-native-elements";
+import {Button, Icon, Input} from "react-native-elements";
 import {post} from "../../service/Interceptor";
 import {Api} from "../../service/Api";
-import {FullScreenLoadingComponent} from "../../components/FullScreenLoadingComponent";
-import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
 
 export class LoginScreen extends Component {
   constructor(props) {
@@ -85,7 +83,6 @@ export class LoginScreen extends Component {
                 titleStyle={{letterSpacing: 5, fontSize: 18}}
               />
             </View>
-            <FullScreenLoadingComponent/>
           </ImageBackground>
         </KeyboardAvoidingView>
       </View>
@@ -102,16 +99,14 @@ export class LoginScreen extends Component {
 
   // 登录操作
   login() {
-    Store.dispatch(isLoading({type: ISLOADING, isLoading: true}));
     Keyboard.dismiss();
     post(Api.LOGIN_URL, {username: this.state.username, password: this.state.password})
-      .then(async (res) => {
+      .then( async (res) => {
         await AsyncStorage.setItem('accessToken', res.token);
         Store.dispatch(isLoading({type: ISLOADING, isLoading: false}));
-        Store.dispatch(isLogin({type: ISLOGIN, isLogin: true}))
+        Store.dispatch(isLogin({type: ISLOGIN, isLogin: true}));
       })
       .catch(err => {
-        Store.dispatch(isLoading({type: ISLOADING, isLoading: false}));
         Alert.alert('', err.message, [
           {text: "关闭", onPress: () => console.log("Cancel Pressed"), style: "cancel"},
           {

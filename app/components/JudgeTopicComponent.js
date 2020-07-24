@@ -11,7 +11,6 @@ export function JudgeTopicComponent(props) {
   const arrAnswer = ['正确','错误'];
   const [checked,setChecked] = useState(arr);
   const checkOnPress = (index) => {
-    arr = [false,false];
     arr[index] = true;
     setChecked(arr);
   };

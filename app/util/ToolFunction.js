@@ -4,6 +4,11 @@
  * date：  2020/7/6 19:58
  */
 
+import {Alert} from "react-native";
+import {Store} from "../redux/store";
+import {isLoading, isLogin} from "../redux/actions";
+import {ISLOADING, ISLOGIN} from "../redux/actionTypes";
+
 /**
  * 动态加载echarts函数
  * @param props
@@ -59,4 +64,28 @@ export const JsonToString = (obj) => {
  */
 export function StrIsEmpty(str) {
   return str === null || str === "" || str === undefined;
+}
+
+/**
+ * 退出登录提醒
+ * @param message 错误提醒信息
+ */
+export function loginOut(message) {
+  Alert.alert('消息提醒',message, [
+    {text: "重新登录", onPress: () =>{Store.dispatch(isLogin({type: ISLOGIN, isLogin: false}));}, style: "cancel"},
+  ], {cancelable: false});
+}
+
+/**
+ * 显示loading
+ */
+export function showLoading() {
+  Store.dispatch(isLoading({type: ISLOADING, isLoading: true}));
+}
+
+/**
+ * 隐藏loading
+ */
+export function hiddenLoading() {
+  Store.dispatch(isLoading({type: ISLOADING, isLoading: false}));
 }

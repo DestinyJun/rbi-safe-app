@@ -2,14 +2,6 @@ import * as React from 'react';
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import {useBackHandler} from "@react-native-community/hooks";
-
-// 自定义工具
-import {Store} from "./app/redux/store";
-
-// 自定义组件
-import {TabButtonComponent} from "./app/components/TabButtonComponent";
-import {FocusStatusBarComponent} from "./app/components/FocusStatusBarComponent";
 
 // 路由屏幕
 import {LoginScreen} from "./app/views/Login/LoginScreen";
@@ -31,21 +23,26 @@ import {ProFileArchivesScreen} from "./app/views/ProFile/ProFileArchivesScreen";
 import {ProFileInventoryScreen} from "./app/views/ProFile/ProFileInventoryScreen";
 import {ProFileInfoScreen} from "./app/views/ProFile/ProFileInfoScreen";
 import {ProFileSafeScreen} from "./app/views/ProFile/ProFileSafeScreen";
+
+// 自定义工具
+import {Store} from "./app/redux/store";
 import {initIsLoginState} from "./app/redux/actions";
-import {BackHandler, ToastAndroid} from "react-native";
+
+
+// 自定义组件
+import {TabButtonComponent} from "./app/components/TabButtonComponent";
+import {FocusStatusBarComponent} from "./app/components/FocusStatusBarComponent";
+import {FullScreenLoadingComponent} from "./app/components/FullScreenLoadingComponent";
 
 // 创建路由对象
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const StackOptions = {
-  headerShown: false
-};
 
 // tab路由
 function TabBarScreen() {
   return (
     <Tab.Navigator
-      initialRouteName={'DoubleDuty'}
+      initialRouteName={'SafeEducation'}
       backBehavior={'none'}
       lazy={true}
       tabBar={props => {
@@ -82,6 +79,7 @@ export default class App extends React.Component {
     if (this.state.isLogin) {
       return (
         <NavigationContainer>
+          <FullScreenLoadingComponent/>
           <Stack.Navigator initialRouteName={'TabBarScreen'} screenOptions={{headerShown: false}}>
             <Stack.Screen name={'TabBarScreen'} component={TabBarScreen}/>
             <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen}/>

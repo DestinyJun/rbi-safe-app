@@ -12,6 +12,10 @@ import {JudgeTopicComponent} from "../../components/JudgeTopicComponent";
 import {FillTopicComponent} from "../../components/FillTopicComponent";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
 import {useBackHandler} from "@react-native-community/hooks";
+import {post} from "../../service/Interceptor";
+import {EducationApi} from "../../service/EducationApi";
+import {hiddenLoading, showLoading} from "../../util/ToolFunction";
+import {MultipleTopicComponent} from "../../components/MultipleTopicComponent";
 
 function MyCustomLeftComponent(props) {
   const headerLeftOnPress = () => {
@@ -25,7 +29,7 @@ function MyCustomLeftComponent(props) {
         },
         {
           text: '确定',
-          onPress: () => {props.navigation.goBack();}
+          onPress: () => {props.goBack()}
         }
       ]);
   };
@@ -41,26 +45,42 @@ export class EducationExamScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.exam = {...props.route.params.exam}
   }
 
   render() {
+    const {navigation} = {...this.props};
     return (
       <View style={styles.Exam}>
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
           backgroundColor={'#226AD5'}
-          leftComponent={<MyCustomLeftComponent {...this.props} />}
+          leftComponent={<MyCustomLeftComponent {...navigation} />}
           centerComponent={{text: `${this.props.route.params.title}  ${this.props.route.params.name}`,style: {fontSize: 20,color: '#fff'}}}
         />
-        <View style={styles.timer}>
+        {/*<View style={styles.timer}>
           <Text style={[styles.timerText,c_styles.pl_3,c_styles.pr_3]}>模拟考试倒计时     00:35:09</Text>
-        </View>
+        </View>*/}
         <ScrollView style={[styles.topic,c_styles.mt_2]}>
           <SingleTopicComponent />
           <JudgeTopicComponent />
           <FillTopicComponent />
+          <MultipleTopicComponent />
         </ScrollView>
       </View>
     );
+  }
+
+  componentDidMount() {
+    showLoading();
+    post(EducationApi.GET_EXAM_PAPER,{id: this.exam.id})
+      .then((res) => {
+        hiddenLoading();
+        console.log(res);
+      })
+      .catch((err) => {
+        hiddenLoading();
+        console.log(err);
+      })
   }
 }

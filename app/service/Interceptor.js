@@ -1,12 +1,20 @@
 /**
  * axios拦截器
  */
-import axios from 'axios'
-import {Alert} from 'react-native';
+import axios from 'axios';
+import {Alert} from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+import {loginOut} from "../util/ToolFunction";
 
+// 无需验证的请求地址
 const skipUrl = [
   `/login`,
-]; // 无需验证的请求地址
+];
+
+// url跳过验证
+function isSkipUrl(url: string) {
+  return skipUrl.includes(url);
+}
 
 // 设置全局请求的地址
 axios.defaults.baseURL = 'http://120.77.171.73:8090/security-platform';
@@ -21,11 +29,9 @@ axios.defaults.timeout = 3000;
 // 请求拦截
 axios.interceptors.request.use(
   async function (config) {
-    // 配置请求头参数
-    // 判断那些接口需要添加token，那些接口需要添加请求类型，判断APPKEY是否存在
+    // 配置请求头参数,判断那些接口需要添加token，那些接口需要添加请求类型，判断APPKEY是否存在
     if (!(isSkipUrl(config.url))) {
-      console.log('需要验证');
-      // config.headers.post['APPKEY'] = await AsyncStorage.getItem('APPKEY');
+      config.headers.post['accessToken'] = await AsyncStorage.getItem('accessToken');
     }
     return config;
   },
@@ -34,11 +40,6 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
-// url跳过验证
-function isSkipUrl(url: string) {
-  return skipUrl.includes(url);
-}
 
 // 响应拦截
 axios.interceptors.response.use(
@@ -50,7 +51,14 @@ axios.interceptors.response.use(
       } else {
         // 不是1000状态码，一律抛出异常
         switch (response.data.status) {
+          case '1002':
+            loginOut('当前登录已过期，请重新登录！');
+            break;
           case '1005':
+            loginOut(response.data.message);
+            break;
+          case '1009':
+            loginOut(response.data.message);
             break;
           default:
             break;
@@ -64,7 +72,7 @@ axios.interceptors.response.use(
   },
   function (error) {
     const str = error.message;
-    if (error.response.status) {
+    if (error.status) {
       // 请求超时处理,判断请求异常信息中是否含有超时timeout字符串
       if (str.includes('timeout')) {
         Alert.alert('', '网络请求超时，是否重试？', [
@@ -81,7 +89,7 @@ axios.interceptors.response.use(
         ]);
       }
       else {
-        switch (error.response.status) {
+        switch (error.status) {
           // 404请求不存在
           case 404:
             Alert.alert('', '网络错误，请检查网络！', [

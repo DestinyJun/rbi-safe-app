@@ -1,24 +1,24 @@
 /**
- * desc：  单选题组件
+ * desc：  多选题组件
  * author：DestinyJun
  * date：  2020/7/16 16:15
  */
 import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {CheckBox} from "react-native-elements";
-export function SingleTopicComponent(props) {
-  let arr = [false,false,false];
+const arr = [false,false,false];
+export function MultipleTopicComponent(props) {
   const arrAnswer = ['选项一','选项二','选项三'];
   const [checked,setChecked] = useState(arr);
   const checkOnPress = (index) => {
-    arr[index] = true;
-    setChecked(arr);
+    arr[index]?arr[index]=false: arr[index]=true;
+    setChecked(arr.map(item => item));
   };
   return (
     <View style={[styles.container,c_styles.p_4]}>
       <View style={styles.title}>
         <View style={[styles.titleTag]}>
-          <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>单选</Text>
+          <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>多选</Text>
         </View>
         <View style={[styles.titleContent,c_styles.pl_3]} >
           <Text style={[c_styles.h6]}>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleTagText: {
-    backgroundColor: '#226AD5',
+    backgroundColor: '#FFA347',
     borderRadius: 5,
     paddingLeft: 8,
     paddingRight: 8,

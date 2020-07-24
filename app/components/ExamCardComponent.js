@@ -8,17 +8,19 @@ import {View,StyleSheet,TouchableOpacity} from 'react-native';
 import {Icon, Slider, Text, Button,} from "react-native-elements";
 
 export function ExamCardComponent(props) {
-  const [isExam,setIsExam] = useState(false);
-  const {navigation} = {...props};
-  const examStart = () => {
+  const {train,exam,navigation} = {...props};
+  const examStart = (item) => {
+    // 开始考试
     navigation.navigate(
       'EducationExamScreen',
       {
-        title: '2020第三期',
-        name: '开始考试'
+        title: item.testPaperName,
+        name: '开始考试',
+        exam: item
       }
     );
   };
+  // 继续学习
   const continueStudy = () => {
     navigation.navigate(
       'EducationTrainScreen',
@@ -26,7 +28,8 @@ export function ExamCardComponent(props) {
         title: '2020第五期培训计划',
       })
   };
-  const imitateExam = () => {
+  // 模拟考试
+  const imitateExam = (item) => {
     navigation.navigate(
       'EducationExamScreen',
       {
@@ -39,24 +42,24 @@ export function ExamCardComponent(props) {
     <View style={[styles.container,c_styles.pl_3,c_styles.pr_4]}>
       <View style={[styles.title,c_styles.pt_1,c_styles.pb_1]}>
         <Icon type={'font-awesome'} name={'list-alt'} size={20} color={'#3B86FF'} raised={true} />
-        <Text style={{fontSize: 20,color: '#333333',marginLeft: 6}}>2020年第三期电工安全</Text>
+        <Text style={{fontSize: 20,color: '#333333',marginLeft: 6}}>{train.trainingContent}</Text>
       </View>
       <View style={[styles.timer,c_styles.pl_5]}>
         <View style={[styles.timerBox]}>
           <Icon type={'font-awesome'} name={'calendar'} size={16} color={'#3B86FF'}/>
-          <Text style={[c_styles.h6,c_styles.ml_2]}>培训时间：2020.04.01-2020.05.03</Text>
+          <Text style={[c_styles.h6,c_styles.ml_2]}>培训时间：{train.startTime}—{train.endTime}</Text>
         </View>
         <View style={[styles.timerBox]}>
           <Icon type={'font-awesome'} name={'clock-o'} size={18} color={'#3B86FF'}/>
-          <Text style={[c_styles.h6,c_styles.ml_2]}>培训时间：2020.04.01-2020.05.03</Text>
+          <Text style={[c_styles.h6,c_styles.ml_2]}>考试时间：{exam.startTime}—{exam.endTime}</Text>
         </View>
       </View>
       <View style={[styles.progress,c_styles.pl_5,c_styles.pt_3,c_styles.pb_3]}>
-        <View style={[styles.progressTitle]}>
+       {/* <View style={[styles.progressTitle]}>
           <Text style={[c_styles.h5]}>学习进度</Text>
           <Text style={[c_styles.h5,{color: '#307AEC'}]}>60%</Text>
         </View>
-      {/*  <Slider
+        <Slider
           thumbStyle={{backgroundColor: 'transparent'}}
           disabled={true}
           trackStyle={{height: 8,borderRadius: 5}}
@@ -66,18 +69,18 @@ export function ExamCardComponent(props) {
       </View>
       <View style={[styles.buttons]}>
         {
-          isExam?
+          exam.isExam?
           <Button
             title={'开始考试'}
             TouchableComponent={TouchableOpacity}
             buttonStyle={[styles.buttonsStyles,{backgroundColor: '#63DCAF'}]}
-            onPress={examStart} />:
+            onPress={examStart.bind(this,exam)} />:
           <Button
             title={'模拟考试'}
             type={'outline'}
             buttonStyle={[styles.buttonsStyles,{borderColor: '#3883FA'}]}
             titleStyle={{color: '#3883FA'}}
-            onPress={imitateExam} />
+            onPress={imitateExam.bind(this,train)} />
         }
         <Button title={'继续学习'} buttonStyle={[styles.buttonsStyles,{backgroundColor: '#3883FA'}]} onPress={continueStudy} />
       </View>

@@ -90,6 +90,6 @@ export class ProFileScreen extends Component {
     this.props.navigation.navigate(item.routerName)
   }
   loginOut() {
-    Store.dispatch(isLogin({type: ISLOGIN, isLoading: false}))
+    Store.dispatch(isLogin({type: ISLOGIN, isLogin: false}))
   }
 }

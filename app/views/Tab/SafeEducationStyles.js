@@ -17,6 +17,7 @@ export const SafeEducationStyles = StyleSheet.create({
     top: 80,
     zIndex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingLeft: 9
   }
 });
