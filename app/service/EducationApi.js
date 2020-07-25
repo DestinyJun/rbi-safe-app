@@ -8,4 +8,10 @@ export class EducationApi {
 
   // 根据考试ID获取试卷信息
   static GET_EXAM_PAPER = '/getTestPaper';
+
+  // 完成考试
+  static COMPLETE_EXAM = '/completeTheExam';
+
+  // 根据培训计划id查询培训内容
+  static GET_TRAIN_INFO = '/getLearningContentById';
 }

@@ -77,6 +77,25 @@ export function loginOut(message) {
 }
 
 /**
+ * 成功提醒
+ */
+export function successRemind(message, navigation) {
+  Alert.alert('成功提醒',message, [
+    {text: "返回", onPress: () =>{navigation.goBack()}, style: "cancel"},
+  ], {cancelable: false});
+}
+
+/**
+ * 失败提醒
+ */
+export function errorRemind(message, navigation) {
+  Alert.alert('失败提醒',message, [
+    {text: "请重试", onPress: () =>{navigation.goBack()}, style: "cancel"},
+  ], {cancelable: false});
+}
+
+
+/**
  * 显示loading
  */
 export function showLoading() {
@@ -88,4 +107,13 @@ export function showLoading() {
  */
 export function hiddenLoading() {
   Store.dispatch(isLoading({type: ISLOADING, isLoading: false}));
+}
+
+/**
+ * 将设计尺寸转换为dp单位
+ */
+export function rpx (num) {
+  const width = Dimensions.get('window').width;
+  const designWidth = 750;
+  return num * width / designWidth
 }

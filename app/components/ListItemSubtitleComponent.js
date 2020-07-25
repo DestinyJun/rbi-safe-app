@@ -13,7 +13,7 @@ export function ListItemSubtitleComponent(props) {
         <Text style={{color: '#C5C5C5'}}>{props.text}</Text>
       </View>
       <View style={[styles.right]}>
-        <Text style={{color:'#3A86FF', fontSize: 16}}>继续学习</Text>
+        <Text style={{color:'#3A86FF', fontSize: 16}}>开始学习</Text>
       </View>
     </View>
   )

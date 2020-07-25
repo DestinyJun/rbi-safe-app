@@ -5,14 +5,21 @@
  */
 import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {CheckBox, Icon} from "react-native-elements";
+import {CheckBox} from "react-native-elements";
 export function JudgeTopicComponent(props) {
-  let arr = [false,false];
-  const arrAnswer = ['正确','错误'];
-  const [checked,setChecked] = useState(arr);
-  const checkOnPress = (index) => {
+  const questionOptions= [...props.safeTestQuestionOptionsList];
+  const arr = questionOptions.map(() => false);
+  const [checked,setChecked] = useState(questionOptions.map(() => false));
+  const checkOnPress = (index,res) => {
     arr[index] = true;
     setChecked(arr);
+    props.onPress({
+      answerResults: res,
+      testUestionsId: props.id,
+      rightKey: props.rightKey,
+      score: props.score,
+      testPapreId: props.testPapreId,
+    });
   };
   return (
     <View style={[styles.container,c_styles.p_4]}>
@@ -21,9 +28,7 @@ export function JudgeTopicComponent(props) {
           <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>判断</Text>
         </View>
         <View style={[styles.titleContent,c_styles.pl_3]} >
-          <Text style={[c_styles.h6]}>
-            02.题目名称 题目名称 题目名称 题目名称 题目名称 题目名称
-          </Text>
+          <Text style={[c_styles.h6]}>{props.subject}</Text>
         </View>
       </View>
       <View style={[styles.choose]}>
@@ -31,12 +36,12 @@ export function JudgeTopicComponent(props) {
           checked.map((item,index) => (
             <CheckBox
               key={`judge${index}`}
-              title={arrAnswer[index]}
+              title={questionOptions[index].option}
               titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
               size={20}
               checkedIcon='dot-circle-o'
               uncheckedIcon='circle-o'
-              onPress={checkOnPress.bind(this,index)}
+              onPress={checkOnPress.bind(this,index,questionOptions[index].order)}
               checked={item}
             />
           ))
@@ -51,7 +56,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   title: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   titleTag: {
     flex: 1,

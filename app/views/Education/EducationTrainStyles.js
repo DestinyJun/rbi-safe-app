@@ -10,7 +10,8 @@ export const EducationTrainStyles = StyleSheet.create({
     flex: 1
   },
   course: {
-    flex: 4,
+    paddingLeft: 12,
+    paddingRight: 12
   },
   courseTitle: {
     flexDirection: 'row',
@@ -19,7 +20,9 @@ export const EducationTrainStyles = StyleSheet.create({
     paddingBottom: 5
   },
   videos: {
-    flex: 6,
+    flex: 1,
+    paddingLeft: 12,
+    paddingRight: 12
   },
   videosTitle: {
     flexDirection: 'row',

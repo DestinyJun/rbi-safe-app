@@ -9,7 +9,10 @@ export const DoubleDutyStyles = StyleSheet.create({
   DoubleDuty: {
     flex: 1,
   },
-  mine: {},
+  mine: {
+    paddingLeft: 12,
+    paddingRight: 12
+  },
   mineTitle: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -18,6 +21,8 @@ export const DoubleDutyStyles = StyleSheet.create({
   },
   pending: {
     flex: 1,
+    paddingLeft: 12,
+    paddingRight: 12
   },
   pendingTitle: {
     flexDirection: 'row',

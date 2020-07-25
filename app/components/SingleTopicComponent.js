@@ -6,13 +6,21 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {CheckBox} from "react-native-elements";
+
 export function SingleTopicComponent(props) {
-  let arr = [false,false,false];
-  const arrAnswer = ['选项一','选项二','选项三'];
-  const [checked,setChecked] = useState(arr);
-  const checkOnPress = (index) => {
+  const questionOptions= [...props.safeTestQuestionOptionsList];
+  const arr = questionOptions.map(() => false);
+  const [checked,setChecked] = useState(questionOptions.map(() => false));
+  const checkOnPress = (index,res) => {
     arr[index] = true;
     setChecked(arr);
+    props.onPress({
+      answerResults: res,
+      testUestionsId: props.id,
+      rightKey: props.rightKey,
+      score: props.score,
+      testPapreId: props.testPapreId,
+    });
   };
   return (
     <View style={[styles.container,c_styles.p_4]}>
@@ -21,10 +29,7 @@ export function SingleTopicComponent(props) {
           <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>单选</Text>
         </View>
         <View style={[styles.titleContent,c_styles.pl_3]} >
-          <Text style={[c_styles.h6]}>
-            01.题目名称 题目名称 题目名称 题目名称 题目名称 题目名称
-            01.题目名称 题目名称 题目名称 题目名称 题目名称 题目名称
-          </Text>
+          <Text style={[c_styles.h6]}>{props.subject}</Text>
         </View>
       </View>
       <View style={[styles.choose]}>
@@ -32,12 +37,12 @@ export function SingleTopicComponent(props) {
           checked.map((item,index) => (
             <CheckBox
               key={`checkBox${index}`}
-              title={arrAnswer[index]}
+              title={questionOptions[index].option}
               titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
               size={20}
               checkedIcon='dot-circle-o'
               uncheckedIcon='circle-o'
-              onPress={checkOnPress.bind(this,index)}
+              onPress={checkOnPress.bind(this,index,questionOptions[index].order)}
               checked={item}
             />
           ))
@@ -52,7 +57,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   title: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   titleTag: {
     flex: 1,

@@ -3,11 +3,22 @@
  * author：DestinyJun
  * date：  2020/7/16 16:15
  */
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Input} from "react-native-elements";
 export function FillTopicComponent(props) {
-  let arr = ['01','02'];
+  const arr = props.rightKey.split('#');
+  const answer = arr.map(() => null);
+  const onInputChange = (index,text) => {
+    answer[index] = text;
+    props.onPress({
+      answerResults: answer.join('#')?answer.join('#'): null,
+      testUestionsId: props.id,
+      rightKey: props.rightKey,
+      score: props.score,
+      testPapreId: props.testPapreId,
+    });
+  };
   return (
     <View style={[styles.container,c_styles.p_4]}>
       <View style={styles.title}>
@@ -15,9 +26,7 @@ export function FillTopicComponent(props) {
           <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>填空</Text>
         </View>
         <View style={[styles.titleContent,c_styles.pl_3]} >
-          <Text style={[c_styles.h6]}>
-            02.题目名称 题目名称 题目名称_01_ 题目名称 题目名称_02_题目名称
-          </Text>
+          <Text style={[c_styles.h6]}>{props.subject}</Text>
         </View>
       </View>
       <View style={[styles.choose]}>
@@ -25,9 +34,10 @@ export function FillTopicComponent(props) {
           arr.map((item,index) => (
             <Input
               key={`fill${index}`}
-              placeholder={`请输入${arr[index]}答案`}
+              placeholder={`请输入第${index+1}个空的答案`}
               placeholderTextColor={'#C9C9C9'}
               inputContainerStyle={{borderColor: '#F5F5F5'}}
+              onChangeText={onInputChange.bind(this,index)}
             />
           ))
         }
@@ -41,7 +51,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   title: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   titleTag: {
     flex: 1,

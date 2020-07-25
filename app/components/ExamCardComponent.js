@@ -21,11 +21,12 @@ export function ExamCardComponent(props) {
     );
   };
   // 继续学习
-  const continueStudy = () => {
+  const continueStudy = (item) => {
     navigation.navigate(
       'EducationTrainScreen',
       {
-        title: '2020第五期培训计划',
+        title: item.trainingContent,
+        train: item
       })
   };
   // 模拟考试
@@ -82,7 +83,7 @@ export function ExamCardComponent(props) {
             titleStyle={{color: '#3883FA'}}
             onPress={imitateExam.bind(this,train)} />
         }
-        <Button title={'继续学习'} buttonStyle={[styles.buttonsStyles,{backgroundColor: '#3883FA'}]} onPress={continueStudy} />
+        <Button title={'继续学习'} buttonStyle={[styles.buttonsStyles,{backgroundColor: '#3883FA'}]} onPress={continueStudy.bind(this,train)} />
       </View>
     </View>
   );

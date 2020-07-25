@@ -46,7 +46,7 @@ export class SafeEducationScreen extends Component {
         }
         <View style={[c_styles.pl_3,c_styles.pr_3]}>
           {
-            this.state.seExamList?this.state.seExamList.map((item,index) => (<ExamCardComponent key={index} {...this.props} {...item} />)):null
+            this.state.seExamList&&this.state.seExamList.map((item,index) => (<ExamCardComponent key={index} {...this.props} {...item} />))
           }
         </View>
       </View>

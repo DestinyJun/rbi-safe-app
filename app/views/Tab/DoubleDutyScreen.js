@@ -62,7 +62,7 @@ export class DoubleDutyScreen extends Component {
           title={'责任清单制定'}
           titleStyle={{color: '#84B3FF',fontSize: 16}}
           buttonStyle={{paddingTop: 10,paddingBottom: 10,backgroundColor: '#fff'}} />
-        <View style={[styles.mine,c_styles.pl_3,c_styles.pr_3]}>
+        <View style={[styles.mine]}>
           <View style={[styles.mineTitle]}>
             <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'} />
             <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>我的责任清单（{fileList.length}）</Text>
@@ -96,7 +96,7 @@ export class DoubleDutyScreen extends Component {
             }
           </ScrollView>
         </View>
-        <View style={[styles.pending,c_styles.pl_3,c_styles.pr_3]}>
+        <View style={[styles.pending]}>
           <View style={[styles.pendingTitle]}>
             <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'} />
             <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>待审核责任清单（{videoList.length}）</Text>

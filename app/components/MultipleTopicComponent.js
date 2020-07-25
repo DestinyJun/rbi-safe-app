@@ -6,13 +6,29 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {CheckBox} from "react-native-elements";
-const arr = [false,false,false];
+let arr = [];
 export function MultipleTopicComponent(props) {
-  const arrAnswer = ['选项一','选项二','选项三'];
-  const [checked,setChecked] = useState(arr);
+  const questionOptions= [...props.safeTestQuestionOptionsList];
+  if (arr.length === 0) {
+    arr = questionOptions.map(() => false);
+  }
+  const [checked,setChecked] = useState(questionOptions.map(() => false));
   const checkOnPress = (index) => {
+    const answer = [];
     arr[index]?arr[index]=false: arr[index]=true;
+    questionOptions.forEach((l,i) => {
+      if (arr[i]) {
+        answer.push(l.order)
+      }
+    });
     setChecked(arr.map(item => item));
+    props.onPress({
+      answerResults: answer.join('#'),
+      testUestionsId: props.id,
+      rightKey: props.rightKey,
+      score: props.score,
+      testPapreId: props.testPapreId,
+    });
   };
   return (
     <View style={[styles.container,c_styles.p_4]}>
@@ -21,10 +37,7 @@ export function MultipleTopicComponent(props) {
           <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>多选</Text>
         </View>
         <View style={[styles.titleContent,c_styles.pl_3]} >
-          <Text style={[c_styles.h6]}>
-            01.题目名称 题目名称 题目名称 题目名称 题目名称 题目名称
-            01.题目名称 题目名称 题目名称 题目名称 题目名称 题目名称
-          </Text>
+          <Text style={[c_styles.h6]}>{props.subject}</Text>
         </View>
       </View>
       <View style={[styles.choose]}>
@@ -32,7 +45,7 @@ export function MultipleTopicComponent(props) {
           checked.map((item,index) => (
             <CheckBox
               key={`checkBox${index}`}
-              title={arrAnswer[index]}
+              title={questionOptions[index].option}
               titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
               size={20}
               checkedIcon='dot-circle-o'
@@ -52,7 +65,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   title: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   titleTag: {
     flex: 1,
