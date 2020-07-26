@@ -11,6 +11,7 @@ import {IMAGE_FILE_LIST} from "../../util/Constant";
 import {Button, Icon, Input} from "react-native-elements";
 import {post} from "../../service/Interceptor";
 import {Api} from "../../service/Api";
+import {hiddenLoading, showLoading} from "../../util/ToolFunction";
 
 export class LoginScreen extends Component {
   constructor(props) {
@@ -67,9 +68,14 @@ export class LoginScreen extends Component {
                 inputContainerStyle={{paddingBottom: 5, borderColor: '#DEDEDE'}}
                 leftIcon={<Icon type={'material'} name={'lock'} color={'#BCBCBC'} size={20}/>}
                 leftIconContainerStyle={{paddingRight: 10}}
-                rightIcon={<Icon type={'ionicon'} name={'ios-eye-off'}
-                                 color={this.state.showPassword ? '#3782F8' : '#BCBCBC'} size={20}
-                                 onPress={this.loginShowPasswordPress.bind(this)}/>}
+                rightIcon={
+                  <Icon
+                    type={'ionicon'}
+                    name={'ios-eye-off'}
+                    color={this.state.showPassword ? '#3782F8' : '#BCBCBC'}
+                    size={20}
+                    onPress={this.loginShowPasswordPress.bind(this)}/>
+                }
               />
             </View>
             <View style={[styles.button]}>
@@ -99,14 +105,16 @@ export class LoginScreen extends Component {
 
   // 登录操作
   login() {
+    showLoading();
     Keyboard.dismiss();
     post(Api.LOGIN_URL, {username: this.state.username, password: this.state.password})
       .then( async (res) => {
         await AsyncStorage.setItem('accessToken', res.token);
-        Store.dispatch(isLoading({type: ISLOADING, isLoading: false}));
+        hiddenLoading();
         Store.dispatch(isLogin({type: ISLOGIN, isLogin: true}));
       })
       .catch(err => {
+        hiddenLoading();
         Alert.alert('', err.message, [
           {text: "关闭", onPress: () => console.log("Cancel Pressed"), style: "cancel"},
           {

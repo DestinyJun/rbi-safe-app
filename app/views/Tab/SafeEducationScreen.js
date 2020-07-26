@@ -13,6 +13,7 @@ import {EducationApi} from "../../service/EducationApi";
 import {Store} from "../../redux/store";
 import {isLoading} from "../../redux/actions";
 import {ISLOADING} from "../../redux/actionTypes";
+import {hiddenLoading, showLoading} from "../../util/ToolFunction";
 
 
 export class SafeEducationScreen extends Component {
@@ -57,8 +58,8 @@ export class SafeEducationScreen extends Component {
     this.safeEducationInit();
   }
   safeEducationInit() {
-    Store.dispatch(isLoading({type: ISLOADING, isLoading: true}));
     // 查询考试信息
+    showLoading();
     post(EducationApi.GET_EXAM_INFO,{pageNo: 1,pageSize: 10000,processingStatus: 1})
       .then((res) => {
         const arr = [];
@@ -82,11 +83,11 @@ export class SafeEducationScreen extends Component {
             })
           })
           .catch((err) => {
-            Store.dispatch(isLoading({type: ISLOADING, isLoading: false}));
+            hiddenLoading();
           });
       })
       .catch((err) => {
-        Store.dispatch(isLoading({type: ISLOADING, isLoading: false}));
+        hiddenLoading();
       })
   }
 }

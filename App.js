@@ -24,6 +24,7 @@ import {ProFileInventoryScreen} from "./app/views/ProFile/ProFileInventoryScreen
 import {ProFileInfoScreen} from "./app/views/ProFile/ProFileInfoScreen";
 import {ProFileSafeScreen} from "./app/views/ProFile/ProFileSafeScreen";
 import {PlayVideoScreen} from "./app/views/Video/PlayVideoScreen";
+import {DownloadScreen} from "./app/views/Download/DownloadScreen";
 
 // 自定义工具
 import {Store} from "./app/redux/store";
@@ -97,6 +98,7 @@ export default class App extends React.Component {
             <Stack.Screen name={'ProFileInfoScreen'} component={ProFileInfoScreen}/>
             <Stack.Screen name={'ProFileSafeScreen'} component={ProFileSafeScreen}/>
             <Stack.Screen name={'PlayVideoScreen'} component={PlayVideoScreen}/>
+            <Stack.Screen name={'DownloadScreen'} component={DownloadScreen}/>
           </Stack.Navigator>
         </NavigationContainer>
       );

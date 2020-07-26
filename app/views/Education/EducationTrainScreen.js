@@ -56,6 +56,7 @@ export class EducationTrainScreen extends Component {
                   // rightIcon={{type: 'font-awesome', name: l.isRead?'check-circle': 'angle-right',color: '#3B86FF',size: 18}}
                   // rightTitle={l.isRead?null:'继续学习'}
                   rightTitleStyle={{color:'#3A86FF', fontSize: 16}}
+                  onPress={() => this.props.navigation.navigate('DownloadScreen',l)}
                 />
               ))
             }

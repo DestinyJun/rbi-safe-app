@@ -7,7 +7,10 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TextInput} from 'react-native';
 
 export function CardInputComponent(props) {
-  const [number,setNumber] = useState(props.number);
+  // 自评内容
+  const [selfEvaluation,setSelfEvaluation] = useState(props.selfEvaluation?props.selfEvaluation: '请输入自评内容');
+  // 自评分数
+  const [selfFraction,setSelfFraction] = useState(props.selfFraction?props.selfFraction: '请输入自评分数');
   return (
     <View style={[styles.container]}>
       <View style={[styles.left]}>
@@ -15,26 +18,27 @@ export function CardInputComponent(props) {
       </View>
       <View style={[styles.right]}>
         <View style={[styles.rightTop]}>
-          <Text style={[c_styles.h6, {color: '#6C6C6C'}]}>{props.title}</Text>
+          <Text style={[c_styles.h6, {color: '#6C6C6C'}]}>{`（${props.fraction}分） ${props.content}`}</Text>
         </View>
         <View style={[styles.rightBottom]}>
-          <View style={{flex: 5}}>
-            <Text style={[c_styles.h6, {color: '#67A1FF'}]}>自评</Text>
+          {/*自评内容*/}
+          <View style={{flex: 5,flexDirection: 'row',alignItems: 'center'}}>
+            <Text style={[c_styles.h6, {color: '#67A1FF'}]}>自评： </Text>
+            <TextInput placeholder={selfEvaluation} style={[c_styles.h6, {textAlign: 'left', color: '#6D6D6D'}]} onChangeText={(text => {
+              props.onChangeSelfEvaluation(text);
+            })} />
           </View>
-          <View style={{flex: 3}}>
-            <TextInput placeholder={'请输入分数'} style={[c_styles.h6, {textAlign: 'right', color: '#6D6D6D'}]} onChangeText={(text => setNumber(text))} value={number}/>
+          {/*自评分数*/}
+          <View style={{flex: 5}}>
+            <TextInput placeholder={selfFraction.toString()} style={[c_styles.h6, {textAlign: 'right', color: '#6D6D6D'}]} onChangeText={(text => {
+              props.onChangeSelfFraction(text);
+            })} />
           </View>
         </View>
       </View>
     </View>
   );
 }
-
-CardInputComponent.defaultProps = {
-  title: '',
-  number: '',
-  index: 0
-};
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',

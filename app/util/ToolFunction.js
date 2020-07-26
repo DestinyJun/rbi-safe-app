@@ -79,18 +79,18 @@ export function loginOut(message) {
 /**
  * 成功提醒
  */
-export function successRemind(message, navigation) {
+export function successRemind(message, navigation,buttonTitle='请重试') {
   Alert.alert('成功提醒',message, [
-    {text: "返回", onPress: () =>{navigation.goBack()}, style: "cancel"},
+    {text: buttonTitle, onPress: () =>{navigation.goBack()}, style: "cancel"},
   ], {cancelable: false});
 }
 
 /**
  * 失败提醒
  */
-export function errorRemind(message, navigation) {
-  Alert.alert('失败提醒',message, [
-    {text: "请重试", onPress: () =>{navigation.goBack()}, style: "cancel"},
+export function errorRemind(message, navigation,buttonTitle='请重试') {
+  Alert.alert('错误提醒',message, [
+    {text: buttonTitle, onPress: () =>{navigation.goBack()}, style: "cancel"},
   ], {cancelable: false});
 }
 
