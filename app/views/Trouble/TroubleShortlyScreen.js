@@ -7,9 +7,11 @@ import React, {Component} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import {TroubleShortlyStyles as styles} from "./TroubleShortlyStyles";
 import {Button, Header, Icon, Input, ListItem} from "react-native-elements";
+// 自定义组件
 import {HeaderLeftBackComponent} from "../../components/HeaderLeftBackComponent";
 import {CheckBoxGroupsComponent} from "../../components/CheckBoxGroupsComponent";
 import {ImagePickerComponent} from "../../components/ImagePickerComponent";
+import {PickerComponent} from "../../components/PickerComponent";
 
 export class TroubleShortlyScreen extends Component {
   constructor(props) {
@@ -17,6 +19,7 @@ export class TroubleShortlyScreen extends Component {
     this.remindMessage = '您是否需要返回？若返回则填写的数据将全部清空！';
     this.state = {
       checked: true,
+      language: 'java',
     };
   }
 
@@ -39,7 +42,13 @@ export class TroubleShortlyScreen extends Component {
               <View style={[styles.infoList]}>
                 <ListItem containerStyle={{backgroundColor: 'none'}} bottomDivider={true} title={'单位车间'} titleStyle={{color: '#9D9D9D'}} chevron={true} rightTitle={'点击选择'} rightTitleStyle={{color: '#9D9D9D'}}/>
                 <ListItem containerStyle={{backgroundColor: 'none'}} bottomDivider={true} title={'排查时间'} titleStyle={{color: '#9D9D9D'}} chevron={true} rightTitle={'点击选择'} rightTitleStyle={{color: '#9D9D9D'}}/>
-                <ListItem containerStyle={{backgroundColor: 'none'}} bottomDivider={true} title={'整改负责人'} titleStyle={{color: '#9D9D9D'}} chevron={true} rightTitle={'点击选择'} rightTitleStyle={{color: '#9D9D9D'}}/>
+                <ListItem
+                  containerStyle={{backgroundColor: 'none'}}
+                  bottomDivider={true} title={'整改负责人'}
+                  titleStyle={{color: '#9D9D9D'}}
+                  chevron={true}
+                  rightElement={ <PickerComponent titleStyle={{color: '#9D9D9D'}} buttonStyle={{backgroundColor: 'unset',padding: 0}} />}
+                />
                 <View style={[{paddingTop: 15,paddingBottom: 15},styles.borderBottom]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患类型</Text>
                   <CheckBoxGroupsComponent />

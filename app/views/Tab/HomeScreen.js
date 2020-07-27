@@ -30,13 +30,13 @@ export class HomeScreen extends Component {
         <View style={styles.content}>
           <ScrollView style={{flex: 1}}>
             <View style={styles.imgBox}>
-              <Image source={IMAGE_HOME_ONE} style={{height: 220}} />
+              <Image source={IMAGE_HOME_ONE} style={{height: 220}} resizeMode={'contain'} />
             </View>
             <View style={styles.imgBox}>
-              <Image source={IMAGE_HOME_TWO} style={{height: 300}} />
+              <Image source={IMAGE_HOME_TWO} style={{height: 300}} resizeMode={'contain'} />
             </View>
             <View style={styles.imgBox}>
-              <Image source={IMAGE_HOME_THREE} style={{height: 300}} />
+              <Image source={IMAGE_HOME_THREE} style={{height: 300}} resizeMode={'contain'} />
             </View>
           </ScrollView>
         </View>
