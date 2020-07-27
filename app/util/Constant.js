@@ -8,7 +8,9 @@
 export const IMAGE_FILE_LIST = require('../assets/images/login_bg.png');
 export const IMAGE_VIDEO_1= require('../assets/images/video1.png');
 export const HEADER_IMAGE = require('../assets/images/秀智1.jpg');
-export const IMAGE_SHOUYE = require('../assets/images/sy.png');
+export const IMAGE_HOME_ONE = require('../assets/images/home1.png');
+export const IMAGE_HOME_TWO = require('../assets/images/home2.png');
+export const IMAGE_HOME_THREE = require('../assets/images/home3.png');
 
 // 个人信息导航菜单
 export const PROFILE_TOP_MENU_LIST = [

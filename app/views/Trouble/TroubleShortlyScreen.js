@@ -39,12 +39,7 @@ export class TroubleShortlyScreen extends Component {
               <View style={[styles.infoList]}>
                 <ListItem containerStyle={{backgroundColor: 'none'}} bottomDivider={true} title={'单位车间'} titleStyle={{color: '#9D9D9D'}} chevron={true} rightTitle={'点击选择'} rightTitleStyle={{color: '#9D9D9D'}}/>
                 <ListItem containerStyle={{backgroundColor: 'none'}} bottomDivider={true} title={'排查时间'} titleStyle={{color: '#9D9D9D'}} chevron={true} rightTitle={'点击选择'} rightTitleStyle={{color: '#9D9D9D'}}/>
-                <ListItem
-                  containerStyle={{backgroundColor: 'none',paddingTop: 5,paddingBottom: 5,paddingLeft: 15,paddingRight: 20}}
-                  bottomDivider={true} title={'整改负责人'}
-                  titleStyle={{color: '#9D9D9D'}}
-                  input={{placeholder: '请输入',placeholderTextColor: '#9D9D9D',inputStyle: {fontSize: 16}}}
-                />
+                <ListItem containerStyle={{backgroundColor: 'none'}} bottomDivider={true} title={'整改负责人'} titleStyle={{color: '#9D9D9D'}} chevron={true} rightTitle={'点击选择'} rightTitleStyle={{color: '#9D9D9D'}}/>
                 <View style={[{paddingTop: 15,paddingBottom: 15},styles.borderBottom]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患类型</Text>
                   <CheckBoxGroupsComponent />

@@ -128,7 +128,6 @@ export class DoubleDutyScreen extends Component {
     // 待审核清单
     post(DoubleDutyApi.GET_MINE_PENDING,{pageNo: 1,pageSize: 100000})
       .then((res) => {
-        console.log(res);
         hiddenLoading();
         this.setState({
           dutyList: [...res.data.contents]

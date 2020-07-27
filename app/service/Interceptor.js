@@ -17,7 +17,7 @@ function isSkipUrl(url: string) {
 }
 
 // 设置全局请求的地址
-axios.defaults.baseURL = 'http://120.77.171.73:8090/security-platform';
+axios.defaults.baseURL = 'http://139.9.153.27:8090/security-platform';
 
 //设置的请求次数，请求的间隙
 axios.defaults.retry = 4;

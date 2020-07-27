@@ -44,7 +44,7 @@ const Tab = createBottomTabNavigator();
 function TabBarScreen() {
   return (
     <Tab.Navigator
-      initialRouteName={'SafeEducation'}
+      initialRouteName={'Home'}
       backBehavior={'none'}
       lazy={true}
       tabBar={props => {

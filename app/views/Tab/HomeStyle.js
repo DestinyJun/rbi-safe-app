@@ -9,4 +9,17 @@ export const HomeStyle = StyleSheet.create({
   home: {
     flex: 1,
   },
+  content: {
+    flex: 1,
+    paddingLeft: 10,
+    paddingTop: 10,
+    paddingRight: 10,
+    paddingBottom: 20
+  },
+  imgBox: {
+    backgroundColor: '#fff',
+    padding: 5,
+    borderRadius: 8,
+    marginTop: 10,
+  }
 });

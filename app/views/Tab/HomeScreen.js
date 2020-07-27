@@ -4,11 +4,10 @@
  * date：  2020/3/16 20:25
  */
 import React, {Component} from 'react';
-import {View, BackHandler, ToastAndroid, Platform} from 'react-native';
+import {View, BackHandler, ToastAndroid, Platform, ScrollView, Text} from 'react-native';
 import {HomeStyle as styles} from "./HomeStyle";
-import {Header} from "react-native-elements";
-import {WebView} from 'react-native-webview';
-import {MY_HTML} from "../../util/Constant";
+import {Header,Image} from "react-native-elements";
+import {IMAGE_HOME_ONE, IMAGE_HOME_THREE, IMAGE_HOME_TWO} from "../../util/Constant";
 
 export class HomeScreen extends Component {
   constructor(props) {
@@ -28,8 +27,18 @@ export class HomeScreen extends Component {
           }}
           centerComponent={{text: '安全生产信息化', style: {color: '#fff', fontSize: 18}}}
         />
-        <View style={{flex: 1}}>
-
+        <View style={styles.content}>
+          <ScrollView style={{flex: 1}}>
+            <View style={styles.imgBox}>
+              <Image source={IMAGE_HOME_ONE} style={{height: 220}} />
+            </View>
+            <View style={styles.imgBox}>
+              <Image source={IMAGE_HOME_TWO} style={{height: 300}} />
+            </View>
+            <View style={styles.imgBox}>
+              <Image source={IMAGE_HOME_THREE} style={{height: 300}} />
+            </View>
+          </ScrollView>
         </View>
       </View>
     );

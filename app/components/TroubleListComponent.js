@@ -12,9 +12,12 @@ export function TroubleListComponent(props) {
       <View style={[styles.container]}>
         <View style={[styles.top]}>
           <View style={[styles.topFlag]}>
-            {props.pendingFlag?<Text style={[styles.flag,{backgroundColor: '#3B86FF',}]}>待处理</Text>:null}
-            {props.issuedFlag?<Text style={[styles.flag,{backgroundColor: '#3BBCFF',}]}>下发</Text>:null}
-            {props.verifyFlag?<Text style={[styles.flag,{backgroundColor: '#85B4FF',}]}>待审核</Text>:null}
+            {props.processingStatus === '1'?<Text style={[styles.flag,{backgroundColor: '#FCCF4F',}]}>上报未整改</Text>:null}
+            {props.processingStatus === '2'?<Text style={[styles.flag,{backgroundColor: '#FFC06A',}]}>责令未整改</Text>:null}
+            {props.processingStatus === '3'?<Text style={[styles.flag,{backgroundColor: '#FF6A7E',}]}>已通知待整改</Text>:null}
+            {props.processingStatus === '4'?<Text style={[styles.flag,{backgroundColor: '#63DCAF',}]}>已整改待审核</Text>:null}
+            {props.processingStatus === '5'?<Text style={[styles.flag,{backgroundColor: '#3BBCFF',}]}>审核通过</Text>:null}
+            {props.processingStatus === '6'?<Text style={[styles.flag,{backgroundColor: '#226AD5',}]}>审核不通过</Text>:null}
           </View>
           <View style={[styles.topTitle]}>
             <Text numberOfLines={1} ellipsizeMode={'tail'} style={[c_styles.h5,c_styles.text_dark]}>
@@ -34,15 +37,6 @@ export function TroubleListComponent(props) {
     </TouchableOpacity>
   );
 }
-TroubleListComponent.defaultProps = {
-  pendingFlag: false,
-  issuedFlag: false,
-  verifyFlag: false,
-  title: '我是标题',
-  rightTitle: '我是右边标题',
-  subtitle: '我是副标题',
-  onPress: null
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -59,6 +53,7 @@ const styles = StyleSheet.create({
   topFlag: {
     flexDirection: 'row',
     minWidth: 0,
+    paddingRight: 6
   },
   topTitle: {
     flex: 1,
@@ -81,6 +76,5 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     paddingBottom: 3,
     color: '#fff',
-    marginRight: 3
   }
 });
