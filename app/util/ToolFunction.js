@@ -117,3 +117,22 @@ export function rpx (num) {
   const designWidth = 750;
   return num * width / designWidth
 }
+
+/**
+ * 组织树结构初始化函数
+ */
+export const treeInit = (data) => {
+  const oneChild = [];
+  for (const item of data) {
+    let childnode: any = {};
+    childnode = Object.assign({},{id: item.id,name: item.organizationName,parentId: item.parentId});
+    if (item.chiled != null && item.chiled.length !== 0) {
+      childnode.children = treeInit(item.chiled);
+    }
+    else {
+      childnode.children = [];
+    }
+    oneChild.push(childnode);
+  }
+  return oneChild;
+};

@@ -94,11 +94,9 @@ export class TroubleShootScreen extends Component {
         this.setState({
           list: [...res.data.contents]
         });
-        console.log(res);
       })
       .catch(err => {
         hiddenLoading();
-        console.log(err);
       });
   }
 }

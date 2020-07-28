@@ -11,6 +11,7 @@ import {HeaderLeftBackComponent} from "../../components/HeaderLeftBackComponent"
 import {CheckBoxGroupsComponent} from "../../components/CheckBoxGroupsComponent";
 import {ImagePickerComponent} from "../../components/ImagePickerComponent";
 import {INPUT_BACK_REMIND_MESSAGE, TROUBLE_ARR_INFO} from "../../util/Constant";
+import {PickerComponent} from "../../components/PickerComponent";
 
 export class TroubleHandleScreen extends Component {
   constructor(props) {
@@ -39,10 +40,11 @@ export class TroubleHandleScreen extends Component {
                 <ListItem containerStyle={{backgroundColor: 'none'}} bottomDivider={true} title={'单位车间'} titleStyle={{color: '#9D9D9D'}} chevron={true} rightTitle={'点击选择'} rightTitleStyle={{color: '#9D9D9D'}}/>
                 <ListItem containerStyle={{backgroundColor: 'none'}} bottomDivider={true} title={'排查时间'} titleStyle={{color: '#9D9D9D'}} chevron={true} rightTitle={'点击选择'} rightTitleStyle={{color: '#9D9D9D'}}/>
                 <ListItem
-                  containerStyle={{backgroundColor: 'none',paddingTop: 5,paddingBottom: 5,paddingLeft: 15,paddingRight: 20}}
+                  containerStyle={{backgroundColor: 'none'}}
                   bottomDivider={true} title={'整改负责人'}
                   titleStyle={{color: '#9D9D9D'}}
-                  input={{placeholder: '请输入',placeholderTextColor: '#9D9D9D',inputStyle: {fontSize: 16}}}
+                  chevron={true}
+                  rightElement={ <PickerComponent titleStyle={{color: '#9D9D9D'}} buttonStyle={{backgroundColor: 'unset',padding: 0}} />}
                 />
                 <View style={[c_styles.pt_4,c_styles.pb_4,styles.borderBottom]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患类型</Text>

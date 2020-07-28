@@ -11,7 +11,12 @@ import {Button, Header, Icon, Input, ListItem} from "react-native-elements";
 import {HeaderLeftBackComponent} from "../../components/HeaderLeftBackComponent";
 import {CheckBoxGroupsComponent} from "../../components/CheckBoxGroupsComponent";
 import {ImagePickerComponent} from "../../components/ImagePickerComponent";
-import {PickerComponent} from "../../components/PickerComponent";
+import {TreePickerComponent} from "../../components/TreePickerComponent";
+import {TimePickerComponent} from "../../components/TimePickerComponent";
+// 自定义工具
+import {post} from "../../service/Interceptor";
+import {TroubleApi} from "../../service/TroubleApi";
+import {hiddenLoading, showLoading} from "../../util/ToolFunction";
 
 export class TroubleShortlyScreen extends Component {
   constructor(props) {
@@ -19,7 +24,8 @@ export class TroubleShortlyScreen extends Component {
     this.remindMessage = '您是否需要返回？若返回则填写的数据将全部清空！';
     this.state = {
       checked: true,
-      language: 'java',
+      orgList: null,
+      submitField: {},
     };
   }
 
@@ -40,14 +46,33 @@ export class TroubleShortlyScreen extends Component {
                 <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>基本信息</Text>
               </View>
               <View style={[styles.infoList]}>
-                <ListItem containerStyle={{backgroundColor: 'none'}} bottomDivider={true} title={'单位车间'} titleStyle={{color: '#9D9D9D'}} chevron={true} rightTitle={'点击选择'} rightTitleStyle={{color: '#9D9D9D'}}/>
-                <ListItem containerStyle={{backgroundColor: 'none'}} bottomDivider={true} title={'排查时间'} titleStyle={{color: '#9D9D9D'}} chevron={true} rightTitle={'点击选择'} rightTitleStyle={{color: '#9D9D9D'}}/>
                 <ListItem
                   containerStyle={{backgroundColor: 'none'}}
-                  bottomDivider={true} title={'整改负责人'}
+                  bottomDivider={true} title={'单位车间'}
                   titleStyle={{color: '#9D9D9D'}}
                   chevron={true}
-                  rightElement={ <PickerComponent titleStyle={{color: '#9D9D9D'}} buttonStyle={{backgroundColor: 'unset',padding: 0}} />}
+                  rightElement={ this.state.orgList && <TreePickerComponent
+                    confirmPress={(res) => {
+                      this.setState({
+                        submitField: Object.assign(this.state.submitField,{organizationId: res.id,organizationName: res.name})
+                      });
+                    }}
+                    treeData={this.state.orgList}
+                    titleStyle={{color: '#9D9D9D'}}
+                    buttonStyle={{backgroundColor: 'unset',padding: 0}}
+                  />}
+                />
+                <ListItem
+                  containerStyle={{backgroundColor: 'none'}}
+                  bottomDivider={true} title={'排查时间'}
+                  titleStyle={{color: '#9D9D9D'}}
+                  chevron={true}
+                  rightElement={ this.state.orgList && <TimePickerComponent
+                    titleStyle={{color: '#9D9D9D'}}
+                    buttonStyle={{backgroundColor: 'unset',padding: 0}}
+                  />}
+               /*   rightTitle={'点击选择'}
+                  rightTitleStyle={{color: '#9D9D9D'}}*/
                 />
                 <View style={[{paddingTop: 15,paddingBottom: 15},styles.borderBottom]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患类型</Text>
@@ -81,10 +106,25 @@ export class TroubleShortlyScreen extends Component {
                 </View>
               </View>
             </View>
-            <Button title={'提交'} buttonStyle={styles.button}/>
+            <Button title={'提交'} buttonStyle={styles.button} onPress={() => {console.log(this.state.submitField);}}/>
           </ScrollView>
         </View>
       </View>
     );
+  }
+
+  // 租金按挂载周期函数
+  componentDidMount() {
+    showLoading();
+    post(TroubleApi.GET_ORG_LIST)
+      .then(res => {
+        hiddenLoading();
+        this.setState({
+          orgList: [...res.data]
+        })
+      })
+      .catch(err => {
+        hiddenLoading();
+      });
   }
 }
