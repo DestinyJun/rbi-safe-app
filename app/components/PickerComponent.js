@@ -7,14 +7,14 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, Dimensions, Modal, TouchableWithoutFeedback, FlatList} from 'react-native';
 import {Button} from "react-native-elements";
 const {width, height} = Dimensions.get('window');
-import Picker from 'react-native-picker';
+// import Picker from 'react-native-picker';
 export function PickerComponent(props) {
   const [isVisible, setIsVisible] = useState(false);
   const data = [];
   for(var i=0;i<15;i++){
     data.push(i);
   }
-  Picker.init({
+  /*Picker.init({
     pickerData: data, // 需要选择的数据列表
     selectedValue: [2], // 默认选中的值
     pickerConfirmBtnText: '确定', // 确定按钮文字
@@ -37,14 +37,14 @@ export function PickerComponent(props) {
     onPickerSelect: data => {
       console.log(data);
     }
-  });
+  });*/
   return (
     <View>
       <Button
         buttonStyle={props.buttonStyle}
         title={'点击选择'}
         titleStyle={props.titleStyle} onPress={() => {
-        Picker.show();
+        /*Picker.show();*/
         // setIsVisible(true)
       }}/>
    {/*   <Modal

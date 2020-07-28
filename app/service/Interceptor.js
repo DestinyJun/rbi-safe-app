@@ -12,7 +12,7 @@ const skipUrl = [
 ];
 
 // url跳过验证
-function isSkipUrl(url: string) {
+function isSkipUrl(url) {
   return skipUrl.includes(url);
 }
 
