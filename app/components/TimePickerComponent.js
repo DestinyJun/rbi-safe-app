@@ -4,18 +4,22 @@
  * date：  2020/7/28 15:52
  */
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {Button} from "react-native-elements";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export function TimePickerComponent(props) {
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth()>9?selectedDate.getMonth()+1:`0${selectedDate.getMonth()+1}`;
+    const day = selectedDate.getDate()>9?selectedDate.getDate():`0${selectedDate.getDate()}`;
+    props.onSelectDate(`${year}.${month}.${day}`);
   };
 
   const showMode = currentMode => {
@@ -27,14 +31,11 @@ export function TimePickerComponent(props) {
     showMode('date');
   };
 
-  const showTimepicker = () => {
-    showMode('time');
-  };
   return (
     <View>
       <Button
         buttonStyle={props.buttonStyle}
-        title={'点击选择'}
+        title={props.title}
         titleStyle={props.titleStyle}
         onPress={showDatepicker}
       />

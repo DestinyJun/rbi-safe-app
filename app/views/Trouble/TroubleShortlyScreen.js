@@ -16,7 +16,8 @@ import {TimePickerComponent} from "../../components/TimePickerComponent";
 // 自定义工具
 import {post} from "../../service/Interceptor";
 import {TroubleApi} from "../../service/TroubleApi";
-import {hiddenLoading, showLoading} from "../../util/ToolFunction";
+import {dataURLtoFile, errorRemind, hiddenLoading, showLoading, successRemind} from "../../util/ToolFunction";
+import {TROUBLE_ARR_TYPE} from "../../util/Constant";
 
 export class TroubleShortlyScreen extends Component {
   constructor(props) {
@@ -25,8 +26,13 @@ export class TroubleShortlyScreen extends Component {
     this.state = {
       checked: true,
       orgList: null,
-      submitField: {},
+      orgTitle: null,
+      timeTitle: null,
     };
+    this.submitField = new FormData();
+    this.beforeFile = [];
+    this.afterFile = [];
+    this.copyObj = {};
   }
 
   render() {
@@ -53,11 +59,14 @@ export class TroubleShortlyScreen extends Component {
                   chevron={true}
                   rightElement={ this.state.orgList && <TreePickerComponent
                     confirmPress={(res) => {
+                      this.submitField.append('organizationId',res.id);
+                      this.submitField.append('organizationName',res.name);
                       this.setState({
-                        submitField: Object.assign(this.state.submitField,{organizationId: res.id,organizationName: res.name})
+                        orgTitle: res.name,
                       });
                     }}
                     treeData={this.state.orgList}
+                    title={this.state.orgTitle?this.state.orgTitle:'点击选择'}
                     titleStyle={{color: '#9D9D9D'}}
                     buttonStyle={{backgroundColor: 'unset',padding: 0}}
                   />}
@@ -67,20 +76,44 @@ export class TroubleShortlyScreen extends Component {
                   bottomDivider={true} title={'排查时间'}
                   titleStyle={{color: '#9D9D9D'}}
                   chevron={true}
-                  rightElement={ this.state.orgList && <TimePickerComponent
+                  rightElement={<TimePickerComponent
+                    onSelectDate={(time) => {
+                      this.submitField.append('troubleshootingTime',time);
+                      this.setState({
+                        timeTitle: time,
+                      });
+                    }}
+                    title={this.state.timeTitle?this.state.timeTitle:'点击选择'}
                     titleStyle={{color: '#9D9D9D'}}
                     buttonStyle={{backgroundColor: 'unset',padding: 0}}
                   />}
-               /*   rightTitle={'点击选择'}
-                  rightTitleStyle={{color: '#9D9D9D'}}*/
                 />
                 <View style={[{paddingTop: 15,paddingBottom: 15},styles.borderBottom]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患类型</Text>
-                  <CheckBoxGroupsComponent />
+                  <CheckBoxGroupsComponent options={TROUBLE_ARR_TYPE} onSelectData={(res) => {
+                    const arr = ['hidTypePerson','hidTypeThing','hidTypeManage'];
+                    res.forEach((item,index) => {
+                      if (item) {
+                        this.copyObj = Object.assign(this.copyObj,{[arr[index]]: '1'})
+                      }
+                      else {
+                        if (arr[index] in this.copyObj) {
+                          delete this.copyObj[arr[index]];
+                        }
+                      }
+                    });
+                  }} />
                 </View>
                 <View style={[{paddingTop: 15}]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患内容</Text>
-                  <Input placeholder={'请输入（最多200字）'} inputStyle={{paddingBottom: 0,fontSize: 16}} inputContainerStyle={{borderBottomWidth: 0}}  />
+                  <Input
+                    onChangeText={(text) =>{
+                      this.submitField.append('hidDangerContent',text);
+                      this.setState({
+                    })}}
+                    placeholder={'请输入（最多200字）'}
+                    inputStyle={{paddingBottom: 0,fontSize: 16}}
+                    inputContainerStyle={{borderBottomWidth: 0}}  />
                 </View>
               </View>
             </View>
@@ -95,18 +128,18 @@ export class TroubleShortlyScreen extends Component {
                     <Text style={[{color: '#858585'}]}>整改前</Text>
                     <Text style={[{backgroundColor: '#3B86FF',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
                   </View>
-                  <ImagePickerComponent />
+                  <ImagePickerComponent onSelect={(f) => {this.beforeFile = f}} />
                 </View>
                 <View style={[styles.siteBox]}>
                   <View style={[styles.siteBoxTitle]}>
                     <Text style={[{color: '#858585'}]}>整改后</Text>
                     <Text style={[{backgroundColor: '#3B86FF',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
                   </View>
-                  <ImagePickerComponent />
+                  <ImagePickerComponent onSelect={(f) => {this.afterFile = f}} />
                 </View>
               </View>
             </View>
-            <Button title={'提交'} buttonStyle={styles.button} onPress={() => {console.log(this.state.submitField);}}/>
+            <Button title={'提交'} buttonStyle={styles.button} onPress={this.onSubmitOnPress.bind(this)}/>
           </ScrollView>
         </View>
       </View>
@@ -116,7 +149,7 @@ export class TroubleShortlyScreen extends Component {
   // 租金按挂载周期函数
   componentDidMount() {
     showLoading();
-    post(TroubleApi.GET_ORG_LIST)
+    post(TroubleApi.GET_ORG_LIST,{})
       .then(res => {
         hiddenLoading();
         this.setState({
@@ -126,5 +159,32 @@ export class TroubleShortlyScreen extends Component {
       .catch(err => {
         hiddenLoading();
       });
+  }
+
+  // 整改提交操作
+  onSubmitOnPress(){
+    if (JSON.stringify(this.copyObj) !== '{}') {
+      for (let k in this.copyObj) {
+        if (this.copyObj.hasOwnProperty(k)) {
+          this.submitField.append(k,this.copyObj[k]);
+        }
+      }
+    }
+    this.beforeFile.map((item) => {
+      this.submitField.append('beforeImg',dataURLtoFile(item.uri,item.fileName));
+    });
+    this.afterFile.map((item) => {
+      this.submitField.append('afterImg',dataURLtoFile(item.uri,item.fileName));
+    });
+    let formData = new FormData();
+    formData.append('file','1123');
+    console.log(formData.getParts());
+  /*  post(TroubleApi.ADD_STRAIGHTAWAY_TRO,this.submitField)
+      .then((res) => {
+        successRemind(res.message,this.props.navigation,'返回');
+      })
+      .catch((err) => {
+        errorRemind(err.message,this.props.navigation);
+      })*/
   }
 }

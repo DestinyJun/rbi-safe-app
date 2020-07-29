@@ -51,8 +51,11 @@ export const PROFILE_BOTTOM_MENU_LIST = [
 // 表单填写返回提醒
 export const INPUT_BACK_REMIND_MESSAGE = '您是否需要返回？若返回则填写的数据将全部清空！';
 
+// 隐患类型数组信息
+export const TROUBLE_ARR_TYPE = ['人','物','管理'];
+
 // 隐患等级数组信息
-export const TROUBLE_ARR_INFO = ['Ⅰ级','Ⅱ级','Ⅲ级','Ⅳ级','Ⅴ级'];
+export const TROUBLE_ARR_GRADE = ['Ⅰ级','Ⅱ级','Ⅲ级','Ⅳ级','Ⅴ级'];
 
 // echarts模板
 export const HTML = `

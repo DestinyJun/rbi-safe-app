@@ -78,38 +78,35 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (this.state.isLogin) {
-      return (
-        <NavigationContainer>
-          <FullScreenLoadingComponent/>
-          <Stack.Navigator initialRouteName={'TabBarScreen'} screenOptions={{headerShown: false}}>
-            <Stack.Screen name={'TabBarScreen'} component={TabBarScreen}/>
-            <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen}/>
-            <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen}/>
-            <Stack.Screen name={'TroubleShortlyScreen'} component={TroubleShortlyScreen}/>
-            <Stack.Screen name={'TroubleReportScreen'} component={TroubleReportScreen}/>
-            <Stack.Screen name={'TroubleHandleScreen'} component={TroubleHandleScreen}/>
-            <Stack.Screen name={'DoubleInventoryMakeScreen'} component={DoubleInventoryMakeScreen}/>
-            <Stack.Screen name={'DoubleInventoryFillScreen'} component={DoubleInventoryFillScreen}/>
-            <Stack.Screen name={'DoubleInventoryCheckScreen'} component={DoubleInventoryCheckScreen}/>
-            <Stack.Screen name={'ProFileRecordScreen'} component={ProFileRecordScreen}/>
-            <Stack.Screen name={'ProFileArchivesScreen'} component={ProFileArchivesScreen}/>
-            <Stack.Screen name={'ProFileInventoryScreen'} component={ProFileInventoryScreen}/>
-            <Stack.Screen name={'ProFileInfoScreen'} component={ProFileInfoScreen}/>
-            <Stack.Screen name={'ProFileSafeScreen'} component={ProFileSafeScreen}/>
-            <Stack.Screen name={'PlayVideoScreen'} component={PlayVideoScreen}/>
-            <Stack.Screen name={'DownloadScreen'} component={DownloadScreen}/>
-          </Stack.Navigator>
-        </NavigationContainer>
-      );
-    }
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={'Login'} headerMode={'none'}>
-          <Stack.Screen name="Login" component={LoginScreen}/>
-        </Stack.Navigator>
+        <FullScreenLoadingComponent/>
+        {
+          this.state.isLogin?
+            <Stack.Navigator initialRouteName={'TabBarScreen'} screenOptions={{headerShown: false}}>
+              <Stack.Screen name={'TabBarScreen'} component={TabBarScreen}/>
+              <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen}/>
+              <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen}/>
+              <Stack.Screen name={'TroubleShortlyScreen'} component={TroubleShortlyScreen}/>
+              <Stack.Screen name={'TroubleReportScreen'} component={TroubleReportScreen}/>
+              <Stack.Screen name={'TroubleHandleScreen'} component={TroubleHandleScreen}/>
+              <Stack.Screen name={'DoubleInventoryMakeScreen'} component={DoubleInventoryMakeScreen}/>
+              <Stack.Screen name={'DoubleInventoryFillScreen'} component={DoubleInventoryFillScreen}/>
+              <Stack.Screen name={'DoubleInventoryCheckScreen'} component={DoubleInventoryCheckScreen}/>
+              <Stack.Screen name={'ProFileRecordScreen'} component={ProFileRecordScreen}/>
+              <Stack.Screen name={'ProFileArchivesScreen'} component={ProFileArchivesScreen}/>
+              <Stack.Screen name={'ProFileInventoryScreen'} component={ProFileInventoryScreen}/>
+              <Stack.Screen name={'ProFileInfoScreen'} component={ProFileInfoScreen}/>
+              <Stack.Screen name={'ProFileSafeScreen'} component={ProFileSafeScreen}/>
+              <Stack.Screen name={'PlayVideoScreen'} component={PlayVideoScreen}/>
+              <Stack.Screen name={'DownloadScreen'} component={DownloadScreen}/>
+            </Stack.Navigator>:
+            <Stack.Navigator initialRouteName={'Login'} headerMode={'none'}>
+              <Stack.Screen name="Login" component={LoginScreen}/>
+            </Stack.Navigator>
+        }
       </NavigationContainer>
-    )
+    );
   }
 
   componentDidMount() {

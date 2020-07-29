@@ -16,8 +16,13 @@
 </head>
 <body style="height: 100%;width: 100%">
 <div class="container">
-  <span>阿三大苏打</span>
-  <img src="../assets/images/sy.png" alt="" style="width: 100%;height: auto">
+  <input type="file" id="file">
+  <button id="button" onclick="f()">获取图片</button>
+  <script>
+    function f() {
+      console.log(document.getElementById('file').files[0]);
+    }
+  </script>
 </div>
 </body>
 </html>

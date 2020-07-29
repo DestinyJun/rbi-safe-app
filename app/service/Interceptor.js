@@ -31,8 +31,9 @@ axios.interceptors.request.use(
   async function (config) {
     // 配置请求头参数,判断那些接口需要添加token，那些接口需要添加请求类型，判断APPKEY是否存在
     if (!(isSkipUrl(config.url))) {
-      config.headers.post['accessToken'] = await AsyncStorage.getItem('accessToken');
+      config.headers['accessToken'] = await AsyncStorage.getItem('accessToken');
     }
+    console.log(config);
     return config;
   },
   function (error) {

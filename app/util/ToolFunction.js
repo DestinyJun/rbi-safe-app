@@ -136,3 +136,50 @@ export const treeInit = (data) => {
   }
   return oneChild;
 };
+
+/**
+ * 将base64转换为文件
+ * @param dataurl 需要传入的base64码
+ * @param filename 需要转成的文件名
+ * @returns {File} 返回一个file
+ */
+export function dataURLtoFile(dataurl, filename) {
+  let arr = dataurl.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, { type: mime });
+}
+
+/**
+ * 将base64转换为blob
+ * @param dataurl 需要传入的base64码
+ * @returns {Blob} 返回一个Blob
+ */
+export  function dataURLtoBlob(dataurl) {
+  let arr = dataurl.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new Blob([u8arr], { type: mime });
+}
+
+/**
+ * 将blob转换为file
+ * @param theBlob 传入blob数据
+ * @param fileName 传入文件名
+ * @returns theBlob 返回一个file
+ */
+export function blobToFile(theBlob, fileName){
+  theBlob.lastModifiedDate = new Date();
+  theBlob.name = fileName;
+  return theBlob;
+}

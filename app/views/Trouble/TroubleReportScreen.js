@@ -10,7 +10,7 @@ import {Button, Header, Icon, Input, ListItem} from "react-native-elements";
 import {HeaderLeftBackComponent} from "../../components/HeaderLeftBackComponent";
 import {CheckBoxGroupsComponent} from "../../components/CheckBoxGroupsComponent";
 import {ImagePickerComponent} from "../../components/ImagePickerComponent";
-import {INPUT_BACK_REMIND_MESSAGE, TROUBLE_ARR_INFO} from "../../util/Constant";
+import {INPUT_BACK_REMIND_MESSAGE, TROUBLE_ARR_GRADE} from "../../util/Constant";
 
 export class TroubleReportScreen extends Component {
   constructor(props) {
@@ -54,7 +54,7 @@ export class TroubleReportScreen extends Component {
                 <View style={[c_styles.pt_4,c_styles.pb_4,styles.borderBottom]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患等级</Text>
                   <ScrollView horizontal={true}>
-                    <CheckBoxGroupsComponent options={TROUBLE_ARR_INFO} />
+                    <CheckBoxGroupsComponent options={TROUBLE_ARR_GRADE} />
                   </ScrollView>
                 </View>
                 <View style={[{paddingTop: 15}]}>

@@ -4,9 +4,10 @@
  * date：  2020/7/28 11:33
  */
 import React, {Component} from 'react';
-import {View, StyleSheet, Dimensions, Modal, TouchableWithoutFeedback, Text} from 'react-native';
+import {View, StyleSheet, Dimensions, TouchableWithoutFeedback, Text} from 'react-native';
 import {Button, Icon} from "react-native-elements";
 import TreeSelect from 'react-native-tree-select';
+import Modal from 'react-native-translucent-modal'
 import {treeInit} from "../util/ToolFunction";
 const {width, height} = Dimensions.get('window');
 
@@ -25,7 +26,7 @@ export class TreePickerComponent extends Component {
       <View>
         <Button
           buttonStyle={this.props.buttonStyle}
-          title={'点击选择'}
+          title={this.props.title}
           titleStyle={this.props.titleStyle} onPress={() => {
           this.setState({
             isVisible: true

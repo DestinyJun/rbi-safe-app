@@ -11,4 +11,7 @@ export class TroubleApi {
 
   // 分页获取组织树
   static GET_ORG_LIST= '/getOrganizationTree';
+
+  // 立即整改
+  static ADD_STRAIGHTAWAY_TRO= '/hid/rectifyImmediately';
 }
