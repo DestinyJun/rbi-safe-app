@@ -18,14 +18,10 @@ export class TroubleShootScreen extends Component {
     this.state = {
       list: null
     };
+    this.unfocus = null
   }
 
   render() {
-    const list = [
-      {title: '矿业公司隐患排查',pendingState: true,issuedState: true,verifyState: false,subtitle: '隐患内容',date: '2020.03.08'},
-      {title: '电工部门隐患排查',pendingState: true,issuedState: false,verifyState: false,subtitle: '隐患内容',date: '2020.03.08'},
-      {title: '合金化事业部隐患排查',pendingState: false,issuedState: false,verifyState: true,subtitle: '隐患内容',date: '2020.03.08'},
-    ];
     return (
       <View style={styles.TroubleShoot}>
         <Header
@@ -87,16 +83,24 @@ export class TroubleShootScreen extends Component {
 
   // 组件挂载生命周期
   componentDidMount() {
-    showLoading();
-    post(TroubleApi.GET_HANDLE_LIST,{pageNo: 1,pageSize: 100000})
-      .then((res) => {
-        hiddenLoading();
-        this.setState({
-          list: [...res.data.contents]
+    this.unfocus = this.props.navigation.addListener('focus',() => {
+      showLoading();
+      post(TroubleApi.GET_HANDLE_LIST,{pageNo: 1,pageSize: 100000})
+        .then((res) => {
+          console.log(res);
+          hiddenLoading();
+          this.setState({
+            list: [...res.data.contents]
+          });
+        })
+        .catch(err => {
+          hiddenLoading();
         });
-      })
-      .catch(err => {
-        hiddenLoading();
-      });
+    });
+  }
+
+  // 组件卸载
+  componentWillUnmount() {
+    this.unfocus();
   }
 }

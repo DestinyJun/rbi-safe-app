@@ -50,9 +50,12 @@ export class ProFileSafeScreen extends Component {
                 onChangeText: (text) => {
                 this.setState({
                   originalPassword: text
-                });
-                }}}
+                })},
+                keyboardType: 'default',
+                secureTextEntry: true
+              }}
               bottomDivider={true}
+              secureTextEntry={true}
             />
             <ListItem
               containerStyle={{backgroundColor: 'unset',paddingLeft: 5,paddingRight: 5}}
@@ -64,8 +67,10 @@ export class ProFileSafeScreen extends Component {
                 onChangeText: (text) => {
                   this.setState({
                     latestPassword: text
-                  });
-                }}}
+                  })},
+                keyboardType: 'default',
+                secureTextEntry: true
+              }}
               bottomDivider={true}
             />
             <ListItem
@@ -78,8 +83,10 @@ export class ProFileSafeScreen extends Component {
                 onChangeText: (text) => {
                   this.setState({
                     surePassword: text
-                  });
-                }}}
+                  })},
+                keyboardType: 'default',
+                secureTextEntry: true
+              }}
             />
           </View>
           <Button buttonStyle={c_styles.button} title={'确认修改'} onPress={this.updatePassword.bind(this)} />

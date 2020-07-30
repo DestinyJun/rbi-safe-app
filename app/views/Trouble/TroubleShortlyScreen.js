@@ -10,9 +10,9 @@ import {Button, Header, Icon, Input, ListItem} from "react-native-elements";
 // 自定义组件
 import {HeaderLeftBackComponent} from "../../components/HeaderLeftBackComponent";
 import {CheckBoxGroupsComponent} from "../../components/CheckBoxGroupsComponent";
-import {ImagePickerComponent} from "../../components/ImagePickerComponent";
-import {TreePickerComponent} from "../../components/TreePickerComponent";
-import {TimePickerComponent} from "../../components/TimePickerComponent";
+import {PickerImageComponent} from "../../components/PickerImageComponent";
+import {PickerTreeComponent} from "../../components/PickerTreeComponent";
+import {PickerTimeComponent} from "../../components/PickerTimeComponent";
 // 自定义工具
 import {post} from "../../service/Interceptor";
 import {TroubleApi} from "../../service/TroubleApi";
@@ -29,7 +29,7 @@ export class TroubleShortlyScreen extends Component {
       orgTitle: null,
       timeTitle: null,
     };
-    this.submitField = new FormData();
+    this.submitField = {};
     this.beforeFile = [];
     this.afterFile = [];
     this.copyObj = {};
@@ -57,10 +57,12 @@ export class TroubleShortlyScreen extends Component {
                   bottomDivider={true} title={'单位车间'}
                   titleStyle={{color: '#9D9D9D'}}
                   chevron={true}
-                  rightElement={ this.state.orgList && <TreePickerComponent
+                  rightElement={ this.state.orgList && <PickerTreeComponent
                     confirmPress={(res) => {
-                      this.submitField.append('organizationId',res.id);
-                      this.submitField.append('organizationName',res.name);
+                      this.submitField = Object.assign(this.submitField,{organizationId: res.id });
+                      this.submitField = Object.assign(this.submitField,{organizationName: res.name });
+                      // this.submitField.append('organizationId',res.id);
+                      // this.submitField.append('organizationName',res.name);
                       this.setState({
                         orgTitle: res.name,
                       });
@@ -76,9 +78,10 @@ export class TroubleShortlyScreen extends Component {
                   bottomDivider={true} title={'排查时间'}
                   titleStyle={{color: '#9D9D9D'}}
                   chevron={true}
-                  rightElement={<TimePickerComponent
+                  rightElement={<PickerTimeComponent
                     onSelectDate={(time) => {
-                      this.submitField.append('troubleshootingTime',time);
+                      this.submitField = Object.assign(this.submitField,{troubleshootingTime:time});
+                      // this.submitField.append('troubleshootingTime',time);
                       this.setState({
                         timeTitle: time,
                       });
@@ -108,7 +111,8 @@ export class TroubleShortlyScreen extends Component {
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患内容</Text>
                   <Input
                     onChangeText={(text) =>{
-                      this.submitField.append('hidDangerContent',text);
+                      // this.submitField.append('hidDangerContent',text);
+                      this.submitField = Object.assign(this.submitField,{hidDangerContent: text});
                       this.setState({
                     })}}
                     placeholder={'请输入（最多200字）'}
@@ -128,14 +132,14 @@ export class TroubleShortlyScreen extends Component {
                     <Text style={[{color: '#858585'}]}>整改前</Text>
                     <Text style={[{backgroundColor: '#3B86FF',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
                   </View>
-                  <ImagePickerComponent onSelect={(f) => {this.beforeFile = f}} />
+                  <PickerImageComponent onSelect={(f) => {this.beforeFile = f}} />
                 </View>
                 <View style={[styles.siteBox]}>
                   <View style={[styles.siteBoxTitle]}>
                     <Text style={[{color: '#858585'}]}>整改后</Text>
                     <Text style={[{backgroundColor: '#3B86FF',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
                   </View>
-                  <ImagePickerComponent onSelect={(f) => {this.afterFile = f}} />
+                  <PickerImageComponent onSelect={(f) => {this.afterFile = f}} />
                 </View>
               </View>
             </View>
@@ -146,7 +150,7 @@ export class TroubleShortlyScreen extends Component {
     );
   }
 
-  // 租金按挂载周期函数
+  // 组件挂载周期函数
   componentDidMount() {
     showLoading();
     post(TroubleApi.GET_ORG_LIST,{})
@@ -163,28 +167,37 @@ export class TroubleShortlyScreen extends Component {
 
   // 整改提交操作
   onSubmitOnPress(){
+    showLoading();
     if (JSON.stringify(this.copyObj) !== '{}') {
       for (let k in this.copyObj) {
         if (this.copyObj.hasOwnProperty(k)) {
-          this.submitField.append(k,this.copyObj[k]);
+          this.submitField = Object.assign(this.submitField,{[k]:this.copyObj[k]});
+          // this.submitField.append(k,this.copyObj[k]);
         }
       }
     }
+    const beforeFileArr = [];
     this.beforeFile.map((item) => {
-      this.submitField.append('beforeImg',dataURLtoFile(item.uri,item.fileName));
+      // beforeFileArr.push(dataURLtoFile(item.uri,item.fileName));
+      beforeFileArr.push({file: item.uri});
     });
+    // this.submitField.append('beforeImg',beforeFileArr);
+    this.submitField = Object.assign(this.submitField,{beforeImg: beforeFileArr});
+    const afterFileArr = [];
     this.afterFile.map((item) => {
-      this.submitField.append('afterImg',dataURLtoFile(item.uri,item.fileName));
+      afterFileArr.push({file: item.uri});
+      // afterFileArr.push(dataURLtoFile(item.uri,item.fileName));
     });
-    let formData = new FormData();
-    formData.append('file','1123');
-    console.log(formData.getParts());
-  /*  post(TroubleApi.ADD_STRAIGHTAWAY_TRO,this.submitField)
+    this.submitField = Object.assign(this.submitField,{afterImg: afterFileArr});
+
+    post(TroubleApi.ADD_STRAIGHTAWAY_TRO,this.submitField)
       .then((res) => {
+        hiddenLoading();
         successRemind(res.message,this.props.navigation,'返回');
       })
       .catch((err) => {
+        hiddenLoading();
         errorRemind(err.message,this.props.navigation);
-      })*/
+      })
   }
 }

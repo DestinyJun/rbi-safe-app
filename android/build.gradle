@@ -33,6 +33,12 @@ allprojects {
 
         google()
         jcenter()
+        // **********START 添加Google依赖 **********
+        maven {
+            url "https://maven.google.com"
+        }
+         // **********END 添加Google依赖***********
+
         maven { url 'https://jitpack.io' }
     }
 }

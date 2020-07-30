@@ -8,7 +8,7 @@ import {View, StyleSheet} from 'react-native';
 import {Button} from "react-native-elements";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-export function TimePickerComponent(props) {
+export function PickerTimeComponent(props) {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -16,6 +16,9 @@ export function TimePickerComponent(props) {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
+    if (!selectedDate) {
+      return;
+    }
     const year = selectedDate.getFullYear();
     const month = selectedDate.getMonth()>9?selectedDate.getMonth()+1:`0${selectedDate.getMonth()+1}`;
     const day = selectedDate.getDate()>9?selectedDate.getDate():`0${selectedDate.getDate()}`;

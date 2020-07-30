@@ -57,6 +57,16 @@ export const TROUBLE_ARR_TYPE = ['人','物','管理'];
 // 隐患等级数组信息
 export const TROUBLE_ARR_GRADE = ['Ⅰ级','Ⅱ级','Ⅲ级','Ⅳ级','Ⅴ级'];
 
+// 整改状态
+export const TROUBLE_STATUS_LIST = [
+  '上报未整改',
+  '责令未整改',
+  '已通知待整改',
+  '已整改待审核',
+  '审核通过',
+  '审核不通过',
+];
+
 // echarts模板
 export const HTML = `
 <!DOCTYPE html>

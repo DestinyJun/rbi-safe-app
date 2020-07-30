@@ -21,6 +21,7 @@ export class DoubleDutyScreen extends Component {
       pendingList: null,
       dutyList: null,
     };
+    this.unfocus = null
   }
 
   render() {
@@ -113,28 +114,35 @@ export class DoubleDutyScreen extends Component {
 
   // 组件挂载生命周期函
   componentDidMount() {
-    showLoading();
-    // 我的清单
-    post(DoubleDutyApi.GET_MINE_LIST,{pageNo: 1,pageSize: 100000})
-      .then((res) => {
-        hiddenLoading();
-        this.setState({
-          pendingList: [...res.data.contents]
+    this.unfocus = this.props.navigation.addListener('focus',() => {
+      showLoading();
+      // 我的清单
+      post(DoubleDutyApi.GET_MINE_LIST,{pageNo: 1,pageSize: 100000})
+        .then((res) => {
+          hiddenLoading();
+          this.setState({
+            pendingList: [...res.data.contents]
+          });
+        })
+        .catch(err => {
+          hiddenLoading();
         });
-      })
-      .catch(err => {
-        hiddenLoading();
-      });
-    // 待审核清单
-    post(DoubleDutyApi.GET_MINE_PENDING,{pageNo: 1,pageSize: 100000})
-      .then((res) => {
-        hiddenLoading();
-        this.setState({
-          dutyList: [...res.data.contents]
-        });
-      })
-      .catch(err => {
-        hiddenLoading();
-      })
+      // 待审核清单
+      post(DoubleDutyApi.GET_MINE_PENDING,{pageNo: 1,pageSize: 100000})
+        .then((res) => {
+          hiddenLoading();
+          this.setState({
+            dutyList: [...res.data.contents]
+          });
+        })
+        .catch(err => {
+          hiddenLoading();
+        })
+    });
+  }
+
+  // 组件卸载
+  componentWillUnmount() {
+    this.unfocus();
   }
 }

@@ -27,11 +27,9 @@ export class PlayVideoScreen extends Component {
           centerComponent={{text: `${this.video.resourceName}`,style: {fontSize: 20,color: '#fff'}}}
         />
         <View style={styles.container}>
-          {/*'http://192.168.28.67/video1.mp4'*/}
-          {/*this.video.resourcePath*/}
           <View style={styles.videoControl} />
           <Video
-            source={{uri: 'http://192.168.28.67/video1.mp4'}}
+            source={{uri: this.video.resourcePath}}
             controls={true}
             disableFocus={true}
             hideShutterView={true}

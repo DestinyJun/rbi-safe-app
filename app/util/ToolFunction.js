@@ -94,6 +94,17 @@ export function errorRemind(message, navigation,buttonTitle='请重试') {
   ], {cancelable: false});
 }
 
+/**
+ * dialog
+ */
+export function dialogRemind(title,message, routerFun,cancelTitle='取消',confirmTitle='确定') {
+  Alert.alert(title,message, [
+    {text: cancelTitle, onPress: () =>{}, style: "cancel"},
+    {text: confirmTitle, onPress: () =>{
+      routerFun()
+    }},
+  ], {cancelable: false});
+}
 
 /**
  * 显示loading

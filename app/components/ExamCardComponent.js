@@ -3,60 +3,42 @@
  * author：DestinyJun
  * date：  2020/7/2 14:35
  */
-import React, {useState} from 'react';
-import {View,StyleSheet,TouchableOpacity} from 'react-native';
+import React, {Component} from 'react';
+import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {Icon, Slider, Text, Button,} from "react-native-elements";
+import {dialogRemind} from "../util/ToolFunction";
 
-export function ExamCardComponent(props) {
-  const {train,exam,navigation} = {...props};
-  const examStart = (item) => {
-    // 开始考试
-    navigation.navigate(
-      'EducationExamScreen',
-      {
-        title: item.testPaperName,
-        name: '开始考试',
-        exam: item
-      }
-    );
-  };
-  // 继续学习
-  const continueStudy = (item) => {
-    navigation.navigate(
-      'EducationTrainScreen',
-      {
-        title: item.trainingContent,
-        train: item
-      })
-  };
-  // 模拟考试
-  const imitateExam = (item) => {
-    navigation.navigate(
-      'EducationExamScreen',
-      {
-        title: '2020第四期',
-        name: '模拟考试'
-      }
-    );
-  };
-  return (
-    <View style={[styles.container,c_styles.pl_3,c_styles.pr_4]}>
-      <View style={[styles.title,c_styles.pt_1,c_styles.pb_1]}>
-        <Icon type={'font-awesome'} name={'list-alt'} size={20} color={'#3B86FF'} raised={true} />
-        <Text style={{fontSize: 20,color: '#333333',marginLeft: 6}}>{train.trainingContent}</Text>
-      </View>
-      <View style={[styles.timer,c_styles.pl_5]}>
-        <View style={[styles.timerBox]}>
-          <Icon type={'font-awesome'} name={'calendar'} size={16} color={'#3B86FF'}/>
-          <Text style={[c_styles.h6,c_styles.ml_2]}>培训时间：{train.startTime}—{train.endTime}</Text>
+export class ExamCardComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isVisible: true,
+      train: props.train,
+      exam: props.exam,
+    };
+    this.navigation = props.exam;
+  }
+
+  render() {
+    return (
+      <View style={[styles.container]}>
+        <View style={[styles.title, c_styles.pt_1, c_styles.pb_1]}>
+          <Icon type={'font-awesome'} name={'list-alt'} size={20} color={'#3B86FF'} raised={true}/>
+          <Text style={{fontSize: 20, color: '#333333', marginLeft: 6}}>{this.state.train.trainingContent}</Text>
         </View>
-        <View style={[styles.timerBox]}>
-          <Icon type={'font-awesome'} name={'clock-o'} size={18} color={'#3B86FF'}/>
-          <Text style={[c_styles.h6,c_styles.ml_2]}>考试时间：{exam.startTime}—{exam.endTime}</Text>
+        <View style={[styles.timer, c_styles.pl_5]}>
+          <View style={[styles.timerBox]}>
+            <Icon type={'font-awesome'} name={'calendar'} size={16} color={'#3B86FF'}/>
+            <Text
+              style={[c_styles.h6, c_styles.ml_2]}>培训时间：{this.state.train.startTime}—{this.state.train.endTime}</Text>
+          </View>
+          <View style={[styles.timerBox]}>
+            <Icon type={'font-awesome'} name={'clock-o'} size={18} color={'#3B86FF'}/>
+            <Text style={[c_styles.h6, c_styles.ml_2]}>考试时间：{this.state.exam.startTime}—{this.state.exam.endTime}</Text>
+          </View>
         </View>
-      </View>
-      <View style={[styles.progress,c_styles.pl_5,c_styles.pt_3,c_styles.pb_3]}>
-       {/* <View style={[styles.progressTitle]}>
+        <View style={[styles.progress, c_styles.pl_5, c_styles.pt_3, c_styles.pb_3]}>
+          {/* <View style={[styles.progressTitle]}>
           <Text style={[c_styles.h5]}>学习进度</Text>
           <Text style={[c_styles.h5,{color: '#307AEC'}]}>60%</Text>
         </View>
@@ -67,32 +49,82 @@ export function ExamCardComponent(props) {
           maximumTrackTintColor={'#F2F2F2'}
           minimumTrackTintColor={'#3883FA'}
           value={0.6}/>*/}
+        </View>
+        <View style={[styles.buttons]}>
+          {
+            this.state.exam.isExam ?
+              <Button
+                title={'开始考试'}
+                TouchableComponent={TouchableOpacity}
+                buttonStyle={[styles.buttonsStyles, {backgroundColor: '#63DCAF'}]}
+                onPress={() => {
+                  Alert.alert('考前须知', this.props.exam.examNotes, [
+                    {
+                      text: '取消考试', onPress: () => {
+                      }, style: "cancel"
+                    },
+                    {
+                      text: '开始考试', onPress: () => {
+                        this.examStart();
+                      }
+                    },
+                  ], {cancelable: false});
+                }}/> :
+              <Button
+                title={'模拟考试'}
+                type={'outline'}
+                buttonStyle={[styles.buttonsStyles, {borderColor: '#3883FA'}]}
+                titleStyle={{color: '#3883FA'}}
+                onPress={this.imitateExam.bind(this, this.state.train)}/>
+          }
+          <Button title={'继续学习'} buttonStyle={[styles.buttonsStyles, {backgroundColor: '#3883FA'}]} onPress={this.continueStudy.bind(this)}/>
+        </View>
       </View>
-      <View style={[styles.buttons]}>
-        {
-          exam.isExam?
-          <Button
-            title={'开始考试'}
-            TouchableComponent={TouchableOpacity}
-            buttonStyle={[styles.buttonsStyles,{backgroundColor: '#63DCAF'}]}
-            onPress={examStart.bind(this,exam)} />:
-          <Button
-            title={'模拟考试'}
-            type={'outline'}
-            buttonStyle={[styles.buttonsStyles,{borderColor: '#3883FA'}]}
-            titleStyle={{color: '#3883FA'}}
-            onPress={imitateExam.bind(this,train)} />
-        }
-        <Button title={'继续学习'} buttonStyle={[styles.buttonsStyles,{backgroundColor: '#3883FA'}]} onPress={continueStudy.bind(this,train)} />
-      </View>
-    </View>
-  );
+    );
+
+  }
+
+  examStart() {
+    // 开始考试
+    this.props.navigation.navigate(
+      'EducationExamScreen',
+      {
+        title: this.state.exam.testPaperName,
+        name: '开始考试',
+        exam: this.state.exam
+      }
+    );
+  };
+
+  // 继续学习
+  continueStudy() {
+    this.props.navigation.navigate(
+      'EducationTrainScreen',
+      {
+        title: this.state.train.trainingContent,
+        train: this.state.train
+      })
+  };
+
+  // 模拟考试
+  imitateExam(item) {
+    this.props.navigation.navigate(
+      'EducationExamScreen',
+      {
+        title: '2020第四期',
+        name: '模拟考试'
+      }
+    );
+  };
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     borderRadius: 6,
+    marginTop: 10,
+    paddingLeft: 12,
+    paddingRight: 15
   },
   title: {
     flexDirection: 'row',
@@ -105,7 +137,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 6
   },
-  progressTitle:{
+  progressTitle: {
     flexDirection: 'row',
     justifyContent: 'space-between'
   },

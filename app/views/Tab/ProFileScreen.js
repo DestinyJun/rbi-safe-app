@@ -16,6 +16,7 @@ import {PROFILE_TOP_MENU_LIST, PROFILE_BOTTOM_MENU_LIST} from "../../util/Consta
 import {hiddenLoading, showLoading} from "../../util/ToolFunction";
 import {post} from "../../service/Interceptor";
 import {ProFileApi} from "../../service/ProFileApi";
+import {DoubleDutyApi} from "../../service/DoubleDutyApi";
 
 export class ProFileScreen extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export class ProFileScreen extends Component {
     this.state = {
       proFileInfo: null
     };
+    this.unfocus = null
   }
 
   render() {
@@ -96,20 +98,27 @@ export class ProFileScreen extends Component {
 
   // 组件挂载生命周期函
   componentDidMount() {
-    showLoading();
-    post(ProFileApi.GET_MY_INFO,{})
-      .then((res) => {
-        hiddenLoading();
-        this.setState({
-          proFileInfo: {...res.data}
-        });
-      })
-      .catch(err => {
-        hiddenLoading();
-      })
+    this.unfocus = this.props.navigation.addListener('focus',() => {
+      showLoading();
+      post(ProFileApi.GET_MY_INFO,{})
+        .then((res) => {
+          hiddenLoading();
+          this.setState({
+            proFileInfo: {...res.data}
+          });
+        })
+        .catch(err => {
+          hiddenLoading();
+        })
+    });
   }
 
-  //
+  // 组件卸载
+  componentWillUnmount() {
+    this.unfocus();
+  }
+
+  // 功能路由跳转
   routerOnPress (item) {
     if (item.routerName === 'ProFileInfoScreen') {
       this.props.navigation.navigate(item.routerName,this.state.proFileInfo);

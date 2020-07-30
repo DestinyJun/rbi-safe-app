@@ -18,6 +18,7 @@ function isSkipUrl(url) {
 
 // 设置全局请求的地址
 axios.defaults.baseURL = 'http://139.9.153.27:8090/security-platform';
+// axios.defaults.baseURL = 'http://192.168.28.5:8090/security-platform';
 
 //设置的请求次数，请求的间隙
 axios.defaults.retry = 4;
@@ -33,7 +34,7 @@ axios.interceptors.request.use(
     if (!(isSkipUrl(config.url))) {
       config.headers['accessToken'] = await AsyncStorage.getItem('accessToken');
     }
-    console.log(config);
+    // console.log(config);
     return config;
   },
   function (error) {
@@ -45,6 +46,7 @@ axios.interceptors.request.use(
 // 响应拦截
 axios.interceptors.response.use(
   function (response) {
+    // console.log(response);
     // 处理200响应数据错误,处理后端各种状态码信息
     if (response.status === 200) {
       if (response.data.status === '1000') {
@@ -72,6 +74,7 @@ axios.interceptors.response.use(
     }
   },
   function (error) {
+    // console.log(error);
     const str = error.message;
     if (error.status) {
       // 请求超时处理,判断请求异常信息中是否含有超时timeout字符串

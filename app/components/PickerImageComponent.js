@@ -8,12 +8,13 @@ import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {Badge, Icon, Image} from "react-native-elements";
 
-export class ImagePickerComponent extends Component{
+export class PickerImageComponent extends Component{
   constructor(props) {
     super(props);
     this.state = {
       avatarSource: []
     };
+    console.log(props);
   }
   render() {
     return (
@@ -45,10 +46,10 @@ export class ImagePickerComponent extends Component{
   }
   // 选取图片
    handleCamera = () => {
+     if (this.state.avatarSource.length>6) {
+       return;
+     }
      ImagePicker.launchImageLibrary({}, (response) => {
-       if (response.didCancel || this.state.avatarSource.length>6) {
-         return;
-       }
        if (response.didCancel || this.state.avatarSource.length>6) {
          return;
        }
@@ -56,7 +57,9 @@ export class ImagePickerComponent extends Component{
        this.setState({
          avatarSource: this.state.avatarSource.concat(source)
        },() =>{
-         this.props.onSelect(this.state.avatarSource);
+         if (this.props.onSelect) {
+           this.props.onSelect(this.state.avatarSource);
+         }
        });
      });
   };
@@ -66,7 +69,9 @@ export class ImagePickerComponent extends Component{
     this.setState({
       avatarSource: this.state.avatarSource.filter((l,i) => i!==index)
     },() =>{
-      this.props.onSelect(this.state.avatarSource);
+      if (this.props.onSelect) {
+        this.props.onSelect(this.state.avatarSource);
+      }
     });
   }
 }

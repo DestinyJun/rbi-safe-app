@@ -11,7 +11,7 @@ import Modal from 'react-native-translucent-modal'
 import {treeInit} from "../util/ToolFunction";
 const {width, height} = Dimensions.get('window');
 
-export class TreePickerComponent extends Component {
+export class PickerTreeComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -22,6 +22,7 @@ export class SafeEducationScreen extends Component {
     this.state = {
       seExamList: null
     };
+    this.unfocus = null
   }
   render() {
     return (
@@ -54,12 +55,22 @@ export class SafeEducationScreen extends Component {
     );
   }
 
+  // 组件挂载
   componentDidMount() {
-    this.safeEducationInit();
+    this.unfocus = this.props.navigation.addListener('focus',() => {
+      showLoading();
+      this.safeEducationInit();
+    });
   }
+
+  // 组件卸载
+  componentWillUnmount() {
+    this.unfocus();
+  }
+
+  // 数据初始化
   safeEducationInit() {
     // 查询考试信息
-    showLoading();
     post(EducationApi.GET_EXAM_INFO,{pageNo: 1,pageSize: 10000,processingStatus: 1})
       .then((res) => {
         const arr = [];

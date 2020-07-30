@@ -4,8 +4,8 @@ import {LoginStyles as styles} from './LoginStyles';
 import AsyncStorage from '@react-native-community/async-storage';
 // reducer
 import {Store} from "../../redux/store";
-import {isLoading, isLogin} from "../../redux/actions";
-import {ISLOADING, ISLOGIN} from "../../redux/actionTypes";
+import {isLogin} from "../../redux/actions";
+import {ISLOGIN} from "../../redux/actionTypes";
 // 常量
 import {IMAGE_FILE_LIST} from "../../util/Constant";
 import {Button, Icon, Input} from "react-native-elements";
@@ -98,9 +98,9 @@ export class LoginScreen extends Component {
   // 组件挂载前执行
   componentDidMount() {
     // 监听键盘隐藏
-    Keyboard.addListener('keyboardDidHide', (event) => {
+   /* Keyboard.addListener('keyboardDidHide', (event) => {
       this.login();
-    });
+    });*/
   }
 
   // 登录操作
