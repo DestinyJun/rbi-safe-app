@@ -6,7 +6,7 @@
 import React, {Component} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {EducationTrainStyles as styles} from "./EducationTrainStyles";
-import {Header, Icon, ListItem, Image} from "react-native-elements";
+import {Header, Icon, ListItem, Image, Button} from "react-native-elements";
 // 自定义组件
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
 import {ListItemSubtitleComponent} from "../../components/ListItemSubtitleComponent";
@@ -25,6 +25,7 @@ export class EducationTrainScreen extends Component {
       videoList: null
     };
     this.train = {...props.route.params.train};
+    console.log( this.train);
   }
 
   render() {
@@ -38,8 +39,15 @@ export class EducationTrainScreen extends Component {
         />
         <View style={[styles.course]}>
           <View style={[styles.courseTitle]}>
-            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'} />
-            <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>培训课件（{this.state.fileList&&this.state.fileList.length}）</Text>
+            <View style={{flexDirection:'row',alignItems: 'center'}}>
+              <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'} />
+              <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>培训课件（{this.state.fileList&&this.state.fileList.length}）</Text>
+            </View>
+            <Button
+              title={'模拟考试'}
+              buttonStyle={{backgroundColor: '#226AD5',borderRadius: 20,paddingBottom: 2,paddingTop: 2}}
+              onPress={this.imitateExam.bind(this)}
+            />
           </View>
           <ScrollView style={{maxHeight: 190}}>
             {
@@ -111,4 +119,16 @@ export class EducationTrainScreen extends Component {
         hiddenLoading();
       })
   }
+
+  // 模拟考试
+  imitateExam() {
+    this.props.navigation.navigate(
+      'EducationExamScreen',
+      {
+        title: this.train.trainingContent,
+        name: '模拟考试',
+        exam: this.train
+      }
+    );
+  };
 }

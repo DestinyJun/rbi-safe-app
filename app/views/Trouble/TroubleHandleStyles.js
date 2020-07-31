@@ -13,7 +13,8 @@ export const TroubleHandleStyles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    paddingBottom: 10
   },
   siteBox: {
     backgroundColor: '#fff',
@@ -26,6 +27,12 @@ export const TroubleHandleStyles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10
   },
+  bottomButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
   // 公共样式
   button: {
     borderRadius: 20,
@@ -33,7 +40,9 @@ export const TroubleHandleStyles = StyleSheet.create({
     marginBottom: 30,
     backgroundColor: '#3B86FF',
     marginRight: 30,
-    marginLeft: 30
+    marginLeft: 30,
+    paddingLeft: 15,
+    paddingRight: 15
   },
   title: {
     flexDirection: 'row',

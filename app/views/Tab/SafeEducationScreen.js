@@ -4,7 +4,7 @@
  * date：  2020/6/17 17:28
  */
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import {SafeEducationStyles as styles} from "./SafeEducationStyles";
 import {Header, Icon} from "react-native-elements";
 import {ExamCardComponent} from "../../components/ExamCardComponent";
@@ -46,10 +46,12 @@ export class SafeEducationScreen extends Component {
             </View>
           ): null
         }
-        <View style={[c_styles.pl_3,c_styles.pr_3]}>
-          {
-            this.state.seExamList&&this.state.seExamList.map((item,index) => (<ExamCardComponent key={index} {...this.props} {...item} />))
-          }
+        <View style={[c_styles.pl_3,c_styles.pr_3,{flex: 1}]}>
+          <ScrollView style={{flex: 1}}>
+            {
+              this.state.seExamList&&this.state.seExamList.map((item,index) => (<ExamCardComponent key={index} {...this.props} {...item} />))
+            }
+          </ScrollView>
         </View>
       </View>
     );
@@ -71,6 +73,37 @@ export class SafeEducationScreen extends Component {
   // 数据初始化
   safeEducationInit() {
     // 查询考试信息
+  /*  post(EducationApi.GET_LEARN_INFO,{pageNo: 1,pageSize: 10000 })
+      .then((res) => {
+        const arr = [];
+        // 查询学习计划
+        post(EducationApi.GET_EXAM_INFO,{pageNo: 1,pageSize: 10000,processingStatus: 1})
+          .then((val) => {
+            Store.dispatch(isLoading({type: ISLOADING, isLoading: false}));
+            val.data.contents.forEach((l) => {
+              l.isExam = true;
+              res.data.contents.map((item) => {
+                if (l.trainingPlanId === item.id) {
+                  arr.push({
+                    exam: l,
+                    train: item
+                  })
+                }
+              });
+              this.setState({
+                seExamList: arr
+              });
+            })
+          })
+          .catch((err) => {
+            hiddenLoading();
+          });
+      })
+      .catch((err) => {
+        hiddenLoading();
+      });*/
+
+    // 查询考试及培训计划
     post(EducationApi.GET_EXAM_INFO,{pageNo: 1,pageSize: 10000,processingStatus: 1})
       .then((res) => {
         const arr = [];
@@ -84,6 +117,10 @@ export class SafeEducationScreen extends Component {
                 if (l.trainingPlanId === item.id) {
                   arr.push({
                     exam: l,
+                    train: item
+                  })
+                } else {
+                  arr.push({
                     train: item
                   })
                 }

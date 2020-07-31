@@ -14,7 +14,6 @@ export class PickerImageComponent extends Component{
     this.state = {
       avatarSource: []
     };
-    console.log(props);
   }
   render() {
     return (

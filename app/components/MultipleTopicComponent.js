@@ -3,61 +3,69 @@
  * author：DestinyJun
  * date：  2020/7/16 16:15
  */
-import React, {useState} from 'react';
+import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {CheckBox} from "react-native-elements";
-let arr = [];
-export function MultipleTopicComponent(props) {
-  const questionOptions= [...props.safeTestQuestionOptionsList];
-  if (arr.length === 0) {
-    arr = questionOptions.map(() => false);
+export class MultipleTopicComponent extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      checked: props.safeSubjectOptionList?props.safeSubjectOptionList.map(() => false):props.safeTestQuestionOptionsList.map(() => false)
+    };
+    this.arr = props.safeSubjectOptionList?props.safeSubjectOptionList.map(() => false):props.safeTestQuestionOptionsList.map(() => false);
+    this.questionOptions= props.safeSubjectOptionList?[...props.safeSubjectOptionList]:[...props.safeTestQuestionOptionsList];
   }
-  const [checked,setChecked] = useState(questionOptions.map(() => false));
-  const checkOnPress = (index) => {
+  render() {
+    return (
+      <View style={[styles.container,c_styles.p_4]}>
+        <View style={styles.title}>
+          <View style={[styles.titleTag]}>
+            <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>多选</Text>
+          </View>
+          <View style={[styles.titleContent,c_styles.pl_3]} >
+            <Text style={[c_styles.h6]}>{this.props.subject}</Text>
+          </View>
+        </View>
+        <View style={[styles.choose]}>
+          {
+            this.state.checked.map((item,index) => (
+              <CheckBox
+                key={`checkBox${index}`}
+                title={this.questionOptions[index].option}
+                titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
+                size={20}
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                onPress={this.checkOnPress.bind(this,index)}
+                checked={item}
+              />
+            ))
+          }
+        </View>
+      </View>
+    );
+  }
+  checkOnPress(index){
     const answer = [];
-    arr[index]?arr[index]=false: arr[index]=true;
-    questionOptions.forEach((l,i) => {
-      if (arr[i]) {
+    this.arr[index]?this.arr[index]=false: this.arr[index]=true;
+    this.questionOptions.forEach((l,i) => {
+      if (this.arr[i]) {
         answer.push(l.order)
       }
     });
-    setChecked(arr.map(item => item));
-    props.onPress({
-      answerResults: answer.join('#'),
-      testUestionsId: props.id,
-      rightKey: props.rightKey,
-      score: props.score,
-      testPapreId: props.testPapreId,
+    this.setState({
+      checked: this.arr.map(item => item)
+    },() => {
+      this.props.onPress({
+        answerResults: answer.join('#'),
+        testUestionsId: this.props.id,
+        rightKey: this.props.rightKey,
+        score: this.props.score,
+        testPapreId: this.props.testPapreId,
+      });
     });
   };
-  return (
-    <View style={[styles.container,c_styles.p_4]}>
-      <View style={styles.title}>
-        <View style={[styles.titleTag]}>
-          <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>多选</Text>
-        </View>
-        <View style={[styles.titleContent,c_styles.pl_3]} >
-          <Text style={[c_styles.h6]}>{props.subject}</Text>
-        </View>
-      </View>
-      <View style={[styles.choose]}>
-        {
-          checked.map((item,index) => (
-            <CheckBox
-              key={`checkBox${index}`}
-              title={questionOptions[index].option}
-              titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
-              size={20}
-              checkedIcon='dot-circle-o'
-              uncheckedIcon='circle-o'
-              onPress={checkOnPress.bind(this,index)}
-              checked={item}
-            />
-          ))
-        }
-      </View>
-    </View>
-  );
+
 }
 
 const styles = StyleSheet.create({

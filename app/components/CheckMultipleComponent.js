@@ -7,7 +7,7 @@ import React, {Component} from 'react';
 import {View,StyleSheet} from 'react-native';
 import {CheckBox} from "react-native-elements";
 
-export class CheckBoxGroupsComponent extends Component{
+export class CheckMultipleComponent extends Component{
   constructor(props) {
     super(props);
     this.state = {

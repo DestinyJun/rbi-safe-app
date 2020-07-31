@@ -1126,6 +1126,11 @@
   resolved "https://registry.npm.taobao.org/@react-native-community/masked-view/download/@react-native-community/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
   integrity sha1-XdpkPhnlh3k7wgNN2b9zmK1D1AE=
 
+"@react-native-community/picker@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.npm.taobao.org/@react-native-community/picker/download/@react-native-community/picker-1.6.5.tgz#9489fdb6d0b4b5877491101e0c3185ea9511d1aa"
+  integrity sha1-lIn9ttC0tYd0kRAeDDGF6pUR0ao=
+
 "@react-navigation/bottom-tabs@^5.6.0":
   version "5.6.0"
   resolved "https://registry.npm.taobao.org/@react-navigation/bottom-tabs/download/@react-navigation/bottom-tabs-5.6.0.tgz#af741da87430e1e68e8d0a53ed58a4a21a09efc2"
@@ -5328,11 +5333,6 @@ react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.npm.taobao.org/react-native-linear-gradient/download/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha1-liFcvF7HoBJHogiQiIqnW4NNRKA=
-
-react-native-picker@^4.3.7:
-  version "4.3.7"
-  resolved "https://registry.npm.taobao.org/react-native-picker/download/react-native-picker-4.3.7.tgz#9842e8c62ff0d8b676e9514d9f9172413c0518a8"
-  integrity sha1-mELoxi/w2LZ26VFNn5FyQTwFGKg=
 
 react-native-ratings@^7.2.0:
   version "7.2.0"

@@ -9,7 +9,8 @@ import {TroubleReportStyles as styles} from "./TroubleReportStyles";
 import {Button, Header, Icon, Input, ListItem} from "react-native-elements";
 // 自定义组件
 import {HeaderLeftBackComponent} from "../../components/HeaderLeftBackComponent";
-import {CheckBoxGroupsComponent} from "../../components/CheckBoxGroupsComponent";
+import {CheckMultipleComponent} from "../../components/CheckMultipleComponent";
+import {CheckSingleComponent} from "../../components/CheckSingleComponent";
 import {PickerImageComponent} from "../../components/PickerImageComponent";
 import {PickerTreeComponent} from "../../components/PickerTreeComponent";
 import {PickerTimeComponent} from "../../components/PickerTimeComponent";
@@ -31,7 +32,6 @@ export class TroubleReportScreen extends Component {
     this.submitField = {};
     this.beforeFile = [];
     this.typeObj = {};
-    this.gradeObj = {};
   }
 
   render() {
@@ -60,8 +60,6 @@ export class TroubleReportScreen extends Component {
                     confirmPress={(res) => {
                       this.submitField = Object.assign(this.submitField,{organizationId: res.id });
                       this.submitField = Object.assign(this.submitField,{organizationName: res.name });
-                      // this.submitField.append('organizationId',res.id);
-                      // this.submitField.append('organizationName',res.name);
                       this.setState({
                         orgTitle: res.name,
                       });
@@ -80,7 +78,6 @@ export class TroubleReportScreen extends Component {
                   rightElement={<PickerTimeComponent
                     onSelectDate={(time) => {
                       this.submitField = Object.assign(this.submitField,{troubleshootingTime:time});
-                      // this.submitField.append('troubleshootingTime',time);
                       this.setState({
                         timeTitle: time,
                       });
@@ -92,7 +89,7 @@ export class TroubleReportScreen extends Component {
                 />
                 <View style={[c_styles.pt_4,c_styles.pb_4,styles.borderBottom]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患类型</Text>
-                  <CheckBoxGroupsComponent options={TROUBLE_ARR_TYPE} onSelectData={(res) => {
+                  <CheckMultipleComponent options={TROUBLE_ARR_TYPE} onSelectData={(res) => {
                     const arr = ['hidTypePerson','hidTypeThing','hidTypeManage'];
                     res.forEach((item,index) => {
                       if (item) {
@@ -109,29 +106,17 @@ export class TroubleReportScreen extends Component {
                 <View style={[c_styles.pt_4,c_styles.pb_4,styles.borderBottom]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患等级</Text>
                   <ScrollView horizontal={true}>
-                    <CheckBoxGroupsComponent options={TROUBLE_ARR_GRADE} onSelectData={(res) => {
-                      const arr = ['hidTypePerson','hidTypeThing','hidTypeManage'];
-                      res.forEach((item,index) => {
-                        if (item) {
-                          this.gradeObj = Object.assign(this.gradeObj,{[arr[index]]: '1'})
-                        }
-                        else {
-                          if (arr[index] in this.gradeObj) {
-                            delete this.gradeObj[arr[index]];
-                          }
-                        }
-                      });
-                    }} />
+                    <CheckSingleComponent options={TROUBLE_ARR_GRADE} onSelectData={(res) => {
+                      this.submitField = Object.assign(this.submitField,{hidDangerGrade:res});
+                    }}/>
                   </ScrollView>
                 </View>
                 <View style={[{paddingTop: 15}]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患内容</Text>
                   <Input
                     onChangeText={(text) =>{
-                      // this.submitField.append('hidDangerContent',text);
                       this.submitField = Object.assign(this.submitField,{hidDangerContent: text});
-                      this.setState({
-                      })}}
+                     }}
                     placeholder={'请输入（最多200字）'}
                     inputStyle={{paddingBottom: 0,fontSize: 16}}
                     inputContainerStyle={{borderBottomWidth: 0}}  />
@@ -177,30 +162,29 @@ export class TroubleReportScreen extends Component {
   }
 
   // 整改提交操作
-  onSubmitOnPress(){
+  onSubmitOnPress() {
+    showLoading();
     if (JSON.stringify(this.copyObj) !== '{}') {
       for (let k in this.copyObj) {
         if (this.copyObj.hasOwnProperty(k)) {
-          this.submitField = Object.assign(this.submitField,{[k]:this.copyObj[k]});
-          // this.submitField.append(k,this.copyObj[k]);
+          this.submitField = Object.assign(this.submitField, {[k]: this.copyObj[k]});
         }
       }
     }
     const beforeFileArr = [];
     this.beforeFile.map((item) => {
-      // beforeFileArr.push(dataURLtoFile(item.uri,item.fileName));
       beforeFileArr.push({file: item.uri});
     });
-    // this.submitField.append('beforeImg',beforeFileArr);
-    this.submitField = Object.assign(this.submitField,{beforeImg: beforeFileArr});
-
-     post(TroubleApi.ADD_REPORT_TRO,this.submitField)
-       .then((res) => {
-         successRemind(res.message,this.props.navigation,'返回');
-       })
-       .catch((err) => {
-         errorRemind(err.message,this.props.navigation);
-       })
+    this.submitField = Object.assign(this.submitField, {beforeImg: beforeFileArr});
+    post(TroubleApi.ADD_REPORT_TRO, this.submitField)
+      .then((res) => {
+        hiddenLoading();
+        successRemind(res.message, this.props.navigation, '返回');
+      })
+      .catch((err) => {
+        hiddenLoading();
+        errorRemind(err.message, this.props.navigation);
+      })
   }
 }
 

@@ -9,14 +9,14 @@ import {TroubleShortlyStyles as styles} from "./TroubleShortlyStyles";
 import {Button, Header, Icon, Input, ListItem} from "react-native-elements";
 // 自定义组件
 import {HeaderLeftBackComponent} from "../../components/HeaderLeftBackComponent";
-import {CheckBoxGroupsComponent} from "../../components/CheckBoxGroupsComponent";
+import {CheckMultipleComponent} from "../../components/CheckMultipleComponent";
 import {PickerImageComponent} from "../../components/PickerImageComponent";
 import {PickerTreeComponent} from "../../components/PickerTreeComponent";
 import {PickerTimeComponent} from "../../components/PickerTimeComponent";
 // 自定义工具
 import {post} from "../../service/Interceptor";
 import {TroubleApi} from "../../service/TroubleApi";
-import {dataURLtoFile, errorRemind, hiddenLoading, showLoading, successRemind} from "../../util/ToolFunction";
+import {errorRemind, hiddenLoading, showLoading, successRemind} from "../../util/ToolFunction";
 import {TROUBLE_ARR_TYPE} from "../../util/Constant";
 
 export class TroubleShortlyScreen extends Component {
@@ -61,8 +61,6 @@ export class TroubleShortlyScreen extends Component {
                     confirmPress={(res) => {
                       this.submitField = Object.assign(this.submitField,{organizationId: res.id });
                       this.submitField = Object.assign(this.submitField,{organizationName: res.name });
-                      // this.submitField.append('organizationId',res.id);
-                      // this.submitField.append('organizationName',res.name);
                       this.setState({
                         orgTitle: res.name,
                       });
@@ -81,7 +79,6 @@ export class TroubleShortlyScreen extends Component {
                   rightElement={<PickerTimeComponent
                     onSelectDate={(time) => {
                       this.submitField = Object.assign(this.submitField,{troubleshootingTime:time});
-                      // this.submitField.append('troubleshootingTime',time);
                       this.setState({
                         timeTitle: time,
                       });
@@ -93,7 +90,7 @@ export class TroubleShortlyScreen extends Component {
                 />
                 <View style={[{paddingTop: 15,paddingBottom: 15},styles.borderBottom]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患类型</Text>
-                  <CheckBoxGroupsComponent options={TROUBLE_ARR_TYPE} onSelectData={(res) => {
+                  <CheckMultipleComponent options={TROUBLE_ARR_TYPE} onSelectData={(res) => {
                     const arr = ['hidTypePerson','hidTypeThing','hidTypeManage'];
                     res.forEach((item,index) => {
                       if (item) {
@@ -111,7 +108,6 @@ export class TroubleShortlyScreen extends Component {
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患内容</Text>
                   <Input
                     onChangeText={(text) =>{
-                      // this.submitField.append('hidDangerContent',text);
                       this.submitField = Object.assign(this.submitField,{hidDangerContent: text});
                       this.setState({
                     })}}
@@ -172,24 +168,19 @@ export class TroubleShortlyScreen extends Component {
       for (let k in this.copyObj) {
         if (this.copyObj.hasOwnProperty(k)) {
           this.submitField = Object.assign(this.submitField,{[k]:this.copyObj[k]});
-          // this.submitField.append(k,this.copyObj[k]);
         }
       }
     }
     const beforeFileArr = [];
     this.beforeFile.map((item) => {
-      // beforeFileArr.push(dataURLtoFile(item.uri,item.fileName));
       beforeFileArr.push({file: item.uri});
     });
-    // this.submitField.append('beforeImg',beforeFileArr);
     this.submitField = Object.assign(this.submitField,{beforeImg: beforeFileArr});
     const afterFileArr = [];
     this.afterFile.map((item) => {
       afterFileArr.push({file: item.uri});
-      // afterFileArr.push(dataURLtoFile(item.uri,item.fileName));
     });
     this.submitField = Object.assign(this.submitField,{afterImg: afterFileArr});
-
     post(TroubleApi.ADD_STRAIGHTAWAY_TRO,this.submitField)
       .then((res) => {
         hiddenLoading();

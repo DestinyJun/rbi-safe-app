@@ -55,7 +55,7 @@ export const INPUT_BACK_REMIND_MESSAGE = '您是否需要返回？若返回则�
 export const TROUBLE_ARR_TYPE = ['人','物','管理'];
 
 // 隐患等级数组信息
-export const TROUBLE_ARR_GRADE = ['Ⅰ级','Ⅱ级','Ⅲ级','Ⅳ级','Ⅴ级'];
+export const TROUBLE_ARR_GRADE = ['Ⅰ','Ⅱ','Ⅲ','Ⅳ','Ⅴ'];
 
 // 整改状态
 export const TROUBLE_STATUS_LIST = [

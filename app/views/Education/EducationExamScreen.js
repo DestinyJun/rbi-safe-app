@@ -47,9 +47,10 @@ export class EducationExamScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topicList: null
+      topicList: []
     };
     this.exam = {...props.route.params.exam};
+    this.name = props.route.params.name;
     this.params = {
       personnelTrainingRecordId: props.route.params.exam.personnelTrainingRecordId,
       safeAnswerRecordList: []
@@ -74,16 +75,16 @@ export class EducationExamScreen extends Component {
           {
             this.state.topicList && this.state.topicList.map((item,index) => {
               if (item.subjectType === 1) {
-                return ( <SingleTopicComponent key={`single${index}`} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
+                return ( <SingleTopicComponent key={`single${index}`} name={this.name} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
               }
               if (item.subjectType === 2) {
-                return ( <MultipleTopicComponent key={`multiple${index}`} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
+                return ( <MultipleTopicComponent key={`multiple${index}`} name={this.name} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
               }
               if (item.subjectType === 3) {
-                return ( <JudgeTopicComponent key={`judge${index}`} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
+                return ( <JudgeTopicComponent key={`judge${index}`} name={this.name} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
               }
               if (item.subjectType === 4) {
-                return ( <FillTopicComponent key={`fill${index}`} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
+                return ( <FillTopicComponent key={`fill${index}`} name={this.name} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
               }
             })
           }
@@ -95,32 +96,64 @@ export class EducationExamScreen extends Component {
 
   // 组件挂在后生命周期
   componentDidMount() {
-    showLoading();
-    post(EducationApi.GET_EXAM_PAPER,{id: this.exam.id})
-      .then((res) => {
-        hiddenLoading();
-        this.setState({
-          topicList: [
-            ...res.data.completion,
-            ...res.data.judgmentQuestions,
-            ...res.data.multipleChoiceQuestions,
-            ...res.data.singleChoiceQuestions]
-        },() => {
-        });
-      })
-      .catch((err) => {
-        hiddenLoading();
-        console.log(err);
-      })
+    switch (this.name) {
+      case '开始考试':
+        this.httpRequestExam(EducationApi.GET_EXAM_PAPER,{id: this.exam.id});
+        break;
+      case '模拟考试':
+        this.httpRequestExam(EducationApi.GET_EXAM_SIMULATION,{trainingPlanId: this.exam.id});
+        break;
+    }
   }
 
   // 结束考试操作
   edExamComplete() {
+    switch (this.name) {
+      case '开始考试':
+        this.httpRequestFinishExam(EducationApi.COMPLETE_EXAM);
+        break;
+      case '模拟考试':
+        this.httpRequestFinishExam(EducationApi.COMPLETE_SIMULATION_EXAM);
+        break;
+    }
+  }
+
+  // 请求获取试卷
+  httpRequestExam(url,params) {
     showLoading();
-    post(EducationApi.COMPLETE_EXAM,this.params)
+    post(url,params)
+      .then((res) => {
+        this.setState({
+          topicList: [
+            ...res.data.completion,
+            ...res.data.multipleChoiceQuestions,
+            ...res.data.judgmentQuestions,
+            ...res.data.singleChoiceQuestions
+          ]
+        });
+        hiddenLoading();
+      })
+      .catch((err) => {
+        hiddenLoading();
+      })
+  }
+
+  // 考试处理请求
+  httpRequestFinishExam(url) {
+    showLoading();
+    const fields = {simulationSafeAnswerRecords: null};
+    if (this.name === '模拟考试') {
+      fields.simulationSafeAnswerRecords = this.params.safeAnswerRecordList.map((item) => ({
+        id: item.testUestionsId,
+        answerResults: item.answerResults,
+        rightKey: item.rightKey,
+        score: item.score,
+      }));
+    }
+    post(url,this.name === '模拟考试'?fields:this.params)
       .then((res) => {
         hiddenLoading();
-        successRemind(res.message,this.props.navigation);
+        successRemind(res.message,this.props.navigation,'返回');
       })
       .catch(err => {
         hiddenLoading();

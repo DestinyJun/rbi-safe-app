@@ -12,10 +12,19 @@ export class DialogContentComponent extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      isVisible: props.isVisible,
-      examNotes: props.examNotes
+      isVisible: false,
+      prevPropsIsVisible: null,
     };
-    console.log(props);
+  }
+
+  static getDerivedStateFromProps(props,state) {
+    if (props.isVisible !== state.isVisible) {
+      return {
+        isVisible: props.isVisible,
+        prevPropsIsVisible: props.isVisible,
+      }
+    }
+    return null;
   }
   render() {
     return (
@@ -37,20 +46,12 @@ export class DialogContentComponent extends Component{
           <View style={styles.content}>
             <View style={styles.contentTitle}>
               <Text style={{fontSize: 18,color: '#fff'}}>
-                考前阅读
+                {this.props.title}
               </Text>
             </View>
-            <View style={styles.contentText}>
-              <ScrollView style={{flex: 1}}>
-                <Text style={{fontSize: 16,color: '#878787'}}>
-                  {`  ${this.state.examNotes}`}
-                </Text>
-              </ScrollView>
-            </View>
-            <View style={styles.buttons}>
-              <Button title={'确定考试'} buttonStyle={{backgroundColor: '#226AD5'}} onPress={() =>this.setState({isVisible: false})} />
-              <Button title={'取消考试'} buttonStyle={{backgroundColor: '#FFA347'}} onPress={() =>this.setState({isVisible: false})} />
-            </View>
+            <ScrollView style={{flex: 1}} keyboardShouldPersistTaps={"always"}>
+              {this.props.children}
+            </ScrollView>
           </View>
         </View>
       </Modal>
@@ -74,6 +75,14 @@ const styles = StyleSheet.create({
     left: 0,
     backgroundColor: 'rgba(0,0,0,0.1)'
   },
+  content: {
+    minHeight: '40%',
+    width: '90%',
+    backgroundColor: '#fff',
+    bottom: 0,
+    paddingBottom: 10,
+    borderRadius: 10
+  },
   contentTitle:{
     height: 50,
     backgroundColor: '#226AD5',
@@ -82,22 +91,4 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
-  content: {
-    height: '40%',
-    width: '90%',
-    backgroundColor: '#FFFFFF',
-    bottom: 0,
-    paddingBottom: 30,
-    borderRadius: 10
-  },
-  contentText: {
-    padding: 15,
-    flex: 4,
-  },
-  buttons: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  }
 });

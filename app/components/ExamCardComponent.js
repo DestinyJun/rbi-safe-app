@@ -6,7 +6,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {Icon, Slider, Text, Button,} from "react-native-elements";
-import {dialogRemind} from "../util/ToolFunction";
 
 export class ExamCardComponent extends Component {
   constructor(props) {
@@ -14,7 +13,7 @@ export class ExamCardComponent extends Component {
     this.state = {
       isVisible: true,
       train: props.train,
-      exam: props.exam,
+      exam: props.exam?props.exam: null,
     };
     this.navigation = props.exam;
   }
@@ -30,12 +29,14 @@ export class ExamCardComponent extends Component {
           <View style={[styles.timerBox]}>
             <Icon type={'font-awesome'} name={'calendar'} size={16} color={'#3B86FF'}/>
             <Text
-              style={[c_styles.h6, c_styles.ml_2]}>培训时间：{this.state.train.startTime}—{this.state.train.endTime}</Text>
+              style={[c_styles.h6, c_styles.ml_2]}>培训时间：{this.state.train.startTime.split(' ')[0]}—{this.state.train.endTime.split(' ')[0]}</Text>
           </View>
-          <View style={[styles.timerBox]}>
-            <Icon type={'font-awesome'} name={'clock-o'} size={18} color={'#3B86FF'}/>
-            <Text style={[c_styles.h6, c_styles.ml_2]}>考试时间：{this.state.exam.startTime}—{this.state.exam.endTime}</Text>
-          </View>
+          {
+            this.state.exam && <View style={[styles.timerBox]}>
+              <Icon type={'font-awesome'} name={'clock-o'} size={18} color={'#3B86FF'}/>
+              <Text style={[c_styles.h6, c_styles.ml_2]}>考试时间：{this.state.exam&&this.state.exam.startTime.split(' ')[0]}—{this.state.exam&&this.state.exam.endTime.split(' ')[0]}</Text>
+            </View>
+          }
         </View>
         <View style={[styles.progress, c_styles.pl_5, c_styles.pt_3, c_styles.pb_3]}>
           {/* <View style={[styles.progressTitle]}>
@@ -52,7 +53,7 @@ export class ExamCardComponent extends Component {
         </View>
         <View style={[styles.buttons]}>
           {
-            this.state.exam.isExam ?
+            this.state.exam?
               <Button
                 title={'开始考试'}
                 TouchableComponent={TouchableOpacity}
@@ -71,11 +72,11 @@ export class ExamCardComponent extends Component {
                   ], {cancelable: false});
                 }}/> :
               <Button
-                title={'模拟考试'}
-                type={'outline'}
-                buttonStyle={[styles.buttonsStyles, {borderColor: '#3883FA'}]}
+                disabled={true}
+                title={'开始考试'}
+                buttonStyle={[styles.buttonsStyles, {backgroundColor: '#63DCAF'}]}
                 titleStyle={{color: '#3883FA'}}
-                onPress={this.imitateExam.bind(this, this.state.train)}/>
+              />
           }
           <Button title={'继续学习'} buttonStyle={[styles.buttonsStyles, {backgroundColor: '#3883FA'}]} onPress={this.continueStudy.bind(this)}/>
         </View>

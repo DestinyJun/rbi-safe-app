@@ -17,7 +17,8 @@ export const EducationTrainStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingTop: 15,
-    paddingBottom: 5
+    paddingBottom: 5,
+    justifyContent: 'space-between'
   },
   videos: {
     flex: 1,

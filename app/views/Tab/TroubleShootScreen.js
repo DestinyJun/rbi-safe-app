@@ -87,7 +87,6 @@ export class TroubleShootScreen extends Component {
       showLoading();
       post(TroubleApi.GET_HANDLE_LIST,{pageNo: 1,pageSize: 100000})
         .then((res) => {
-          console.log(res);
           hiddenLoading();
           this.setState({
             list: [...res.data.contents]
