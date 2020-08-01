@@ -8,7 +8,6 @@ import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {ProFileInfoStyles as styles} from "./ProFileInfoStyles";
 import {Header, Icon, ListItem} from "react-native-elements";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
-import {HEADER_IMAGE} from "../../util/Constant";
 
 export class ProFileInfoScreen extends Component {
   constructor(props) {

@@ -6,13 +6,10 @@
 import React, {Component} from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import {SafeEducationStyles as styles} from "./SafeEducationStyles";
-import {Header, Icon} from "react-native-elements";
+import {Header, Icon, Button} from "react-native-elements";
 import {ExamCardComponent} from "../../components/ExamCardComponent";
 import {post} from "../../service/Interceptor";
 import {EducationApi} from "../../service/EducationApi";
-import {Store} from "../../redux/store";
-import {isLoading} from "../../redux/actions";
-import {ISLOADING} from "../../redux/actionTypes";
 import {hiddenLoading, showLoading} from "../../util/ToolFunction";
 
 
@@ -22,7 +19,7 @@ export class SafeEducationScreen extends Component {
     this.state = {
       seExamList: null
     };
-    this.unfocus = null
+    this.unfocus = null;
   }
   render() {
     return (
@@ -36,7 +33,7 @@ export class SafeEducationScreen extends Component {
             marginBottom: 10
           }}
           centerComponent={{ text: '安全教育培训', style: { color: '#fff', fontSize: 18 } }}
-          rightComponent={{ icon: 'search', color: '#fff' }}
+          rightComponent={<Button title={'错题库'} buttonStyle={{backgroundColor:'#226AD5'}} onPress={this.errorTopicStart.bind(this)} />}
         />
         {
           this.state.seExamList?(
@@ -110,7 +107,7 @@ export class SafeEducationScreen extends Component {
         // 查询学习计划
         post(EducationApi.GET_LEARN_INFO,{pageNo: 1,pageSize: 10000})
           .then((val) => {
-            Store.dispatch(isLoading({type: ISLOADING, isLoading: false}));
+            hiddenLoading();
             res.data.contents.forEach((l) => {
               l.isExam = true;
               val.data.contents.map((item) => {
@@ -138,4 +135,15 @@ export class SafeEducationScreen extends Component {
         hiddenLoading();
       })
   }
+
+  // 错题训练
+  errorTopicStart() {
+    // 开始考试
+    this.props.navigation.navigate(
+      'EducationErrorScreen',
+      {
+        name: '错题训练',
+      }
+    );
+  };
 }

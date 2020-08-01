@@ -194,3 +194,13 @@ export function blobToFile(theBlob, fileName){
   theBlob.name = fileName;
   return theBlob;
 }
+
+/**
+ * 保留两位小数换算
+ * @param divisor
+ * @param dividend
+ * @returns {number}
+ */
+export function percentage(divisor,dividend) {
+  return parseFloat((parseFloat(divisor) / parseFloat(dividend)).toFixed(2));
+}

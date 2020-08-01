@@ -6,6 +6,7 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {Icon, Slider, Text, Button,} from "react-native-elements";
+import {percentage} from "../util/ToolFunction";
 
 export class ExamCardComponent extends Component {
   constructor(props) {
@@ -13,10 +14,10 @@ export class ExamCardComponent extends Component {
     this.state = {
       isVisible: true,
       train: props.train,
-      exam: props.exam?props.exam: null,
+      exam: props.exam ? props.exam : null,
     };
     this.navigation = props.exam;
-  }
+}
 
   render() {
     return (
@@ -34,26 +35,26 @@ export class ExamCardComponent extends Component {
           {
             this.state.exam && <View style={[styles.timerBox]}>
               <Icon type={'font-awesome'} name={'clock-o'} size={18} color={'#3B86FF'}/>
-              <Text style={[c_styles.h6, c_styles.ml_2]}>考试时间：{this.state.exam&&this.state.exam.startTime.split(' ')[0]}—{this.state.exam&&this.state.exam.endTime.split(' ')[0]}</Text>
+              <Text style={[c_styles.h6, c_styles.ml_2]}>考试时间：{this.state.exam && this.state.exam.startTime.split(' ')[0]}—{this.state.exam && this.state.exam.endTime.split(' ')[0]}</Text>
             </View>
           }
         </View>
         <View style={[styles.progress, c_styles.pl_5, c_styles.pt_3, c_styles.pb_3]}>
-          {/* <View style={[styles.progressTitle]}>
-          <Text style={[c_styles.h5]}>学习进度</Text>
-          <Text style={[c_styles.h5,{color: '#307AEC'}]}>60%</Text>
-        </View>
-        <Slider
-          thumbStyle={{backgroundColor: 'transparent'}}
-          disabled={true}
-          trackStyle={{height: 8,borderRadius: 5}}
-          maximumTrackTintColor={'#F2F2F2'}
-          minimumTrackTintColor={'#3883FA'}
-          value={0.6}/>*/}
+          <View style={[styles.progressTitle]}>
+            <Text style={[c_styles.h5]}>学习进度</Text>
+            <Text style={[c_styles.h5, {color: '#307AEC'}]}>{this.state.train.finishStudyTime?Math.floor(percentage(this.state.train.finishStudyTime,this.state.train.trainingDuration)*100): 0}%</Text>
+          </View>
+          <Slider
+            thumbStyle={{backgroundColor: 'transparent'}}
+            disabled={true}
+            trackStyle={{height: 8, borderRadius: 5}}
+            maximumTrackTintColor={'#F2F2F2'}
+            minimumTrackTintColor={'#3883FA'}
+            value={this.state.train.finishStudyTime?percentage(this.state.train.finishStudyTime,this.state.train.trainingDuration): 0}/>
         </View>
         <View style={[styles.buttons]}>
           {
-            this.state.exam?
+            this.state.exam ?
               <Button
                 title={'开始考试'}
                 TouchableComponent={TouchableOpacity}
@@ -78,7 +79,8 @@ export class ExamCardComponent extends Component {
                 titleStyle={{color: '#3883FA'}}
               />
           }
-          <Button title={'继续学习'} buttonStyle={[styles.buttonsStyles, {backgroundColor: '#3883FA'}]} onPress={this.continueStudy.bind(this)}/>
+          <Button title={'继续学习'} buttonStyle={[styles.buttonsStyles, {backgroundColor: '#3883FA'}]}
+                  onPress={this.continueStudy.bind(this)}/>
         </View>
       </View>
     );

@@ -35,6 +35,7 @@ import {initIsLoginState} from "./app/redux/actions";
 import {TabButtonComponent} from "./app/components/TabButtonComponent";
 import {FocusStatusBarComponent} from "./app/components/FocusStatusBarComponent";
 import {FullScreenLoadingComponent} from "./app/components/FullScreenLoadingComponent";
+import {EducationErrorScreen} from "./app/views/Education/EducationErrorScreen";
 
 // 创建路由对象
 const Stack = createStackNavigator();
@@ -87,6 +88,7 @@ export default class App extends React.Component {
               <Stack.Screen name={'TabBarScreen'} component={TabBarScreen}/>
               <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen}/>
               <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen}/>
+              <Stack.Screen name={'EducationErrorScreen'} component={EducationErrorScreen}/>
               <Stack.Screen name={'TroubleShortlyScreen'} component={TroubleShortlyScreen}/>
               <Stack.Screen name={'TroubleReportScreen'} component={TroubleReportScreen}/>
               <Stack.Screen name={'TroubleHandleScreen'} component={TroubleHandleScreen}/>

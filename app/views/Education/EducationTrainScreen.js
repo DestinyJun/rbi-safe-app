@@ -13,7 +13,7 @@ import {ListItemSubtitleComponent} from "../../components/ListItemSubtitleCompon
 import {ListItemRightIconComponent} from "../../components/ListItemRightIconComponent";
 // 自定义工具类
 import {IMAGE_VIDEO_1} from "../../util/Constant";
-import {hiddenLoading, showLoading} from "../../util/ToolFunction";
+import {errorRemind, hiddenLoading, showLoading} from "../../util/ToolFunction";
 import {post} from "../../service/Interceptor";
 import {EducationApi} from "../../service/EducationApi";
 
@@ -22,10 +22,11 @@ export class EducationTrainScreen extends Component {
     super(props);
     this.state = {
       fileList: null,
-      videoList: null
+      videoList: null,
+      isStudy: false
     };
     this.train = {...props.route.params.train};
-    console.log( this.train);
+    console.log(this.train);
   }
 
   render() {
@@ -63,8 +64,9 @@ export class EducationTrainScreen extends Component {
                   rightTitle={'开始学习'}
                   // rightIcon={{type: 'font-awesome', name: l.isRead?'check-circle': 'angle-right',color: '#3B86FF',size: 18}}
                   // rightTitle={l.isRead?null:'继续学习'}
+                  checkmark={l.whetherStudy === 1?{type: 'font-awesome',name: 'check-circle',color: 'green'}:false}
                   rightTitleStyle={{color:'#3A86FF', fontSize: 16}}
-                  onPress={() => this.props.navigation.navigate('DownloadScreen',l)}
+                  onPress={this.studyOnPress.bind(this,'file',l)}
                 />
               ))
             }
@@ -91,7 +93,8 @@ export class EducationTrainScreen extends Component {
                   leftElement={<Image source={IMAGE_VIDEO_1} style={{width: 100,height: 60}} resizeMode={'cover'} />}
                   // rightIcon={l.isRead?{type: 'font-awesome', name: 'check-circle',color: '#3B86FF',size: 18}:<ListItemRightIconComponent />}
                   rightIcon={<ListItemRightIconComponent />}
-                  onPress={() => this.props.navigation.navigate('PlayVideoScreen',l)}
+                  checkmark={l.whetherStudy === 1?{type: 'font-awesome',name: 'check-circle',color: 'green'}:false}
+                  onPress={this.studyOnPress.bind(this,'video',l)}
                 />
               ))
             }
@@ -103,21 +106,25 @@ export class EducationTrainScreen extends Component {
 
   // 组件挂在后生命周期
   componentDidMount() {
-    showLoading();
-    post(EducationApi.GET_TRAIN_INFO,{id: this.train.id})
-      .then((res) => {
-        hiddenLoading();
-        this.setState({
-          fileList: [...res.data.file],
-          videoList: [...res.data.video]
-        },() => {
-          console.log(this.state.fileList);
-          console.log(this.state.videoList);
-        });
-      })
-      .catch((err) => {
-        hiddenLoading();
-      })
+    this.unfocus = this.props.navigation.addListener('focus',() => {
+      showLoading();
+      post(EducationApi.GET_TRAIN_INFO,{id: this.train.id})
+        .then((res) => {
+          hiddenLoading();
+          this.setState({
+            fileList: [...res.data.file],
+            videoList: [...res.data.video]
+          });
+        })
+        .catch((err) => {
+          hiddenLoading();
+        })
+    });
+  }
+
+  // 组件卸载
+  componentWillUnmount() {
+    this.unfocus();
   }
 
   // 模拟考试
@@ -131,4 +138,26 @@ export class EducationTrainScreen extends Component {
       }
     );
   };
+
+  // 学习操作
+  studyOnPress(name,item) {
+    showLoading();
+    const fields = {
+      planId: this.train.id,
+      contentId: item.id,
+    };
+    post(EducationApi.ADD_STUDY_TIME,fields)
+      .then((res) => {
+        hiddenLoading();
+        if (name === 'file') {
+          this.props.navigation.navigate('DownloadScreen',item)
+        } else {
+          this.props.navigation.navigate('PlayVideoScreen',item)
+        }
+      })
+      .catch((err) => {
+        hiddenLoading();
+        errorRemind(err.message,this.props.navigation)
+      })
+  }
 }

@@ -20,4 +20,14 @@ export class EducationApi {
 
   // 根据培训计划id查询培训内容
   static GET_TRAIN_INFO = '/getLearningContentById';
+
+  // 获取自身错题信息
+  static GET_ERROR_TOPIC = '/findByPage';
+
+  //  完成错题训练
+  static COMPLETE_ERROR_EXAM = '/handlePersonalMistakes';
+
+  //  添加学时
+  static ADD_STUDY_TIME= '/addFinishStudyTime';
+
 }
