@@ -7,7 +7,6 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TextInput} from 'react-native';
 
 export function CardInputComponent(props) {
-  console.log(props);
   // 自评内容
   const [selfEvaluation,setSelfEvaluation] = useState(props.selfEvaluation?props.selfEvaluation: '请输入自评内容');
   // 自评分数

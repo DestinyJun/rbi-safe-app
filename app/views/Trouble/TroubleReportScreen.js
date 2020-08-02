@@ -165,10 +165,16 @@ export class TroubleReportScreen extends Component {
   // 整改提交操作
   onSubmitOnPress() {
     showLoading();
-    if (JSON.stringify(this.copyObj) !== '{}') {
-      for (let k in this.copyObj) {
-        if (this.copyObj.hasOwnProperty(k)) {
-          this.submitField = Object.assign(this.submitField, {[k]: this.copyObj[k]});
+    const arr = ['hidTypePerson','hidTypeThing','hidTypeManage'];
+    arr.forEach((k) => {
+      if (k in this.submitField) {
+        delete this.submitField[k]
+      }
+    });
+    if (JSON.stringify(this.typeObj) !== '{}') {
+      for (let k in this.typeObj) {
+        if (this.typeObj.hasOwnProperty(k)) {
+          this.submitField[k] = this.typeObj[k]
         }
       }
     }

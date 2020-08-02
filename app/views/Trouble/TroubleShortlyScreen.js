@@ -165,6 +165,12 @@ export class TroubleShortlyScreen extends Component {
   // 整改提交操作
   onSubmitOnPress(){
     showLoading();
+    const arr = ['hidTypePerson','hidTypeThing','hidTypeManage'];
+    arr.forEach((k) => {
+      if (k in this.submitField) {
+        delete this.submitField[k]
+      }
+    });
     if (JSON.stringify(this.copyObj) !== '{}') {
       for (let k in this.copyObj) {
         if (this.copyObj.hasOwnProperty(k)) {

@@ -23,7 +23,6 @@ export class DoubleInventoryCheckScreen extends Component {
     };
     this.type = this.props.route.params.type;
     this.addFiled = null;
-    console.log(props);
   }
 
   render() {
@@ -49,10 +48,19 @@ export class DoubleInventoryCheckScreen extends Component {
                   CardInputComponent
                   type={this.type}
                   onChangeSelfEvaluation={(text) => {
-                    this.addFiled.content[i].selfEvaluation = text;
+                    if (this.type === 2) {
+                      this.addFiled.content[i].checkResult = text;
+                    } else {
+                      this.addFiled.content[i].selfEvaluation = text;
+                    }
+
                   }}
                   onChangeSelfFraction={(text) => {
-                    this.addFiled.content[i].selfFraction = text;
+                    if (this.type === 2) {
+                      this.addFiled.content[i].checkFraction = text;
+                    } else {
+                      this.addFiled.content[i].selfFraction = text;
+                    }
                   }}
                   {...item} index={i}
                   key={i}/>))
@@ -125,7 +133,6 @@ export class DoubleInventoryCheckScreen extends Component {
       showLoading();
       post(DoubleDutyApi.GET_LIST_FILL, {})
         .then((res) => {
-          console.log(res);
           hiddenLoading();
           for (let key in res.data) {
             if (res.data.hasOwnProperty(key)) {
