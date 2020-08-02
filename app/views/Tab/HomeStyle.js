@@ -21,5 +21,17 @@ export const HomeStyle = StyleSheet.create({
     padding: 5,
     borderRadius: 8,
     marginTop: 10,
-  }
+  },
+  imgBoxTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 10
+  },
+  imgBoxList: {
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
 });

@@ -7,6 +7,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TextInput} from 'react-native';
 
 export function CardInputComponent(props) {
+  console.log(props);
   // 自评内容
   const [selfEvaluation,setSelfEvaluation] = useState(props.selfEvaluation?props.selfEvaluation: '请输入自评内容');
   // 自评分数
@@ -24,17 +25,34 @@ export function CardInputComponent(props) {
           {/*自评内容*/}
           <View style={{flex: 5,flexDirection: 'row',alignItems: 'center'}}>
             <Text style={[c_styles.h6, {color: '#67A1FF'}]}>自评： </Text>
-            <TextInput placeholder={selfEvaluation} style={[c_styles.h6, {textAlign: 'left', color: '#6D6D6D'}]} onChangeText={(text => {
+            <TextInput editable={props.type === 1}  placeholder={selfEvaluation} style={[c_styles.h6, {textAlign: 'left', color: '#6D6D6D'}]} onChangeText={(text => {
               props.onChangeSelfEvaluation(text);
             })} />
           </View>
           {/*自评分数*/}
           <View style={{flex: 5}}>
-            <TextInput placeholder={selfFraction.toString()} style={[c_styles.h6, {textAlign: 'right', color: '#6D6D6D'}]} onChangeText={(text => {
+            <TextInput editable={props.type === 1} placeholder={selfFraction.toString()} style={[c_styles.h6, {textAlign: 'right', color: '#6D6D6D'}]} onChangeText={(text => {
               props.onChangeSelfFraction(text);
             })} />
           </View>
         </View>
+        {
+          props.type === 2 && <View style={[styles.rightBottom]}>
+            {/*检查内容*/}
+            <View style={{flex: 5,flexDirection: 'row',alignItems: 'center'}}>
+              <Text style={[c_styles.h6, {color: '#67A1FF'}]}>检查内容： </Text>
+              <TextInput placeholder={'请输入检查内容'} style={[c_styles.h6, {textAlign: 'left', color: '#6D6D6D'}]} onChangeText={(text => {
+                props.onChangeSelfEvaluation(text);
+              })} />
+            </View>
+            {/*检查分数*/}
+            <View style={{flex: 5}}>
+              <TextInput placeholder={'请输入检查分数'} style={[c_styles.h6, {textAlign: 'right', color: '#6D6D6D'}]} onChangeText={(text => {
+                props.onChangeSelfFraction(text);
+              })} />
+            </View>
+          </View>
+        }
       </View>
     </View>
   );

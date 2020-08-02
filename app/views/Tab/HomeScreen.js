@@ -4,15 +4,20 @@
  * date：  2020/3/16 20:25
  */
 import React, {Component} from 'react';
-import {View, BackHandler, ToastAndroid, Platform, ScrollView, Text} from 'react-native';
+import {View, BackHandler, ToastAndroid, Platform, ScrollView, Text, TouchableOpacity} from 'react-native';
 import {HomeStyle as styles} from "./HomeStyle";
-import {Header,Image} from "react-native-elements";
-import {IMAGE_HOME_ONE, IMAGE_HOME_THREE, IMAGE_HOME_TWO} from "../../util/Constant";
+import {Button, Header, Image, ListItem} from "react-native-elements";
+import {IMAGE_HOME_ONE, IMAGE_HOME_TWO} from "../../util/Constant";
+import {hiddenLoading, showLoading} from "../../util/ToolFunction";
+import {post} from "../../service/Interceptor";
+import {HomeApi} from "../../service/HomeApi";
 
 export class HomeScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      infoList: null
+    };
   }
 
   render() {
@@ -36,7 +41,35 @@ export class HomeScreen extends Component {
               <Image source={IMAGE_HOME_TWO} style={{height: 300}} resizeMode={'contain'} />
             </View>
             <View style={styles.imgBox}>
-              <Image source={IMAGE_HOME_THREE} style={{height: 300}} resizeMode={'contain'} />
+              <View style={styles.imgBoxTitle}>
+                <Text style={[c_styles.h6,{color: '#555555'}]}>综合信息公告栏</Text>
+                <Button onPress={() => {
+                  this.props.navigation.navigate('HomeInformationScreen')
+                }} title={'查看更多'} titleStyle={{color: '#C0C0C0',fontSize: 14}} buttonStyle={{backgroundColor: 'unset'}} />
+              </View>
+              <View style={styles.imgBoxList}>
+                {
+                  this.state.infoList&&this.state.infoList.map((item,index) => (
+                    <ListItem
+                      Component={TouchableOpacity}
+                      onPress={() =>{this.props.navigation.navigate('HomeInformationScreen')}}
+                      key={index}
+                      containerStyle={{backgroundColor: '#fff',borderWidth: 1,borderRadius: 5,borderColor: '#F4F4F4',marginBottom: 10}}
+                      leftAvatar={{
+                        containerStyle: {backgroundColor: '#226AD5',paddingTop: 8,paddingLeft: 8,paddingRight: 8,borderRadius: 8},
+                        size: 60,
+                        icon: {name: 'comment',type: 'material',color: '#fff',size: 40},
+                        iconStyle: {backgroundColor: '#226AD5'},
+                        rounded: false
+                      }}
+                      title={item.title}
+                      titleStyle={{color: '#3A3A3A'}}
+                      subtitle={item.idt}
+                      subtitleStyle={{paddingTop: 14}}
+                    />
+                  ))
+                }
+              </View>
             </View>
           </ScrollView>
         </View>
@@ -49,9 +82,23 @@ export class HomeScreen extends Component {
     if (Platform.OS === 'android') {
       BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
     }
+    this.unfocus = this.props.navigation.addListener('focus',() => {
+      showLoading();
+      post(HomeApi.GET_MINE_LIST,{pageNo: 1,pageSize: 3})
+        .then(res => {
+          hiddenLoading();
+          this.setState({
+            infoList: [...res.data.contents]
+          });
+        })
+        .catch(err => {
+          hiddenLoading();
+        })
+    });
   }
 
   componentWillUnmount() {
+    this.unfocus();
     if (Platform.OS === 'android') {
       BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
     }

@@ -20,8 +20,8 @@ export function TroubleListComponent(props) {
             {props.processingStatus === '6'?<Text style={[styles.flag,{backgroundColor: '#226AD5',}]}>审核不通过</Text>:null}
           </View>
           <View style={[styles.topTitle]}>
-            <Text numberOfLines={1} ellipsizeMode={'tail'} style={[c_styles.h5,c_styles.text_dark]}>
-              {props.title}
+            <Text numberOfLines={1} ellipsizeMode={'tail'} style={[c_styles.h5,c_styles.text_dark,{color: props.color}]}>
+              {props.title === 'null'?'中铝贵州分公司':props.title}
             </Text>
           </View>
           <View style={[styles.topDate]}>

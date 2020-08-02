@@ -26,7 +26,6 @@ export class EducationTrainScreen extends Component {
       isStudy: false
     };
     this.train = {...props.route.params.train};
-    console.log(this.train);
   }
 
   render() {

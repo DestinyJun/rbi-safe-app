@@ -23,6 +23,7 @@ export class DoubleInventoryCheckScreen extends Component {
     };
     this.type = this.props.route.params.type;
     this.addFiled = null;
+    console.log(props);
   }
 
   render() {
@@ -34,7 +35,7 @@ export class DoubleInventoryCheckScreen extends Component {
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {
             this.props.navigation.goBack()
           }}/>}
-          centerComponent={{text: `责任清单填写`, style: {fontSize: 20, color: '#fff'}}}
+          centerComponent={{text: this.type === 1?'责任清单填写':'责任清单审核', style: {fontSize: 20, color: '#fff'}}}
         />
         <View style={[styles.content]}>
           <View style={[styles.contentTitle]}>
@@ -46,6 +47,7 @@ export class DoubleInventoryCheckScreen extends Component {
               {
                 this.state.list && this.state.list.map((item, i) => (<
                   CardInputComponent
+                  type={this.type}
                   onChangeSelfEvaluation={(text) => {
                     this.addFiled.content[i].selfEvaluation = text;
                   }}
@@ -123,6 +125,7 @@ export class DoubleInventoryCheckScreen extends Component {
       showLoading();
       post(DoubleDutyApi.GET_LIST_FILL, {})
         .then((res) => {
+          console.log(res);
           hiddenLoading();
           for (let key in res.data) {
             if (res.data.hasOwnProperty(key)) {

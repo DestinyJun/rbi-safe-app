@@ -47,18 +47,13 @@ export class DoubleDutyScreen extends Component {
             <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>我的责任清单（{this.state.pendingList?this.state.pendingList.length: '0'}）</Text>
           </View>
           <ScrollView style={{maxHeight: 190}}>
-            {/*
-              onPress={() => {
-                    if (l.isState === 1) {
-                      this.props.navigation.navigate('DoubleInventoryCheckScreen',l)
-                    } else if(l.isState === 2) {
-                      this.props.navigation.navigate('DoubleInventoryFillScreen',l)
-                    }
-                  }}
-            */}
             {
               this.state.pendingList&&this.state.pendingList.map((l, i) => (
                 <ListItem
+                  onPress={() => {
+                    this.props.navigation.navigate('DoubleInventoryDetailScreen',l)
+                  }}
+                  Component={TouchableOpacity}
                   key={i}
                   containerStyle={{marginTop: 10,borderRadius: 10}}
                   title={`${l.templateName}  ${l.statusName}`}

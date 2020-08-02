@@ -11,9 +11,13 @@ export class CheckSingleComponent extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      checked:props.options.map(() => false)
+      checked:props.options.map((item) => {
+        return item === props.value;
+      })
     };
-    this.arr = props.options.map(() =>false);
+    this.arr = props.options.map((item) => {
+      return item === props.value;
+    });
   }
   render(){
     return (

@@ -23,7 +23,7 @@ export class MultipleTopicComponent extends Component{
             <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>多选</Text>
           </View>
           <View style={[styles.titleContent,c_styles.pl_3]} >
-            <Text style={[c_styles.h6]}>{this.props.subject}</Text>
+            <Text style={[c_styles.h6]}>{`${this.props.serial+1}、${this.props.subject}`}</Text>
           </View>
         </View>
         <View style={[styles.choose]}>
@@ -62,6 +62,7 @@ export class MultipleTopicComponent extends Component{
         rightKey: this.props.rightKey,
         score: this.props.score,
         testPapreId: this.props.testPapreId,
+        questionBankSubjectId: this.props.questionBankSubjectId?this.props.questionBankSubjectId: '',
       });
     });
   };

@@ -30,6 +30,8 @@ export class TroubleHandleScreen extends Component {
     this.state = {
       checked: true,
       timeTitle: null,
+      specifiedRectificationTime: null,
+      rectificationOpinions: null,
       info: null,
       beforeImgs: null,
       afterImgs: null,
@@ -45,7 +47,9 @@ export class TroubleHandleScreen extends Component {
     this.afterFile = [];
     this.processingStatus = props.route.params.processingStatus;
     this.hidDangerCode = props.route.params.hidDangerCode;
-    this.title = TROUBLE_STATUS_LIST[parseInt(this.processingStatus-1)]
+    this.hidDangerGrade = props.route.params.hidDangerGrade;
+    this.title = TROUBLE_STATUS_LIST[parseInt(this.processingStatus-1)];
+    this.typeList = {hidTypePerson: props.route.params.hidTypePerson,hidTypeThing: props.route.params.hidTypePerson,hidTypeManage: props.route.params.hidTypeManage};
   }
 
   render() {
@@ -108,7 +112,7 @@ export class TroubleHandleScreen extends Component {
                 />
                 <View style={[c_styles.pt_4,c_styles.pb_4,styles.borderBottom]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患类型</Text>
-                  <CheckMultipleComponent options={TROUBLE_ARR_TYPE} onSelectData={(res) => {
+                  <CheckMultipleComponent options={TROUBLE_ARR_TYPE} value={this.typeList} onSelectData={(res) => {
                     const arr = ['hidTypePerson','hidTypeThing','hidTypeManage'];
                     res.forEach((item,index) => {
                       if (item) {
@@ -125,7 +129,7 @@ export class TroubleHandleScreen extends Component {
                 <View style={[c_styles.pt_4,c_styles.pb_4,styles.borderBottom]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患等级</Text>
                   <ScrollView horizontal={true}>
-                    <CheckSingleComponent options={TROUBLE_ARR_GRADE} onSelectData={(res) => {
+                    <CheckSingleComponent options={TROUBLE_ARR_GRADE} value={this.hidDangerGrade} onSelectData={(res) => {
                       this.submitField = Object.assign(this.submitField,{hidDangerGrade:res});
                     }}/>
                   </ScrollView>
@@ -199,9 +203,9 @@ export class TroubleHandleScreen extends Component {
                       <PickerTimeComponent
                         disabled={!!(this.state.info && this.state.info.processingStatus === '4')}
                         onSelectDate={(time) => {
-                          this.submitField = Object.assign(this.submitField,{completionTime:time});
+                          this.submitField = Object.assign(this.submitField,{completionTime:time.split('.').join('-')});
                           this.setState({
-                            timeTitle: time,
+                            timeTitle: time.split('.').join('-'),
                           });
                         }}
                         title={this.state.timeTitle?this.state.timeTitle:'点击选择'}
@@ -271,6 +275,16 @@ export class TroubleHandleScreen extends Component {
                         />)
                       )
                     }
+                    if (item.botton === '审核通过'||item.botton === '审核不通过' ) {
+                      return (
+                        (<
+                          Button
+                          key={index}
+                          onPress={this.handlePress.bind(this,item.botton)}
+                          title={item.botton}
+                        />)
+                      )
+                    }
                     return null
                   }
                   if (item.botton === '完成整改' && !this.state.isHandle) {
@@ -289,7 +303,7 @@ export class TroubleHandleScreen extends Component {
             </View>
           </ScrollView>
         </View>
-      {/* 审核不通过modal */}
+        {/* 审核不通过modal */}
         <DialogContentComponent isVisible={this.state.verifyModalShow} title={'审核内容'}>
           <View style={{flex: 1}}>
             <Input placeholder={'请输入评价整改评估'} onChangeText={(text) => {
@@ -328,11 +342,14 @@ export class TroubleHandleScreen extends Component {
               bottomDivider={true} title={'整改截止时间'}
               titleStyle={{color: '#9D9D9D'}}
               rightElement={
+                this.state.specifiedRectificationTime?<Text style={{color: '#B4B4B4'}}>
+                    {this.state.specifiedRectificationTime}
+                  </Text>:
                 <PickerTimeComponent
                   onSelectDate={(time) => {
-                    this.submitField = Object.assign(this.submitField,{specifiedRectificationTime:time});
+                    this.submitField = Object.assign(this.submitField,{specifiedRectificationTime:time.split('.').join('-')});
                     this.setState({
-                      timeTitle: time,
+                      timeTitle: time.split('.').join('-'),
                     });
                   }}
                   title={this.state.timeTitle?this.state.timeTitle:'点击选择'}
@@ -346,6 +363,8 @@ export class TroubleHandleScreen extends Component {
               bottomDivider={true} title={'整改意见'}
               titleStyle={{color: '#9D9D9D'}}
               input={{
+                value: this.state.rectificationOpinions,
+                disabled: this.state.rectificationOpinions,
                 inputStyle: {borderWidth: 0,fontSize: 14,color: '#AEAEAE'},
                 placeholder: '请输入整改意见',
                 onChangeText: (text) => {this.submitField = Object.assign(this.submitField,{rectificationOpinions:text});
@@ -374,6 +393,8 @@ export class TroubleHandleScreen extends Component {
         this.setState({
           isHandle: res.data.hidDangerDO.ifDeal === '是',
           timeTitle:res.data.hidDangerDO.completionTime?res.data.hidDangerDO.completionTime:null,
+          rectificationOpinions:res.data.hidDangerDO.rectificationOpinions?res.data.hidDangerDO.rectificationOpinions:null,
+          specifiedRectificationTime:res.data.hidDangerDO.specifiedRectificationTime?res.data.hidDangerDO.specifiedRectificationTime:null,
           info: res.data.hidDangerDO,
           afterImgs:  res.data.afterImgs,
           beforeImgs:  res.data.beforImgs,

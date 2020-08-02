@@ -66,6 +66,7 @@ export class TroubleShootScreen extends Component {
                     <TroubleListComponent
                       key={`TroubleListComponent${i}`}
                       title={title}
+                      color={item.color}
                       onPress={() => {this.props.navigation.navigate('TroubleHandleScreen',item)}}
                       subtitle={item.hidDangerContent}
                       rightTitle={item.idt.split(' ')[0]}

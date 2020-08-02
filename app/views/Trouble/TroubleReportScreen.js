@@ -32,6 +32,7 @@ export class TroubleReportScreen extends Component {
     this.submitField = {};
     this.beforeFile = [];
     this.typeObj = {};
+    this.typeList = {hidTypePerson: null,hidTypeThing: null,hidTypeManage: null};
   }
 
   render() {
@@ -77,9 +78,9 @@ export class TroubleReportScreen extends Component {
                   chevron={true}
                   rightElement={<PickerTimeComponent
                     onSelectDate={(time) => {
-                      this.submitField = Object.assign(this.submitField,{troubleshootingTime:time});
+                      this.submitField = Object.assign(this.submitField,{troubleshootingTime:time.split('.').join('-')});
                       this.setState({
-                        timeTitle: time,
+                        timeTitle: time.split('.').join('-'),
                       });
                     }}
                     title={this.state.timeTitle?this.state.timeTitle:'点击选择'}
@@ -89,7 +90,7 @@ export class TroubleReportScreen extends Component {
                 />
                 <View style={[c_styles.pt_4,c_styles.pb_4,styles.borderBottom]}>
                   <Text style={{paddingLeft: 15,paddingBottom: 10,fontSize: 16,color: '#9D9D9D'}}>隐患类型</Text>
-                  <CheckMultipleComponent options={TROUBLE_ARR_TYPE} onSelectData={(res) => {
+                  <CheckMultipleComponent options={TROUBLE_ARR_TYPE} value={this.typeList} onSelectData={(res) => {
                     const arr = ['hidTypePerson','hidTypeThing','hidTypeManage'];
                     res.forEach((item,index) => {
                       if (item) {

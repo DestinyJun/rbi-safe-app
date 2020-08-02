@@ -17,6 +17,7 @@ export function FillTopicComponent(props) {
       rightKey: props.rightKey,
       score: props.score,
       testPapreId: props.testPapreId,
+      questionBankSubjectId: props.questionBankSubjectId?props.questionBankSubjectId: '',
     });
   };
   return (
@@ -26,7 +27,7 @@ export function FillTopicComponent(props) {
           <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>填空</Text>
         </View>
         <View style={[styles.titleContent,c_styles.pl_3]} >
-          <Text style={[c_styles.h6]}>{props.subject}</Text>
+          <Text style={[c_styles.h6]}>{`${props.serial+1}、${props.subject}`}</Text>
         </View>
       </View>
       <View style={[styles.choose]}>

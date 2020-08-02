@@ -36,6 +36,8 @@ import {TabButtonComponent} from "./app/components/TabButtonComponent";
 import {FocusStatusBarComponent} from "./app/components/FocusStatusBarComponent";
 import {FullScreenLoadingComponent} from "./app/components/FullScreenLoadingComponent";
 import {EducationErrorScreen} from "./app/views/Education/EducationErrorScreen";
+import {HomeInformationScreen} from "./app/views/Home/HomeInformationScreen";
+import {DoubleInventoryDetailScreen} from "./app/views/Double/DoubleInventoryDetailScreen";
 
 // 创建路由对象
 const Stack = createStackNavigator();
@@ -95,6 +97,7 @@ export default class App extends React.Component {
               <Stack.Screen name={'DoubleInventoryMakeScreen'} component={DoubleInventoryMakeScreen}/>
               <Stack.Screen name={'DoubleInventoryFillScreen'} component={DoubleInventoryFillScreen}/>
               <Stack.Screen name={'DoubleInventoryCheckScreen'} component={DoubleInventoryCheckScreen}/>
+              <Stack.Screen name={'DoubleInventoryDetailScreen'} component={DoubleInventoryDetailScreen}/>
               <Stack.Screen name={'ProFileRecordScreen'} component={ProFileRecordScreen}/>
               <Stack.Screen name={'ProFileArchivesScreen'} component={ProFileArchivesScreen}/>
               <Stack.Screen name={'ProFileInventoryScreen'} component={ProFileInventoryScreen}/>
@@ -102,6 +105,7 @@ export default class App extends React.Component {
               <Stack.Screen name={'ProFileSafeScreen'} component={ProFileSafeScreen}/>
               <Stack.Screen name={'PlayVideoScreen'} component={PlayVideoScreen}/>
               <Stack.Screen name={'DownloadScreen'} component={DownloadScreen}/>
+              <Stack.Screen name={'HomeInformationScreen'} component={HomeInformationScreen}/>
             </Stack.Navigator>:
             <Stack.Navigator initialRouteName={'Login'} headerMode={'none'}>
               <Stack.Screen name="Login" component={LoginScreen}/>

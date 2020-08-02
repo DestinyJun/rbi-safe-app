@@ -14,10 +14,7 @@ export class DoubleInventoryFillScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [
-        {title: '(10分）啊就是的哈德和大家都阿坎德拉速度快可视对讲卡里的动画',number: '10'},
-        {title: '(10分）啊就是的哈德和大家都阿坎德拉速度快可视对讲卡里的动画',number: '0'},
-      ]
+      list: []
     };
   }
 

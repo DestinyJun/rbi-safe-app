@@ -73,16 +73,16 @@ export class EducationErrorScreen extends Component {
           {
             this.state.topicList && this.state.topicList.map((item,index) => {
               if (item.subjectType === 1) {
-                return ( <SingleTopicComponent key={`single${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
+                return ( <SingleTopicComponent serial={index} key={`single${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
               }
               if (item.subjectType === 2) {
-                return ( <MultipleTopicComponent key={`multiple${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
+                return ( <MultipleTopicComponent serial={index} key={`multiple${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
               }
               if (item.subjectType === 3) {
-                return ( <JudgeTopicComponent key={`judge${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
+                return ( <JudgeTopicComponent serial={index} key={`judge${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
               }
               if (item.subjectType === 4) {
-                return ( <FillTopicComponent key={`fill${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
+                return ( <FillTopicComponent serial={index} key={`fill${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
               }
             })
           }
@@ -121,7 +121,15 @@ export class EducationErrorScreen extends Component {
 
   // 考试处理请求
   httpRequestFinishExam(url) {
-    showLoading();
+    this.params.handlePersonalMistakes.forEach((item,index) => {
+      for (let key in item) {
+        if (item.hasOwnProperty(key)) {
+          if (key === 'testUestionsId') {
+            this.params.handlePersonalMistakes[index].id =  this.params.handlePersonalMistakes[index][key]
+          }
+        }
+      }
+    });
     post(url,this.params)
       .then((res) => {
         hiddenLoading();

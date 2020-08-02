@@ -11,9 +11,13 @@ export class CheckMultipleComponent extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      checked:props.options.map(() => false)
+      checked:Object.keys(props.value).map((item,index,obj) => {
+        return !!props.value[item];
+      })
     };
-    this.arr = props.options.map(() =>false);
+    this.arr = Object.keys(props.value).map((item,index,obj) => {
+      return !!props.value[item];
+    });
   }
   render(){
     return (
