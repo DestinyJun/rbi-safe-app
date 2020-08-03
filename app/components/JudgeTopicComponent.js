@@ -7,7 +7,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {CheckBox} from "react-native-elements";
 export function JudgeTopicComponent(props) {
-  const questionOptions= [...props.safeTestQuestionOptionsList];
+  const questionOptions= props.safeTestQuestionOptionsList?[...props.safeTestQuestionOptionsList]:[...props.safeSubjectOptionList];
   const arr = questionOptions.map(() => false);
   const [checked,setChecked] = useState(questionOptions.map(() => false));
   const checkOnPress = (index,res) => {

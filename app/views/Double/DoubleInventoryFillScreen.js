@@ -23,7 +23,7 @@ export class DoubleInventoryFillScreen extends Component {
       <View style={styles.InventoryFill}>
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
           centerComponent={{text: `一岗双责清单待填写`, style: {fontSize: 20, color: '#fff'}}}
         />

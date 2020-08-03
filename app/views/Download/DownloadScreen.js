@@ -22,7 +22,7 @@ export class DownloadScreen extends Component {
       <View style={styles.container}>
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
           centerComponent={{text: `文件下载`,style: {fontSize: 20,color: '#fff'}}}
         />

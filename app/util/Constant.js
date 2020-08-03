@@ -46,6 +46,12 @@ export const PROFILE_BOTTOM_MENU_LIST = [
     type: 'material',
     routerName: 'ProFileSafeScreen'
   },
+  {
+    title: '版本更新',
+    icon: 'lock',
+    type: 'material',
+    routerName: 'UpdateVersionScreen'
+  },
 ];
 
 // 表单填写返回提醒

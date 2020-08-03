@@ -86,7 +86,7 @@ export default class App extends React.Component {
         <FullScreenLoadingComponent/>
         {
           this.state.isLogin?
-            <Stack.Navigator initialRouteName={'TabBarScreen'} screenOptions={{headerShown: false}}>
+            <Stack.Navigator initialRouteName={'TabBarScreen'} headerMode={'none'}>
               <Stack.Screen name={'TabBarScreen'} component={TabBarScreen}/>
               <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen}/>
               <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen}/>

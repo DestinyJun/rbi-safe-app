@@ -41,7 +41,7 @@ export class TroubleShortlyScreen extends Component {
       <View style={styles.TroubleShortly}>
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<HeaderLeftBackComponent {...this.props} message={this.remindMessage}/>}
           centerComponent={{text: `立即整改`, style: {fontSize: 20, color: '#fff'}}}
         />

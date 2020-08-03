@@ -27,7 +27,7 @@ export class DoubleInventoryMakeScreen extends Component {
       <View style={styles.DoubleInventory}>
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
           centerComponent={{text: `一岗双责清单制定`, style: {fontSize: 20, color: '#fff'}}}
         />

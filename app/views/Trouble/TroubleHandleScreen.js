@@ -57,7 +57,7 @@ export class TroubleHandleScreen extends Component {
       <View style={styles.TroubleHandle}>
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<HeaderLeftBackComponent {...this.props} message={INPUT_BACK_REMIND_MESSAGE}/>}
           centerComponent={{text: `${this.title}隐患`, style: {fontSize: 20, color: '#fff'}}}
         />

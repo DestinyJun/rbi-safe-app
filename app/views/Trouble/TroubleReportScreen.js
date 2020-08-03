@@ -40,7 +40,7 @@ export class TroubleReportScreen extends Component {
       <View style={styles.TroubleReport}>
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<HeaderLeftBackComponent {...this.props} message={INPUT_BACK_REMIND_MESSAGE}/>}
           centerComponent={{text: `上报整改`, style: {fontSize: 20, color: '#fff'}}}
         />

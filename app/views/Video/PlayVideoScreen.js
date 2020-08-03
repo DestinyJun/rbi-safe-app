@@ -22,7 +22,7 @@ export class PlayVideoScreen extends Component {
       <View style={{flex: 1}}>
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
           centerComponent={{text: `${this.video.resourceName}`,style: {fontSize: 20,color: '#fff'}}}
         />

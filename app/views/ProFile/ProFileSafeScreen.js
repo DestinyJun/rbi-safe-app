@@ -4,7 +4,7 @@
  * date：  2020/7/3 21:44
  */
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import {ProFileSafeStyles as styles} from "./ProFileSafeStyles";
 import {Header, Icon, ListItem, Button} from "react-native-elements";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
@@ -30,7 +30,7 @@ export class ProFileSafeScreen extends Component {
       <View style={styles.Safe}>
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
           centerComponent={{text: `账号与安全`, style: {fontSize: 20, color: '#fff'}}}
         />

@@ -26,7 +26,7 @@ export class ProFileRecordScreen extends Component {
       <View style={styles.Record}>
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
           centerComponent={{text: `我的隐患排查记录`, style: {fontSize: 20, color: '#fff'}}}
         />

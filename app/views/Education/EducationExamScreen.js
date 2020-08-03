@@ -63,7 +63,7 @@ export class EducationExamScreen extends Component {
       <View style={styles.Exam}>
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<MyCustomLeftComponent {...navigation} />}
           centerComponent={{text: `${this.props.route.params.title}  ${this.props.route.params.name}`,style: {fontSize: 20,color: '#fff'}}}
         />
@@ -132,8 +132,6 @@ export class EducationExamScreen extends Component {
             ...res.data.judgmentQuestions,
             ...res.data.singleChoiceQuestions
           ]
-        },() => {
-          console.log(this.state.topicList);
         });
         hiddenLoading();
       })

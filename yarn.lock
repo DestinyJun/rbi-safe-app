@@ -5428,6 +5428,11 @@ react-native-windows@^0.62.0-0:
     uuid "^3.3.2"
     xml-parser "^1.2.1"
 
+react-native-xupdate-new@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/react-native-xupdate-new/download/react-native-xupdate-new-1.0.0.tgz#a79294b451d837d409fbf66cfe8b5848e8b25f18"
+  integrity sha1-p5KUtFHYN9QJ+/Zs/otYSOiyXxg=
+
 react-native@~0.61.5:
   version "0.61.5"
   resolved "https://registry.npm.taobao.org/react-native/download/react-native-0.61.5.tgz#6e21acb56cbd75a3baeb1f70201a66f42600bba8"

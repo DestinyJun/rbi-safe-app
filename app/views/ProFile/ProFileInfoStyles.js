@@ -7,7 +7,7 @@ import {StyleSheet} from 'react-native';
 
 export const ProFileInfoStyles = StyleSheet.create({
   Info: {
-    flex: 1
+    flex: 1,
   },
   content: {
     flex: 1,
@@ -18,7 +18,7 @@ export const ProFileInfoStyles = StyleSheet.create({
     height: 50,
     ...c_styles.w_100,
     position: 'absolute',
-    top: -1
+    top: -1,
   },
   contentList: {
     flex: 1,
