@@ -15,11 +15,10 @@ export class DoubleInventoryDetailScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: null
+      list: null,
+      type: '2',
     };
-    this.type = 3;
     this.addFiled = null;
-    console.log(props);
   }
 
   render() {
@@ -43,7 +42,7 @@ export class DoubleInventoryDetailScreen extends Component {
               {
                 this.state.list && this.state.list.map((item, i) => (<
                   CardInputComponent
-                  type={this.type}
+                  type={this.state.type}
                   onChangeSelfEvaluation={(text) => {
                     this.addFiled.content[i].selfEvaluation = text;
                   }}
@@ -64,7 +63,8 @@ export class DoubleInventoryDetailScreen extends Component {
   componentDidMount() {
     const baseInfo = {...this.props.route.params};
     this.setState({
-      list: [...baseInfo.doubleDutyEvaluationContents]
+      list: [...baseInfo.doubleDutyEvaluationContents],
+      type: baseInfo.status
     })
   }
 }

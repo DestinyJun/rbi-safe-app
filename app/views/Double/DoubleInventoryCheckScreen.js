@@ -19,7 +19,7 @@ export class DoubleInventoryCheckScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: null
+      list: []
     };
     this.type = this.props.route.params.type;
     this.addFiled = null;
@@ -34,7 +34,7 @@ export class DoubleInventoryCheckScreen extends Component {
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {
             this.props.navigation.goBack()
           }}/>}
-          centerComponent={{text: this.type === 1?'责任清单填写':'责任清单审核', style: {fontSize: 20, color: '#fff'}}}
+          centerComponent={{text: this.type === '1'?'责任清单填写':'责任清单审核', style: {fontSize: 20, color: '#fff'}}}
         />
         <View style={[styles.content]}>
           <View style={[styles.contentTitle]}>
@@ -44,11 +44,11 @@ export class DoubleInventoryCheckScreen extends Component {
           <View style={[styles.contentList]}>
             <ScrollView style={{flex: 1}} keyboardShouldPersistTaps={'always'}>
               {
-                this.state.list && this.state.list.map((item, i) => (<
+                this.state.list.length>0?this.state.list.map((item, i) => (<
                   CardInputComponent
                   type={this.type}
                   onChangeSelfEvaluation={(text) => {
-                    if (this.type === 2) {
+                    if (this.type === '4') {
                       this.addFiled.content[i].checkResult = text;
                     } else {
                       this.addFiled.content[i].selfEvaluation = text;
@@ -56,17 +56,19 @@ export class DoubleInventoryCheckScreen extends Component {
 
                   }}
                   onChangeSelfFraction={(text) => {
-                    if (this.type === 2) {
+                    if (this.type === '4') {
                       this.addFiled.content[i].checkFraction = text;
                     } else {
                       this.addFiled.content[i].selfFraction = text;
                     }
                   }}
                   {...item} index={i}
-                  key={i}/>))
+                  key={i}/>)): <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h4]}>
+                  没有任何需要填写的责任项，请联系管理员添加！
+                </Text>
               }
               {
-                this.type === 2 && (
+                (this.type === '4' && this.state.list.length>0) && (
                   <View>
                     <View style={[styles.contentTitle]}>
                       <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'}/>
@@ -107,7 +109,9 @@ export class DoubleInventoryCheckScreen extends Component {
                   </View>
                 )
               }
-              <Button title={'提交'} buttonStyle={c_styles.button} onPress={this.addOnPress.bind(this)}/>
+              {
+                this.state.list.length>0&&<Button title={'提交'} buttonStyle={c_styles.button} onPress={this.addOnPress.bind(this)}/>
+              }
             </ScrollView>
           </View>
         </View>
@@ -117,7 +121,7 @@ export class DoubleInventoryCheckScreen extends Component {
 
   // 组件挂载生命周期函
   componentDidMount() {
-    if (this.type === 2) {
+    if (this.type === '4') {
       const {baseInfo} = {...this.props.route.params};
       this.addFiled = Object.assign({},{id: baseInfo.id,badeSituation: '',correctSituation: ''});
       const baseInfoList = baseInfo.doubleDutyEvaluationContents;

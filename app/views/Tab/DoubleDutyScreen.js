@@ -35,7 +35,7 @@ export class DoubleDutyScreen extends Component {
         />
         <Button
           onPress={() => {this.props.navigation.navigate('DoubleInventoryCheckScreen',{
-            type: 1
+            type: '1'
           })}}
           icon={{name: 'add', color: '#84B3FF',size: 18}}
           title={'责任清单填写'}
@@ -84,7 +84,7 @@ export class DoubleDutyScreen extends Component {
                   Component={TouchableOpacity}
                   onPress={() => {this.props.navigation.navigate('DoubleInventoryCheckScreen',{
                     baseInfo: l,
-                    type: 2
+                    type: '4'
                   })}}
                   containerStyle={{marginTop: 10,borderRadius: 10}}
                   title={<ListItemTitleComponent title={l.templateName} />}

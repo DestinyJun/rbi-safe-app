@@ -24,19 +24,19 @@ export function CardInputComponent(props) {
           {/*自评内容*/}
           <View style={{flex: 5,flexDirection: 'row',alignItems: 'center'}}>
             <Text style={[c_styles.h6, {color: '#67A1FF'}]}>自评： </Text>
-            <TextInput editable={props.type === 1}  placeholder={selfEvaluation} style={[c_styles.h6, {textAlign: 'left', color: '#6D6D6D'}]} onChangeText={(text => {
+            <TextInput editable={props.type === '1'}  placeholder={selfEvaluation} style={[c_styles.h6, {textAlign: 'left', color: '#6D6D6D'}]} onChangeText={(text => {
               props.onChangeSelfEvaluation(text);
             })} />
           </View>
           {/*自评分数*/}
           <View style={{flex: 5}}>
-            <TextInput editable={props.type === 1} placeholder={selfFraction.toString()} style={[c_styles.h6, {textAlign: 'right', color: '#6D6D6D'}]} onChangeText={(text => {
+            <TextInput editable={props.type === '1'} placeholder={selfFraction.toString()} style={[c_styles.h6, {textAlign: 'right', color: '#6D6D6D'}]} onChangeText={(text => {
               props.onChangeSelfFraction(text);
             })} />
           </View>
         </View>
         {
-          props.type === 2 && <View style={[styles.rightBottom]}>
+          props.type === '4' && <View style={[styles.rightBottom]}>
             {/*检查内容*/}
             <View style={{flex: 5,flexDirection: 'row',alignItems: 'center'}}>
               <Text style={[c_styles.h6, {color: '#67A1FF'}]}>检查内容： </Text>
@@ -49,6 +49,19 @@ export function CardInputComponent(props) {
               <TextInput placeholder={'请输入检查分数'} style={[c_styles.h6, {textAlign: 'right', color: '#6D6D6D'}]} onChangeText={(text => {
                 props.onChangeSelfFraction(text);
               })} />
+            </View>
+          </View>
+        }
+        {
+          props.type === '3' && <View style={[styles.rightBottom]}>
+            {/*检查内容*/}
+            <View style={{flex: 5,flexDirection: 'row',alignItems: 'center'}}>
+              <Text style={[c_styles.h6, {color: '#67A1FF'}]}>检查内容： </Text>
+              <TextInput editable={false} placeholder={props.checkResult} style={[c_styles.h6, {textAlign: 'left', color: '#6D6D6D'}]}/>
+            </View>
+            {/*检查分数*/}
+            <View style={{flex: 5}}>
+              <TextInput editable={false} placeholder={props.checkFraction.toString()} style={[c_styles.h6, {textAlign: 'right', color: '#6D6D6D'}]}/>
             </View>
           </View>
         }
