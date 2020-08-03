@@ -4,7 +4,7 @@
  * date：  2020/7/2 14:51
  */
 import React, {Component} from 'react';
-import {View, ScrollView, Alert} from 'react-native';
+import {View, ScrollView, Alert, Text} from 'react-native';
 import {EducationErrorStyles as styles} from "./EducationErrorStyles";
 import {useBackHandler} from "@react-native-community/hooks";
 import {Button, Header} from "react-native-elements";
@@ -71,7 +71,7 @@ export class EducationErrorScreen extends Component {
         <ScrollView style={[styles.topic,c_styles.mt_2]}>
           {/* 4填空题 3判断题  2多选题 1单选题 */}
           {
-            this.state.topicList && this.state.topicList.map((item,index) => {
+            this.state.topicList.length>0?this.state.topicList.map((item,index) => {
               if (item.subjectType === 1) {
                 return ( <SingleTopicComponent serial={index} key={`single${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
               }
@@ -84,9 +84,11 @@ export class EducationErrorScreen extends Component {
               if (item.subjectType === 4) {
                 return ( <FillTopicComponent serial={index} key={`fill${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
               }
-            })
+            }):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h4]}>您太棒了，一个错题也没有！</Text>
           }
-          <Button title={'结束考试'} buttonStyle={c_styles.button} onPress={this.edExamComplete.bind(this)} />
+          {
+            this.state.topicList.length>0&&<Button title={'结束考试'} buttonStyle={c_styles.button} onPress={this.edExamComplete.bind(this)} />
+          }
         </ScrollView>
       </View>
     );

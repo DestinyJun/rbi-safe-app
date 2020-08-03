@@ -4,7 +4,7 @@
  * date：  2020/7/2 14:51
  */
 import React, {Component} from 'react';
-import {View, ScrollView, Alert} from 'react-native';
+import {View, ScrollView, Alert, Text} from 'react-native';
 import {EducationExamStyles as styles} from "./EducationExamStyles";
 import {useBackHandler} from "@react-native-community/hooks";
 import {Button, Header} from "react-native-elements";
@@ -67,13 +67,13 @@ export class EducationExamScreen extends Component {
           leftComponent={<MyCustomLeftComponent {...navigation} />}
           centerComponent={{text: `${this.props.route.params.title}  ${this.props.route.params.name}`,style: {fontSize: 20,color: '#fff'}}}
         />
-       {/* <View style={styles.timer}>
+      {/*  <View style={styles.timer}>
           <Text style={[styles.timerText,c_styles.pl_3,c_styles.pr_3]}>模拟考试倒计时     00:35:09</Text>
         </View>*/}
         <ScrollView style={[styles.topic,c_styles.mt_2]}>
            {/*4填空题 3判断题  2多选题 1单选题*/}
           {
-            this.state.topicList && this.state.topicList.map((item,index) => {
+            this.state.topicList?this.state.topicList.map((item,index) => {
               if (item.subjectType === 1) {
                 return ( <SingleTopicComponent serial={index} key={`single${index}`} name={this.name} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
               }
@@ -86,9 +86,11 @@ export class EducationExamScreen extends Component {
               if (item.subjectType === 4) {
                 return ( <FillTopicComponent serial={index} key={`fill${index}`} name={this.name} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
               }
-            })
+            }): <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h4]}>暂时无考试题目，请您联系管理员添加！</Text>
           }
-          <Button title={'结束考试'} buttonStyle={c_styles.button} onPress={this.edExamComplete.bind(this)} />
+          {
+            this.state.topicList.length>0&&<Button title={'结束考试'} buttonStyle={c_styles.button} onPress={this.edExamComplete.bind(this)} />
+          }
         </ScrollView>
       </View>
     );
@@ -130,6 +132,8 @@ export class EducationExamScreen extends Component {
             ...res.data.judgmentQuestions,
             ...res.data.singleChoiceQuestions
           ]
+        },() => {
+          console.log(this.state.topicList);
         });
         hiddenLoading();
       })

@@ -14,17 +14,19 @@ export class ExamCardComponent extends Component {
     this.state = {
       isVisible: true,
       train: props.train,
-      exam: props.exam ? props.exam : null,
+      exam: props.train.exam ? props.train.exam : null,
     };
-    this.navigation = props.exam;
+    // console.log(props);
 }
 
   render() {
     return (
       <View style={[styles.container]}>
-        <View style={[styles.title, c_styles.pt_1, c_styles.pb_1]}>
+        <View style={styles.title}>
           <Icon type={'font-awesome'} name={'list-alt'} size={20} color={'#3B86FF'} raised={true}/>
-          <Text style={{fontSize: 20, color: '#333333', marginLeft: 6}}>{this.state.train.trainingContent}</Text>
+          <View style={{flex: 1}}>
+            <Text style={{fontSize: 20, color: '#333333', marginLeft: 6}} numberOfLines={1} ellipsizeMode={'tail'}>{this.state.train.trainingContent}</Text>
+          </View>
         </View>
         <View style={[styles.timer, c_styles.pl_5]}>
           <View style={[styles.timerBox]}>
@@ -35,7 +37,7 @@ export class ExamCardComponent extends Component {
           {
             this.state.exam && <View style={[styles.timerBox]}>
               <Icon type={'font-awesome'} name={'clock-o'} size={18} color={'#3B86FF'}/>
-              <Text style={[c_styles.h6, c_styles.ml_2]}>考试时间：{this.state.exam.startTime?this.state.exam.startTime.split(' ')[0]:''}—{this.state.exam.endTime?this.state.exam.endTime.split(' ')[0]:''}</Text>
+              <Text style={[c_styles.h6, c_styles.ml_2]}>考试时间：{this.state.exam.startTime.split(' ')[0]}—{this.state.exam.endTime.split(' ')[0]}</Text>
             </View>
           }
         </View>
@@ -54,13 +56,13 @@ export class ExamCardComponent extends Component {
         </View>
         <View style={[styles.buttons]}>
           {
-            this.state.exam ?
+            (this.state.exam && this.state.exam.processingStatus === 1) ?
               <Button
                 title={'开始考试'}
                 TouchableComponent={TouchableOpacity}
                 buttonStyle={[styles.buttonsStyles, {backgroundColor: '#63DCAF'}]}
                 onPress={() => {
-                  Alert.alert('考前须知', this.props.exam.examNotes, [
+                  Alert.alert('考前须知', this.state.exam.examNotes, [
                     {
                       text: '取消考试', onPress: () => {
                       }, style: "cancel"
@@ -79,16 +81,15 @@ export class ExamCardComponent extends Component {
                 titleStyle={{color: '#3883FA'}}
               />
           }
-          <Button title={'继续学习'} buttonStyle={[styles.buttonsStyles, {backgroundColor: '#3883FA'}]}
-                  onPress={this.continueStudy.bind(this)}/>
+          <Button title={'继续学习'} buttonStyle={[styles.buttonsStyles, {backgroundColor: '#3883FA'}]} onPress={this.continueStudy.bind(this)}/>
         </View>
       </View>
     );
 
   }
 
+  // 开始考试
   examStart() {
-    // 开始考试
     this.props.navigation.navigate(
       'EducationExamScreen',
       {
@@ -133,7 +134,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomColor: '#F8F8F8',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
+    paddingTop: 6,
+    paddingBottom: 6,
   },
   timerBox: {
     flexDirection: 'row',

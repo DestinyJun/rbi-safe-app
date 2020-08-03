@@ -202,5 +202,10 @@ export function blobToFile(theBlob, fileName){
  * @returns {number}
  */
 export function percentage(divisor,dividend) {
-  return parseFloat((parseFloat(divisor) / parseFloat(dividend)).toFixed(2));
+  const num = parseFloat((parseFloat(divisor) / parseFloat(dividend)).toFixed(2));
+  if (num >= 1) {
+    return 1
+  } else {
+    return num;
+  }
 }
