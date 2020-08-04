@@ -17,7 +17,7 @@ export class SafeEducationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      seExamList: null
+      seExamList: []
     };
     this.unfocus = null;
   }
@@ -36,7 +36,7 @@ export class SafeEducationScreen extends Component {
           rightComponent={<Button title={'错题库'} buttonStyle={{backgroundColor:'#226AD5'}} onPress={this.errorTopicStart.bind(this)} />}
         />
         {
-          this.state.seExamList?(
+          this.state.seExamList.length>0?(
             <View style={[styles.remind]}>
               <Icon type={'font-awesome'} name={'exclamation-circle'} size={14} color={'#FF7700'} />
               <Text style={{color: '#FF7700',fontSize: 14,marginLeft: 5}}>{this.state.seExamList.length}项培训计划考试中</Text>
@@ -46,7 +46,9 @@ export class SafeEducationScreen extends Component {
         <View style={[c_styles.pl_3,c_styles.pr_3,{flex: 1}]}>
           <ScrollView style={{flex: 1}}>
             {
-              this.state.seExamList&&this.state.seExamList.map((item,index) => (<ExamCardComponent key={index} {...this.props} train={item} />))
+              this.state.seExamList.length>0?
+                this.state.seExamList.map((item,index) => (<ExamCardComponent key={index} {...this.props} train={item} />)):
+                <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>别发呆了！赶紧去喊管理员给您添加培训计划！</Text>
             }
           </ScrollView>
         </View>

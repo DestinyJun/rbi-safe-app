@@ -1,7 +1,9 @@
 import * as React from 'react';
+import {PermissionsAndroid} from "react-native";
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import SplashScreen from 'react-native-splash-screen'
 
 // 路由屏幕
 import {LoginScreen} from "./app/views/Login/LoginScreen";
@@ -30,7 +32,6 @@ import {DownloadScreen} from "./app/views/Download/DownloadScreen";
 import {Store} from "./app/redux/store";
 import {initIsLoginState} from "./app/redux/actions";
 
-
 // 自定义组件
 import {TabButtonComponent} from "./app/components/TabButtonComponent";
 import {FocusStatusBarComponent} from "./app/components/FocusStatusBarComponent";
@@ -38,6 +39,8 @@ import {FullScreenLoadingComponent} from "./app/components/FullScreenLoadingComp
 import {EducationErrorScreen} from "./app/views/Education/EducationErrorScreen";
 import {HomeInformationScreen} from "./app/views/Home/HomeInformationScreen";
 import {DoubleInventoryDetailScreen} from "./app/views/Double/DoubleInventoryDetailScreen";
+import {UpdateVersionScreen} from "./app/views/Update/UpdateVersionScreen";
+import {singleRemind} from "./app/util/ToolFunction";
 
 // 创建路由对象
 const Stack = createStackNavigator();
@@ -106,6 +109,7 @@ export default class App extends React.Component {
               <Stack.Screen name={'PlayVideoScreen'} component={PlayVideoScreen}/>
               <Stack.Screen name={'DownloadScreen'} component={DownloadScreen}/>
               <Stack.Screen name={'HomeInformationScreen'} component={HomeInformationScreen}/>
+              <Stack.Screen name={'UpdateVersionScreen'} component={UpdateVersionScreen}/>
             </Stack.Navigator>:
             <Stack.Navigator initialRouteName={'Login'} headerMode={'none'}>
               <Stack.Screen name="Login" component={LoginScreen}/>
@@ -116,9 +120,27 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    this.requestPermission();
+    SplashScreen.hide();//关闭启动屏幕
   }
 
   componentWillUnmount() {
     this.subscription();
   }
+
+  // 权限获取
+  requestPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.requestMultiple(
+        [PermissionsAndroid.PERMISSIONS.CAMERA,
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+        ]
+      );
+      if (granted["android.permission.CAMERA"] !== 'granted' || granted["android.permission.WRITE_EXTERNAL_STORAGE"] !== 'granted') {
+        singleRemind('权限获取','权限获取异常，某些功能可能无法使用！')
+      }
+    } catch (err) {
+      singleRemind('权限获取','权限获取异常，某些功能可能无法使用！')
+    }
+  };
 }

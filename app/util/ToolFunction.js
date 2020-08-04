@@ -107,6 +107,15 @@ export function dialogRemind(title,message, routerFun,cancelTitle='取消',confi
 }
 
 /**
+ * dialog
+ */
+export function singleRemind(title,message,cancelTitle='关闭') {
+  Alert.alert(title,message, [
+    {text: cancelTitle, onPress: () =>{}, style: "cancel"},
+  ], {cancelable: false});
+}
+
+/**
  * 显示loading
  */
 export function showLoading() {

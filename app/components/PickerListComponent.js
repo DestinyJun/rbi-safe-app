@@ -7,7 +7,6 @@ import React, {useState} from 'react';
 import {View,StyleSheet} from 'react-native';
 import {Picker} from "@react-native-community/picker";
 export function PickerListComponent(props) {
-  console.log(props);
   const [value,setValue]=useState('点击选择');
   return (
     <View>

@@ -5,4 +5,10 @@ export class ProFileApi {
 
   // 密码修改
   static UPDATE_MY_PASSWORD = '/modifyPwd';
+
+  // 分页获取隐患排查档案
+  static GET_RECORD_LIST = '/hid/findFinishByPage';
+
+  // 分页获取培训档案
+  static GET_TRAIN_LIST = '/getPersonalTrainingFiles';
 }

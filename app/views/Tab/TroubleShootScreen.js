@@ -4,7 +4,7 @@
  * date：  2020/6/17 17:32
  */
 import React, {Component} from 'react';
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, Text} from 'react-native';
 import {TroubleShootStyles as styles} from './TroubleShootStyles'
 import {Header, Button} from "react-native-elements";
 import {TroubleListComponent} from "../../components/TroubleListComponent";
@@ -16,7 +16,7 @@ export class TroubleShootScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: null
+      list: []
     };
     this.unfocus = null
   }
@@ -55,7 +55,7 @@ export class TroubleShootScreen extends Component {
             </View>
             <View style={styles.content}>
               {
-                this.state.list && this.state.list.map((item,i) => {
+                this.state.list.length>0?this.state.list.map((item,i) => {
                   let title = '';
                   if (item.workshopName) {
                     title = `${item.factoryName}${item.workshopName}`;
@@ -73,7 +73,7 @@ export class TroubleShootScreen extends Component {
                       processingStatus={item.processingStatus}
                     />
                   )
-                })
+                }):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>亲，一切正常，没有任何隐患呢！</Text>
               }
             </View>
           </ScrollView>

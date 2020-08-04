@@ -59,7 +59,7 @@ export class ProFileScreen extends Component {
             </View>
             <View style={[styles.topMenu]}>
               {
-               /* PROFILE_TOP_MENU_LIST.map((item, i) => (
+                PROFILE_TOP_MENU_LIST.map((item, i) => (
                   <ListItem
                     Component={TouchableOpacity}
                     containerStyle={{backgroundColor: 'unset'}}
@@ -69,7 +69,7 @@ export class ProFileScreen extends Component {
                     leftIcon={{ name: item.icon,type: item.type,size: 18}}
                     bottomDivider={!(i === (PROFILE_TOP_MENU_LIST.length - 1))}
                   />
-                ))*/
+                ))
               }
             </View>
             <View style={[styles.bottomMenu]}>

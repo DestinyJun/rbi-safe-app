@@ -27,7 +27,13 @@ export const PROFILE_TOP_MENU_LIST = [
     routerName: 'ProFileArchivesScreen'
   },
   {
-    title: '一岗双责检查清单',
+    title: '我的资格证书',
+    icon: 'calendar-minus-o',
+    type: 'font-awesome',
+    routerName: 'ProFileInventoryScreen'
+  },
+  {
+    title: '我的四级HSE教育卡',
     icon: 'calendar-minus-o',
     type: 'font-awesome',
     routerName: 'ProFileInventoryScreen'

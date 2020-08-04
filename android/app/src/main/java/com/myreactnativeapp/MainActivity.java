@@ -2,6 +2,10 @@ package com.myreactnativeapp;
 
 import com.facebook.react.ReactActivity;
 
+// START 配置显示启动页 //
+import org.devio.rn.splashscreen.SplashScreen;
+// END 配置显示启动页 //
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -10,6 +14,9 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
+    // START 配置显示启动页 //
+    SplashScreen.show(this,R.style.AppTheme);
+    // END 配置显示启动页 //
     return "myreactnativeapp";
   }
 }

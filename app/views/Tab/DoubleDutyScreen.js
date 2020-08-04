@@ -18,8 +18,8 @@ export class DoubleDutyScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pendingList: null,
-      dutyList: null,
+      pendingList: [],
+      dutyList: [],
     };
     this.unfocus = null
   }
@@ -48,7 +48,7 @@ export class DoubleDutyScreen extends Component {
           </View>
           <ScrollView style={{maxHeight: 190}}>
             {
-              this.state.pendingList&&this.state.pendingList.map((l, i) => (
+              this.state.pendingList.length>0?this.state.pendingList.map((l, i) => (
                 <ListItem
                   onPress={() => {
                     this.props.navigation.navigate('DoubleInventoryDetailScreen',l)
@@ -67,7 +67,7 @@ export class DoubleDutyScreen extends Component {
                   rightTitle={'2020.06.18'}
                   rightTitleStyle={{color:'#BABABA', fontSize: 16}}
                 />
-              ))
+              )): <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>您真棒，当前无任何责任清单！</Text>
             }
           </ScrollView>
         </View>
@@ -78,7 +78,7 @@ export class DoubleDutyScreen extends Component {
           </View>
           <ScrollView style={{flex: 1}}>
             {
-              this.state.dutyList&&this.state.dutyList.map((l, i) => (
+              this.state.dutyList.length>0?this.state.dutyList.map((l, i) => (
                 <ListItem
                   key={i}
                   Component={TouchableOpacity}
@@ -99,7 +99,7 @@ export class DoubleDutyScreen extends Component {
                     rounded: true
                   }}
                 />
-              ))
+              )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>您当前没有待审核业务，赶快去整个一吧亲！</Text>
             }
           </ScrollView>
         </View>

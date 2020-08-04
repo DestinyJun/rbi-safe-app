@@ -4,9 +4,10 @@
  * date：  2020/7/21 20:46
  */
 import React, {Component} from 'react';
-import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, ScrollView, PermissionsAndroid} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {Badge, Icon, Image} from "react-native-elements";
+import {singleRemind} from "../util/ToolFunction";
 
 export class PickerImageComponent extends Component{
   constructor(props) {
@@ -44,23 +45,58 @@ export class PickerImageComponent extends Component{
     );
   }
   // 选取图片
-   handleCamera = () => {
-     if (this.state.avatarSource.length>6) {
-       return;
-     }
-     ImagePicker.launchImageLibrary({}, (response) => {
-       if (response.didCancel || this.state.avatarSource.length>6) {
-         return;
-       }
-       const source = { uri: 'data:image/jpeg;base64,' + response.data,fileName: response.fileName };
-       this.setState({
-         avatarSource: this.state.avatarSource.concat(source)
-       },() =>{
-         if (this.props.onSelect) {
-           this.props.onSelect(this.state.avatarSource);
+   handleCamera = async () => {
+     try {
+       const granted = await PermissionsAndroid.request(
+         PermissionsAndroid.PERMISSIONS.CAMERA
+       );
+       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+         if (this.state.avatarSource.length>6) {
+           return;
          }
-       });
-     });
+         const options = {
+           title: '请选择获取图片的方式',
+           takePhotoButtonTitle: '拍照', // 点击选择相机
+           chooseFromLibraryButtonTitle: '相册', // 点击选择相册
+           cancelButtonTitle: '取消',
+           storageOptions: {
+             skipBackup: true,
+             path: 'images',
+           },
+         };
+         ImagePicker.showImagePicker(options, (response) => {
+           if (response.didCancel || this.state.avatarSource.length>6) {
+             return;
+           }
+           const source = { uri: 'data:image/jpeg;base64,' + response.data,fileName: response.fileName };
+           this.setState({
+             avatarSource: this.state.avatarSource.concat(source)
+           },() =>{
+             if (this.props.onSelect) {
+               this.props.onSelect(this.state.avatarSource);
+             }
+           });
+         });
+         /*ImagePicker.launchImageLibrary({}, (response) => {
+           if (response.didCancel || this.state.avatarSource.length>6) {
+             return;
+           }
+           const source = { uri: 'data:image/jpeg;base64,' + response.data,fileName: response.fileName };
+           this.setState({
+             avatarSource: this.state.avatarSource.concat(source)
+           },() =>{
+             if (this.props.onSelect) {
+               this.props.onSelect(this.state.avatarSource);
+             }
+           });
+         });*/
+       } else {
+         singleRemind('权限提醒','你已拒接获取相机权限，当前功能无法使用！')
+       }
+     } catch (err) {
+       singleRemind('权限提醒','获取权限异常，请重新获取权限')
+     }
+
   };
 
   // 删除图片

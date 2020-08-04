@@ -19,11 +19,13 @@ export const ProFileInfoStyles = StyleSheet.create({
     ...c_styles.w_100,
     position: 'absolute',
     top: -1,
+    zIndex: 1
   },
   contentList: {
     flex: 1,
     paddingLeft: 10,
     paddingRight: 10,
+    zIndex: 1
   },
   baseInfo: {
     backgroundColor: '#fff',

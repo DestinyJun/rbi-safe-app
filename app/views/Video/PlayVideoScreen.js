@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    backgroundColor: '#E3E3E3'
   },
   videoBgc: {
     position: 'absolute',

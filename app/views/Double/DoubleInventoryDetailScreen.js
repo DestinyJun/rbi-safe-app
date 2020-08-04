@@ -40,7 +40,7 @@ export class DoubleInventoryDetailScreen extends Component {
           <View style={[styles.contentList]}>
             <ScrollView style={{flex: 1}} keyboardShouldPersistTaps={'always'}>
               {
-                this.state.list && this.state.list.map((item, i) => (<
+                this.state.list?this.state.list.map((item, i) => (<
                   CardInputComponent
                   type={this.state.type}
                   onChangeSelfEvaluation={(text) => {
@@ -50,7 +50,7 @@ export class DoubleInventoryDetailScreen extends Component {
                     this.addFiled.content[i].selfFraction = text;
                   }}
                   {...item} index={i}
-                  key={i}/>))
+                  key={i}/>)):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>亲，没有任何信息噢，赶快联系管理员吧！</Text>
               }
             </ScrollView>
           </View>

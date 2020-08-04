@@ -11,12 +11,15 @@ import {IMAGE_HOME_ONE, IMAGE_HOME_TWO} from "../../util/Constant";
 import {hiddenLoading, showLoading} from "../../util/ToolFunction";
 import {post} from "../../service/Interceptor";
 import {HomeApi} from "../../service/HomeApi";
+import {DialogContentComponent} from "../../components/DialogContentComponent";
 
 export class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      infoList: null
+      infoList: null,
+      contentModalShow: false,
+      detailInfo: null,
     };
   }
 
@@ -49,10 +52,15 @@ export class HomeScreen extends Component {
               </View>
               <View style={styles.imgBoxList}>
                 {
-                  this.state.infoList&&this.state.infoList.map((item,index) => (
+                  this.state.infoList?this.state.infoList.map((item,index) => (
                     <ListItem
                       Component={TouchableOpacity}
-                      onPress={() =>{this.props.navigation.navigate('HomeInformationScreen')}}
+                      onPress={() =>{
+                        this.setState({
+                          contentModalShow: true,
+                          detailInfo: item,
+                        })
+                      }}
                       key={index}
                       containerStyle={{backgroundColor: '#fff',borderWidth: 1,borderRadius: 5,borderColor: '#F4F4F4',marginBottom: 10}}
                       leftAvatar={{
@@ -67,9 +75,22 @@ export class HomeScreen extends Component {
                       subtitle={item.idt}
                       subtitleStyle={{paddingTop: 14}}
                     />
-                  ))
+                  )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>真棒！当前没有任何西事件通知呢！</Text>
                 }
               </View>
+              <DialogContentComponent isVisible={this.state.contentModalShow} title={'详细信息'}>
+                <View style={styles.dialogContainer}>
+                  <Text style={[c_styles.h4,c_styles.pt_5,c_styles.pb_5,c_styles.text_center]}>{this.state.detailInfo?this.state.detailInfo.title:''}</Text>
+                  <Text style={{fontSize: 16,color: '#72827E'}}>
+                    {this.state.detailInfo?this.state.detailInfo.content:''}
+                  </Text>
+                  <Button title={'关闭'} buttonStyle={c_styles.button} onPress={() => {
+                    this.setState({
+                      contentModalShow: false,
+                    })
+                  }}/>
+                </View>
+              </DialogContentComponent>
             </View>
           </ScrollView>
         </View>

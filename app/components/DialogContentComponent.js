@@ -12,16 +12,22 @@ export class DialogContentComponent extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      isVisible: false,
+      isVisible: props.isVisible,
       prevPropsIsVisible: null,
     };
   }
 
   static getDerivedStateFromProps(props,state) {
-    if (props.isVisible !== state.isVisible) {
+    if (props.isVisible !== state.prevPropsIsVisible) {
       return {
         isVisible: props.isVisible,
         prevPropsIsVisible: props.isVisible,
+      }
+    }
+    if (props.isVisible !== state.isVisible) {
+      return {
+        isVisible: state.isVisible,
+        prevPropsIsVisible: state.isVisible,
       }
     }
     return null;
@@ -32,9 +38,7 @@ export class DialogContentComponent extends Component{
         visible={this.state.isVisible}
         transparent={true}
         onRequestClose={() => {
-          this.setState({
-            isVisible: false
-          })
+          this.setState({isVisible: false});
         }}
       >
         <View style={styles.container}>

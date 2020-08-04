@@ -16,10 +16,11 @@ export class ExamCardComponent extends Component {
       train: props.train,
       exam: props.train.exam ? props.train.exam : null,
     };
-    // console.log(props);
+    console.log(props);
 }
 
   render() {
+    console.log();
     return (
       <View style={[styles.container]}>
         <View style={styles.title}>
@@ -29,13 +30,15 @@ export class ExamCardComponent extends Component {
           </View>
         </View>
         <View style={[styles.timer, c_styles.pl_5]}>
-          <View style={[styles.timerBox]}>
-            <Icon type={'font-awesome'} name={'calendar'} size={16} color={'#3B86FF'}/>
-            <Text
-              style={[c_styles.h6, c_styles.ml_2]}>培训时间：{this.state.train.startTime?this.state.train.startTime.split(' ')[0]:''}—{this.state.train.endTime?this.state.train.endTime.split(' ')[0]:''}</Text>
-          </View>
           {
-            this.state.exam && <View style={[styles.timerBox]}>
+            this.state.train.startTime&&  <View style={[styles.timerBox]}>
+              <Icon type={'font-awesome'} name={'calendar'} size={16} color={'#3B86FF'}/>
+              <Text
+                style={[c_styles.h6, c_styles.ml_2]}>培训时间：{this.state.train.startTime.split(' ')[0]}—{this.state.train.endTime.split(' ')[0]}</Text>
+            </View>
+          }
+          {
+            (this.state.exam&&this.state.exam.startTime) && <View style={[styles.timerBox]}>
               <Icon type={'font-awesome'} name={'clock-o'} size={18} color={'#3B86FF'}/>
               <Text style={[c_styles.h6, c_styles.ml_2]}>考试时间：{this.state.exam.startTime.split(' ')[0]}—{this.state.exam.endTime.split(' ')[0]}</Text>
             </View>

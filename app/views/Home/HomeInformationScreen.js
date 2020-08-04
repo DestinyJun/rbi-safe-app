@@ -36,7 +36,7 @@ export class HomeInformationScreen extends Component {
         <ScrollView style={[styles.container]}>
           <View style={styles.containerList}>
             {
-              this.state.infoList&&this.state.infoList.map((item,index) => (
+              this.state.infoList?this.state.infoList.map((item,index) => (
                 <ListItem
                   Component={TouchableOpacity}
                   onPress={() =>{
@@ -59,7 +59,7 @@ export class HomeInformationScreen extends Component {
                   subtitle={item.idt}
                   subtitleStyle={{paddingTop: 14}}
                 />
-              ))
+              )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>真棒！当前没有任何西事件通知呢！</Text>
             }
           </View>
         </ScrollView>

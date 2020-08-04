@@ -96,7 +96,7 @@ export class TroubleHandleScreen extends Component {
                 />
                 <ListItem
                   containerStyle={{backgroundColor: 'none'}}
-                  bottomDivider={true} title={'班主'}
+                  bottomDivider={true} title={'班组'}
                   titleStyle={{color: '#9D9D9D'}}
                   rightTitle={this.state.info&&this.state.info.className}
                   rightTitleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
@@ -392,7 +392,8 @@ export class TroubleHandleScreen extends Component {
         this.typeObj.hidTypeManage = res.data.hidDangerDO.hidTypeManage;
         this.typeObj.hidTypePerson = res.data.hidDangerDO.hidTypePerson;
         this.typeObj.hidTypeThing = res.data.hidDangerDO.hidTypeThing;
-        this.submitField.hidDangerGrade = res.data.hidDangerDO.hidDangerGrade;
+        this.submitField.rectificationOpinions = res.data.hidDangerDO.rectificationOpinions;
+        this.submitField.specifiedRectificationTime = res.data.hidDangerDO.specifiedRectificationTime;
         hiddenLoading();
         this.setState({
           isHandle: res.data.hidDangerDO.ifDeal === '是',
