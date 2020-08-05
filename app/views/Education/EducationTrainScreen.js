@@ -149,7 +149,7 @@ export class EducationTrainScreen extends Component {
       .then((res) => {
         hiddenLoading();
         if (name === 'file') {
-          this.props.navigation.navigate('DownloadScreen',item)
+          this.props.navigation.navigate('DownFileScreen',item)
         } else {
           this.props.navigation.navigate('PlayVideoScreen',item)
         }

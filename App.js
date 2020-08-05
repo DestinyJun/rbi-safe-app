@@ -26,7 +26,6 @@ import {ProFileInventoryScreen} from "./app/views/ProFile/ProFileInventoryScreen
 import {ProFileInfoScreen} from "./app/views/ProFile/ProFileInfoScreen";
 import {ProFileSafeScreen} from "./app/views/ProFile/ProFileSafeScreen";
 import {PlayVideoScreen} from "./app/views/Video/PlayVideoScreen";
-import {DownloadScreen} from "./app/views/Download/DownloadScreen";
 
 // 自定义工具
 import {Store} from "./app/redux/store";
@@ -41,6 +40,7 @@ import {HomeInformationScreen} from "./app/views/Home/HomeInformationScreen";
 import {DoubleInventoryDetailScreen} from "./app/views/Double/DoubleInventoryDetailScreen";
 import {UpdateVersionScreen} from "./app/views/Update/UpdateVersionScreen";
 import {singleRemind} from "./app/util/ToolFunction";
+import {DownFileScreen} from "./app/views/Download/DownFileScreen";
 
 // 创建路由对象
 const Stack = createStackNavigator();
@@ -107,9 +107,9 @@ export default class App extends React.Component {
               <Stack.Screen name={'ProFileInfoScreen'} component={ProFileInfoScreen}/>
               <Stack.Screen name={'ProFileSafeScreen'} component={ProFileSafeScreen}/>
               <Stack.Screen name={'PlayVideoScreen'} component={PlayVideoScreen}/>
-              <Stack.Screen name={'DownloadScreen'} component={DownloadScreen}/>
               <Stack.Screen name={'HomeInformationScreen'} component={HomeInformationScreen}/>
               <Stack.Screen name={'UpdateVersionScreen'} component={UpdateVersionScreen}/>
+              <Stack.Screen name={'DownFileScreen'} component={DownFileScreen}/>
             </Stack.Navigator>:
             <Stack.Navigator initialRouteName={'Login'} headerMode={'none'}>
               <Stack.Screen name="Login" component={LoginScreen}/>

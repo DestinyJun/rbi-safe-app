@@ -13,5 +13,40 @@ export const ProFileArchivesStyles = StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 10,
     paddingRight: 10
+  },
+  examCard: {
+    backgroundColor: '#fff',
+    borderRadius: 6,
+    marginBottom: 10,
+    paddingLeft: 12,
+    paddingRight: 15
+  },
+  title: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomColor: '#F8F8F8',
+    borderBottomWidth: 1,
+    paddingTop: 6,
+    paddingBottom: 6,
+  },
+  timerBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 10,
+  },
+  progressTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  buttons: {
+    paddingBottom: 20,
+    paddingTop: 15,
+    paddingLeft: 30,
+    paddingRight: 30,
+  },
+  buttonsStyles: {
+    paddingLeft: 30,
+    paddingRight: 30,
+    borderRadius: 20
   }
 });

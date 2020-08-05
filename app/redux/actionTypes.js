@@ -8,3 +8,6 @@ export const ISLOGIN = 'isLogin';
 // 加载状态
 export const ISLOADING = 'isLoading';
 
+// 加载状态
+export const ISUPDATEAPP = 'isUpdateApp';
+

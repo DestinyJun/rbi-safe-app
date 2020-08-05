@@ -16,11 +16,9 @@ export class ExamCardComponent extends Component {
       train: props.train,
       exam: props.train.exam ? props.train.exam : null,
     };
-    console.log(props);
 }
 
   render() {
-    console.log();
     return (
       <View style={[styles.container]}>
         <View style={styles.title}>

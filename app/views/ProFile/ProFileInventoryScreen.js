@@ -1,5 +1,5 @@
 /**
- * desc：  一岗双责检查清单
+ * desc：  我的资格证书
  * author：DestinyJun
  * date：  2020/7/3 17:56
  */
@@ -8,38 +8,35 @@ import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import {ProFileInventoryStyles as styles} from "./ProFileInventoryStyles";
 import {Header, ListItem} from "react-native-elements";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
+import {hiddenLoading, showLoading} from "../../util/ToolFunction";
+import {post} from "../../service/Interceptor";
+import {ProFileApi} from "../../service/ProFileApi";
 
 export class ProFileInventoryScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      data: null
+    };
+    this.fileList =  [
+      {
+      name: '姓名',
+      keywords: 'name',
+    }
+    ];
   }
 
   render() {
-    const fileList = [
-      {
-        title: '责任清单  待审核',
-        isState: 3,
-      },
-      {
-        title: '责任清单  待填写',
-        isState: 3,
-      },
-      {
-        title: '责任清单  已完成',
-        isState: 3,
-      },
-    ];
     return (
       <View style={styles.Inventory}>
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
           containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
-          centerComponent={{text: `一岗双责检查清单`, style: {fontSize: 20, color: '#fff'}}}
+          centerComponent={{text: `我的资格证书`, style: {fontSize: 20, color: '#fff'}}}
         />
         <View style={styles.content}>
-          <ScrollView style={{flex: 1}}>
+          {/*<ScrollView style={{flex: 1}}>
             {
               fileList.map((l, i) => (
                 <ListItem
@@ -53,7 +50,7 @@ export class ProFileInventoryScreen extends Component {
                     {backgroundColor: l.isState === 1?'#FFC06A':l.isState === 2?'#3DBCFF': '#63DCAF',
                       color: '#fff',
                       borderRadius: 20,
-                      fontSize: 14},c_styles.pl_1,c_styles.pr_1]}>我方</Text>}
+                      fontSize: 14},c_styles.pl_1,c_styles.pr_1]}>{(i + 1)>9?i:`0${i+1}`}</Text>}
                   rightTitle={'2020.06.18'}
                   onPress={() => {
                     if (l.isState === 1) {
@@ -66,10 +63,27 @@ export class ProFileInventoryScreen extends Component {
                 />
               ))
             }
-          </ScrollView>
+          </ScrollView>*/}
         </View>
       </View>
     );
+  }
+
+  // 组件挂载
+  componentDidMount() {
+    showLoading();
+    // 查询培训计划信息
+    post(ProFileApi.GET_MY_PROOF)
+      .then((res) => {
+        console.log(res);
+        hiddenLoading();
+      /*  this.setState({
+          seExamList: [...train.data.contents]
+        })*/
+      })
+      .catch((err) => {
+        hiddenLoading();
+      });
   }
 }
 

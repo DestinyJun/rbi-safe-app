@@ -10,21 +10,22 @@ import {ProFileStyles as styles} from "./ProFileStyles";
 
 // 自定义工具
 import {Store} from "../../redux/store";
-import {isLogin} from "../../redux/actions";
-import {ISLOGIN} from "../../redux/actionTypes";
+import {isLogin, isUpdateApp} from "../../redux/actions";
+import {ISLOGIN, ISUPDATEAPP} from "../../redux/actionTypes";
 import {PROFILE_TOP_MENU_LIST, PROFILE_BOTTOM_MENU_LIST} from "../../util/Constant";
-import {hiddenLoading, showLoading} from "../../util/ToolFunction";
+import {hiddenLoading, showLoading, singleRemind} from "../../util/ToolFunction";
 import {post} from "../../service/Interceptor";
 import {ProFileApi} from "../../service/ProFileApi";
-import {DoubleDutyApi} from "../../service/DoubleDutyApi";
+import {versionName} from "rn-app-upgrade";
 
 export class ProFileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      proFileInfo: null
+      proFileInfo: null,
+      updateState: Store.getState().isUpdateApp
     };
-    this.unfocus = null
+    this.unfocus = null;
   }
 
   render() {
@@ -39,7 +40,7 @@ export class ProFileScreen extends Component {
           }}
           centerComponent={{ text: '个人中心', style: { color: '#fff', fontSize: 18 } }}
         />
-        <View style={[c_styles.pl_3,c_styles.pr_3,{flex: 1}]}>
+        <View style={[c_styles.pl_3,c_styles.pr_3,{flex: 1,paddingBottom: 20}]}>
           <ScrollView style={{flex: 1}}>
             <View style={[styles.baseInfo]}>
               <Avatar
@@ -80,10 +81,22 @@ export class ProFileScreen extends Component {
                     key={i}
                     title={item.title}
                     leftIcon={{ name: item.icon,type: item.type,size: item.type === 'material'?22:18}}
-                    bottomDivider={!(i === (PROFILE_TOP_MENU_LIST.length - 1))}
+                    bottomDivider={true}
                   />
                 ))
               }
+              <ListItem
+                onPress={() => {
+                  if (!this.state.updateState) {
+                    singleRemind('更新提示','当前已是最新版本，无需更新！')
+                  } else {
+                    this.props.navigation.navigate('UpdateVersionScreen');
+                  }
+                }}
+                title={'版本更新'}
+                leftIcon={{ name: 'lock',type: 'material',size: 22}}
+                badge={this.state.updateState?{status: 'error',badgeStyle: {height: 10,width: 10,borderRadius: 10}}: null}
+              />
             </View>
             <Button
               containerStyle={[{borderRadius: 30}]}
@@ -98,6 +111,11 @@ export class ProFileScreen extends Component {
 
   // 组件挂载生命周期函
   componentDidMount() {
+    this.subscription = Store.subscribe(() => {
+      this.setState({
+        updateState: Store.getState().isUpdateApp
+      })
+    });
     this.unfocus = this.props.navigation.addListener('focus',() => {
       showLoading();
       post(ProFileApi.GET_MY_INFO,{})
@@ -111,11 +129,28 @@ export class ProFileScreen extends Component {
           hiddenLoading();
         })
     });
+    this.checkAppUpdate();
   }
 
   // 组件卸载
   componentWillUnmount() {
     this.unfocus();
+    this.subscription();
+  }
+
+  // 检查APP更新
+  checkAppUpdate() {
+    let fileds = new FormData();
+    fileds.append('version',versionName);
+    post(ProFileApi.UPDATE_APP_MOBILE,fileds)
+      .then(res => {
+        if (res.data.ifUpdate === 1) {
+          Store.dispatch(isUpdateApp({type: ISUPDATEAPP, isUpdateApp: true}))
+        }
+      })
+      .catch(err => {
+        singleRemind('错误提醒',`${err.message}，请联系管理员`)
+      })
   }
 
   // 功能路由跳转

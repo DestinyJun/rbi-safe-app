@@ -116,6 +116,7 @@ export class HomeScreen extends Component {
           hiddenLoading();
         })
     });
+
   }
 
   componentWillUnmount() {
