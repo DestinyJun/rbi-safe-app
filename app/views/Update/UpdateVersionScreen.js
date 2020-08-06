@@ -4,7 +4,7 @@
  * date：  2020/8/3 17:29
  */
 import React, {Component} from 'react';
-import {View, StyleSheet, PermissionsAndroid, Text, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, PermissionsAndroid, Text, ActivityIndicator, Linking} from 'react-native';
 import {Button, Header} from "react-native-elements";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
 import {hiddenLoading, showLoading, singleRemind} from "../../util/ToolFunction";
@@ -80,8 +80,10 @@ export class UpdateVersionScreen extends Component {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
 
-      } else {
+      } else if (granted === PermissionsAndroid.RESULTS.DENIED) {
         singleRemind('权限提醒','您已拒接获取系统读写权限，应用可能无法升级！')
+      } else {
+        Linking.openSettings();
       }
     } catch (err) {
       singleRemind('权限提醒','系统读写权限获取异常，应用可能无法升级！')

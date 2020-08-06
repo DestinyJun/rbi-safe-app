@@ -1,4 +1,4 @@
-package com.myreactnativeapp;
+package com.rbisafeapp;
 
 
 import android.app.Application;

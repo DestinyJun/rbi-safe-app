@@ -1,4 +1,4 @@
-package com.myreactnativeapp;
+package com.rbisafeapp;
 
 import com.facebook.react.ReactActivity;
 
@@ -17,6 +17,6 @@ public class MainActivity extends ReactActivity {
     // START 配置显示启动页 //
     SplashScreen.show(this,R.style.AppTheme);
     // END 配置显示启动页 //
-    return "myreactnativeapp";
+    return "rbisafeapp";
   }
 }

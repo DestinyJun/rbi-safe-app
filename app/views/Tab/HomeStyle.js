@@ -34,4 +34,8 @@ export const HomeStyle = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
   },
+  dialogContainer: {
+    paddingLeft: 15,
+    paddingRight: 15
+  }
 });

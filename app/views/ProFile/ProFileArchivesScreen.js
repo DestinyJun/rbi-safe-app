@@ -4,12 +4,11 @@
  * date：  2020/7/3 17:53
  */
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, Alert, ScrollView} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import {ProFileArchivesStyles as styles} from "./ProFileArchivesStyles";
-import {Button, Header, Icon, Slider} from "react-native-elements";
+import {Button, Header, Icon} from "react-native-elements";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
-import {ExamCardComponent} from "../../components/ExamCardComponent";
-import {hiddenLoading, percentage, showLoading} from "../../util/ToolFunction";
+import {hiddenLoading, showLoading} from "../../util/ToolFunction";
 import {post} from "../../service/Interceptor";
 import {ProFileApi} from "../../service/ProFileApi";
 
@@ -33,7 +32,7 @@ export class ProFileArchivesScreen extends Component {
           }}/>}
           centerComponent={{text: `我的培训档案`, style: {fontSize: 20, color: '#fff'}}}
         />
-        <View style={{flex: 1}}>
+        <View style={{flex: 1,paddingBottom: 20}}>
           <ScrollView style={{flex: 1}}>
             {
               this.state.seExamList.length>0?this.state.seExamList.map((item,index) => (
@@ -87,7 +86,6 @@ export class ProFileArchivesScreen extends Component {
     // 查询培训计划信息
     post(ProFileApi.GET_TRAIN_LIST, {pageNo: 1, pageSize: 10000})
       .then((train) => {
-        console.log(train);
         hiddenLoading();
         this.setState({
           seExamList: [...train.data.contents]

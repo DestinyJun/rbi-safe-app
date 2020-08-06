@@ -78,21 +78,21 @@ export class HomeScreen extends Component {
                   )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>真棒！当前没有任何西事件通知呢！</Text>
                 }
               </View>
-              <DialogContentComponent isVisible={this.state.contentModalShow} title={'详细信息'}>
-                <View style={styles.dialogContainer}>
-                  <Text style={[c_styles.h4,c_styles.pt_5,c_styles.pb_5,c_styles.text_center]}>{this.state.detailInfo?this.state.detailInfo.title:''}</Text>
-                  <Text style={{fontSize: 16,color: '#72827E'}}>
-                    {this.state.detailInfo?this.state.detailInfo.content:''}
-                  </Text>
-                  <Button title={'关闭'} buttonStyle={c_styles.button} onPress={() => {
-                    this.setState({
-                      contentModalShow: false,
-                    })
-                  }}/>
-                </View>
-              </DialogContentComponent>
             </View>
           </ScrollView>
+          <DialogContentComponent isVisible={this.state.contentModalShow} title={'详细信息'}>
+            <View style={styles.dialogContainer}>
+              <Text style={[c_styles.h4,c_styles.pt_5,c_styles.pb_5,c_styles.text_center]}>{this.state.detailInfo?this.state.detailInfo.title:''}</Text>
+              <Text style={{fontSize: 16,color: '#72827E'}}>
+                {this.state.detailInfo?this.state.detailInfo.content:''}
+              </Text>
+              <Button title={'关闭'} buttonStyle={c_styles.button} onPress={() => {
+                this.setState({
+                  contentModalShow: false,
+                })
+              }}/>
+            </View>
+          </DialogContentComponent>
         </View>
       </View>
     );

@@ -4,7 +4,7 @@
  * date：  2020/7/21 20:46
  */
 import React, {Component} from 'react';
-import {View, StyleSheet, TouchableOpacity, ScrollView, PermissionsAndroid} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, ScrollView, PermissionsAndroid, Linking} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {Badge, Icon, Image} from "react-native-elements";
 import {singleRemind} from "../util/ToolFunction";
@@ -90,8 +90,11 @@ export class PickerImageComponent extends Component{
              }
            });
          });*/
+       }
+       else if (granted === PermissionsAndroid.RESULTS.DENIED) {
+         singleRemind('权限提醒','您已拒接获取系统读写权限，应用可能无法升级！')
        } else {
-         singleRemind('权限提醒','你已拒接获取相机权限，当前功能无法使用！')
+         Linking.openSettings();
        }
      } catch (err) {
        singleRemind('权限提醒','获取权限异常，请重新获取权限')

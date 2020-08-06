@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.myreactnativeapp"
+        applicationId "com.rbisafeapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

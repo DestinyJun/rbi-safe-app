@@ -34,9 +34,9 @@ export const PROFILE_TOP_MENU_LIST = [
   },
   {
     title: '我的四级HSE教育卡',
-    icon: 'calendar-minus-o',
+    icon: 'address-card-o',
     type: 'font-awesome',
-    routerName: 'ProFileInventoryScreen'
+    routerName: 'ProFileFourEduScreen'
   },
 ];
 export const PROFILE_BOTTOM_MENU_LIST = [
@@ -52,12 +52,6 @@ export const PROFILE_BOTTOM_MENU_LIST = [
     type: 'material',
     routerName: 'ProFileSafeScreen'
   },
-  /*{
-    title: '版本更新',
-    icon: 'lock',
-    type: 'material',
-    routerName: 'UpdateVersionScreen'
-  },*/
 ];
 
 // 表单填写返回提醒
@@ -78,6 +72,19 @@ export const TROUBLE_STATUS_LIST = [
   '审核通过',
   '审核不通过',
 ];
+
+// 常见文件后缀名及对应类型
+export const FILE_TYPE = {
+  '.doc': 'application/msword',
+  '.docx': 'application/msword',
+  '.pdf': 'application/application/pdf',
+  '.pps': 'application/vnd.ms-powerpoint',
+  '.ppt': 'application/vnd.ms-powerpoint',
+  '.pptx': 'application/vnd.ms-powerpoint',
+  '.wps': 'application/vnd.ms-works',
+  '.xlsx': 'application/vnd.ms-excel',
+  '.xls': 'application/vnd.ms-excel',
+};
 
 // echarts模板
 export const HTML = `

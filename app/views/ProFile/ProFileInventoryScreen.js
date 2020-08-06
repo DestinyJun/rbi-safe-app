@@ -4,7 +4,7 @@
  * date：  2020/7/3 17:56
  */
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {View, ScrollView, Text} from 'react-native';
 import {ProFileInventoryStyles as styles} from "./ProFileInventoryStyles";
 import {Header, ListItem} from "react-native-elements";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
@@ -16,13 +16,35 @@ export class ProFileInventoryScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null
+      data: {}
     };
     this.fileList =  [
-      {
-      name: '姓名',
-      keywords: 'name',
-    }
+      {name: 'name', keywords: '姓名'},
+      {name: 'gender', keywords: '性别'},
+      {name: 'idCardNo', keywords: '身份证号'},
+      {name: 'degreeOfEducation', keywords: '文化程度'},
+      {name: 'typeOfWork', keywords: '工种'},
+      {name: 'operationItems', keywords: '操作项目'},
+      {name: 'workingYears', keywords: '工龄'},
+      {name: 'theoreticalAchievements', keywords: '理论成绩'},
+      {name: 'actualResults', keywords: '实际成绩'},
+      {name: 'operationCertificateNo', keywords: '操作证号'},
+      {name: 'dateOfIssue', keywords: '发证日期'},
+      {name: 'yearsOfWork', keywords: '工种年限'},
+      {name: 'validityPeriod', keywords: '复审年限'},
+      {name: 'oneReviewResults', keywords: '第一次复审成绩'},
+      {name: 'oneReviewTime', keywords: '第一次复审时间'},
+      {name: 'towReviewResults', keywords: '第二次复审成绩'},
+      {name: 'towReviewTime', keywords: '第二次复审时间'},
+      {name: 'threeReviewResults', keywords: '第三次复审成绩'},
+      {name: 'threeReviewTime', keywords: '第三次复审时间'},
+      {name: 'fourReviewResults', keywords: '第四次复审成绩'},
+      {name: 'fourReviewTime', keywords: '第四次复审时间'},
+      {name: 'fiveReviewResults', keywords: '第五次复审成绩'},
+      {name: 'fiveReviewTime', keywords: '第五次复审时间'},
+      {name: 'sixReviewResults', keywords: '第六次复审成绩'},
+      {name: 'sixReviewTime', keywords: '第六次复审时间'},
+      {name: 'remarks', keywords: '备注'},
     ];
   }
 
@@ -36,34 +58,23 @@ export class ProFileInventoryScreen extends Component {
           centerComponent={{text: `我的资格证书`, style: {fontSize: 20, color: '#fff'}}}
         />
         <View style={styles.content}>
-          {/*<ScrollView style={{flex: 1}}>
+          <ScrollView style={{flex: 1}}>
             {
-              fileList.map((l, i) => (
+              Object.keys(this.state.data).length>0?this.fileList.map((l, i) => (
                 <ListItem
-                  Component={TouchableOpacity}
                   key={i}
                   containerStyle={{marginTop: 10,borderRadius: 10}}
-                  title={l.title}
+                  title={l.keywords}
                   titleStyle={{color: '#5A5A5A'}}
                   titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
-                  leftElement={<Text style={[
-                    {backgroundColor: l.isState === 1?'#FFC06A':l.isState === 2?'#3DBCFF': '#63DCAF',
-                      color: '#fff',
-                      borderRadius: 20,
-                      fontSize: 14},c_styles.pl_1,c_styles.pr_1]}>{(i + 1)>9?i:`0${i+1}`}</Text>}
-                  rightTitle={'2020.06.18'}
-                  onPress={() => {
-                    if (l.isState === 1) {
-                      this.props.navigation.navigate('DoubleInventoryCheckScreen',l)
-                    } else if(l.isState === 2) {
-                      this.props.navigation.navigate('DoubleInventoryFillScreen',l)
-                    }
-                  }}
+                  rightTitle={this.state.data?this.state.data[l.name]:''}
                   rightTitleStyle={{color:'#BABABA', fontSize: 16}}
                 />
-              ))
+              )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>
+                您当前没有任何资格证书，赶紧去培训吧亲！
+              </Text>
             }
-          </ScrollView>*/}
+          </ScrollView>
         </View>
       </View>
     );
@@ -72,14 +83,12 @@ export class ProFileInventoryScreen extends Component {
   // 组件挂载
   componentDidMount() {
     showLoading();
-    // 查询培训计划信息
     post(ProFileApi.GET_MY_PROOF)
       .then((res) => {
-        console.log(res);
         hiddenLoading();
-      /*  this.setState({
-          seExamList: [...train.data.contents]
-        })*/
+        this.setState({
+          data: {...res.data}
+        })
       })
       .catch((err) => {
         hiddenLoading();

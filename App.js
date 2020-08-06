@@ -41,6 +41,7 @@ import {DoubleInventoryDetailScreen} from "./app/views/Double/DoubleInventoryDet
 import {UpdateVersionScreen} from "./app/views/Update/UpdateVersionScreen";
 import {singleRemind} from "./app/util/ToolFunction";
 import {DownFileScreen} from "./app/views/Download/DownFileScreen";
+import {ProFileFourEduScreen} from "./app/views/ProFile/ProFileFourEduScreen";
 
 // 创建路由对象
 const Stack = createStackNavigator();
@@ -107,6 +108,7 @@ export default class App extends React.Component {
               <Stack.Screen name={'ProFileInfoScreen'} component={ProFileInfoScreen}/>
               <Stack.Screen name={'ProFileSafeScreen'} component={ProFileSafeScreen}/>
               <Stack.Screen name={'PlayVideoScreen'} component={PlayVideoScreen}/>
+              <Stack.Screen name={'ProFileFourEduScreen'} component={ProFileFourEduScreen}/>
               <Stack.Screen name={'HomeInformationScreen'} component={HomeInformationScreen}/>
               <Stack.Screen name={'UpdateVersionScreen'} component={UpdateVersionScreen}/>
               <Stack.Screen name={'DownFileScreen'} component={DownFileScreen}/>

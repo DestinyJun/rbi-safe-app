@@ -1,11 +1,11 @@
 /**
- * desc：  一岗双责检查清单样式
+ * desc：  我的四级教育卡样式
  * author：DestinyJun
  * date：  2020/7/3 17:58
  */
 import {StyleSheet} from 'react-native';
 
-export const ProFileInventoryStyles = StyleSheet.create({
+export const ProFileFourEduStyles = StyleSheet.create({
   Inventory: {
     flex: 1
   },

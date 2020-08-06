@@ -12,8 +12,11 @@ export class ProFileApi {
   // 分页获取培训档案
   static GET_TRAIN_LIST = '/getPersonalTrainingFiles';
 
-  // 分页获取培训档案
+  // 获取资格证书
   static GET_MY_PROOF = '/training/findCertificate';
+
+  // 获取四级教育卡
+  static GET_FOUR_EDU = '/safeFourLevel/findSafeFourLevelByOperatingStaff';
 
   // APP检查更新
   static UPDATE_APP_MOBILE = '/loadApp';

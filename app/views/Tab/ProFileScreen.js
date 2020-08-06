@@ -94,7 +94,7 @@ export class ProFileScreen extends Component {
                   }
                 }}
                 title={'版本更新'}
-                leftIcon={{ name: 'lock',type: 'material',size: 22}}
+                leftIcon={{ name: 'cloud-upload',type: 'font-awesome',size: 22}}
                 badge={this.state.updateState?{status: 'error',badgeStyle: {height: 10,width: 10,borderRadius: 10}}: null}
               />
             </View>
