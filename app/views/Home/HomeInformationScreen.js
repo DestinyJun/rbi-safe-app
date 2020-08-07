@@ -59,11 +59,15 @@ export class HomeInformationScreen extends Component {
                   subtitle={item.idt}
                   subtitleStyle={{paddingTop: 14}}
                 />
-              )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>真棒！当前没有任何西事件通知呢！</Text>
+              )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前没有任何事件通知！</Text>
             }
           </View>
         </ScrollView>
-        <DialogContentComponent isVisible={this.state.contentModalShow} title={'详细信息'}>
+        <DialogContentComponent isVisible={this.state.contentModalShow} title={'详细信息'}  onClose={(res) => {
+          this.setState({
+            contentModalShow: res
+          })
+        }}>
           <View style={styles.dialogContainer}>
             <Text style={[c_styles.h4,c_styles.pt_5,c_styles.pb_5,c_styles.text_center]}>{this.state.detailInfo?this.state.detailInfo.title:''}</Text>
             <Text style={{fontSize: 16,color: '#72827E'}}>

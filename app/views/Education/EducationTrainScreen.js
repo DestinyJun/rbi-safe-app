@@ -95,7 +95,7 @@ export class EducationTrainScreen extends Component {
                   checkmark={l.whetherStudy === 1?{type: 'font-awesome',name: 'check-circle',color: 'green'}:false}
                   onPress={this.studyOnPress.bind(this,'video',l)}
                 />
-              )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>很想练习是吧？但是没题目哦，还不赶紧联系管理员！</Text>
+              )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前暂无题目，请联系管理员！</Text>
             }
           </ScrollView>
         </View>

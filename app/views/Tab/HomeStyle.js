@@ -14,7 +14,7 @@ export const HomeStyle = StyleSheet.create({
     paddingLeft: 10,
     paddingTop: 10,
     paddingRight: 10,
-    paddingBottom: 20
+    paddingBottom: 5
   },
   imgBox: {
     backgroundColor: '#fff',

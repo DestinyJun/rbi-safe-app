@@ -8,7 +8,14 @@ import {View, Text, StyleSheet} from 'react-native';
 import {CheckBox} from "react-native-elements";
 
 export function SingleTopicComponent(props) {
-  const questionOptions= props.safeTestQuestionOptionsList?[...props.safeTestQuestionOptionsList]:[...props.safeSubjectOptionList];
+  let questionOptions = [];
+  if (props.safeSubjectOptions) {
+    questionOptions = [...props.safeSubjectOptions]
+  } else if (props.safeTestQuestionOptionsList) {
+    questionOptions = [...props.safeTestQuestionOptionsList]
+  } else {
+    questionOptions = [...props.safeSubjectOptionList]
+  }
   const arr = questionOptions.map(() => false);
   const [checked,setChecked] = useState(questionOptions.map(() => false));
   const checkOnPress = (index,res) => {

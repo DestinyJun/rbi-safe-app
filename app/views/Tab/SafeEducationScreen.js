@@ -48,7 +48,7 @@ export class SafeEducationScreen extends Component {
             {
               this.state.seExamList.length>0?
                 this.state.seExamList.map((item,index) => (<ExamCardComponent key={index} {...this.props} train={item} />)):
-                <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>别发呆了！赶紧去喊管理员给您添加培训计划！</Text>
+                <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>请联系管理员给您添加培训计划！</Text>
             }
           </ScrollView>
         </View>

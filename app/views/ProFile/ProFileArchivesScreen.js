@@ -71,7 +71,7 @@ export class ProFileArchivesScreen extends Component {
                     </View>
                   </View>
                 ))
-                :<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>噢，天了！您还没有任何培训，真糟糕！</Text>
+                :<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>您还没有任何培训！</Text>
             }
           </ScrollView>
         </View>

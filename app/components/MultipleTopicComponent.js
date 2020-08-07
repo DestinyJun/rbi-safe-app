@@ -10,10 +10,10 @@ export class MultipleTopicComponent extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      checked: props.safeSubjectOptionList?props.safeSubjectOptionList.map(() => false):props.safeTestQuestionOptionsList.map(() => false)
+      checked: props.safeSubjectOptionList?props.safeSubjectOptionList.map(() => false):props.safeTestQuestionOptionsList?props.safeTestQuestionOptionsList.map(() => false):props.safeSubjectOptions.map(() => false)
     };
-    this.arr = props.safeSubjectOptionList?props.safeSubjectOptionList.map(() => false):props.safeTestQuestionOptionsList.map(() => false);
-    this.questionOptions= props.safeSubjectOptionList?[...props.safeSubjectOptionList]:[...props.safeTestQuestionOptionsList];
+    this.arr = props.safeSubjectOptionList?props.safeSubjectOptionList.map(() => false):props.safeTestQuestionOptionsList?props.safeTestQuestionOptionsList.map(() => false):props.safeSubjectOptions.map(() => false)
+    this.questionOptions= props.safeSubjectOptionList?[...props.safeSubjectOptionList]:props.safeTestQuestionOptionsList?[...props.safeTestQuestionOptionsList]:[...props.safeSubjectOptions];
   }
   render() {
     return (

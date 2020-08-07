@@ -40,13 +40,13 @@ export function CardInputComponent(props) {
             {/*检查内容*/}
             <View style={{flex: 5,flexDirection: 'row',alignItems: 'center'}}>
               <Text style={[c_styles.h6, {color: '#67A1FF'}]}>检查内容： </Text>
-              <TextInput placeholder={'请输入检查内容'} style={[c_styles.h6, {textAlign: 'left', color: '#6D6D6D'}]} onChangeText={(text => {
+              <TextInput placeholder={'输入内容'} style={[c_styles.h6, {textAlign: 'left', color: '#6D6D6D'}]} onChangeText={(text => {
                 props.onChangeSelfEvaluation(text);
               })} />
             </View>
             {/*检查分数*/}
             <View style={{flex: 5}}>
-              <TextInput placeholder={'请输入检查分数'} style={[c_styles.h6, {textAlign: 'right', color: '#6D6D6D'}]} onChangeText={(text => {
+              <TextInput placeholder={'输入分数'} style={[c_styles.h6, {textAlign: 'right', color: '#6D6D6D'}]} onChangeText={(text => {
                 props.onChangeSelfFraction(text);
               })} />
             </View>

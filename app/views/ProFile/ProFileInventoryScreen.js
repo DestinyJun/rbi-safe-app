@@ -12,6 +12,14 @@ import {hiddenLoading, showLoading} from "../../util/ToolFunction";
 import {post} from "../../service/Interceptor";
 import {ProFileApi} from "../../service/ProFileApi";
 
+const RightTitle = (props) => {
+  let rightTitle = '暂无';
+  if (props.data[props.keywords]) {
+    rightTitle = props.data[props.keywords]
+  }
+  return <Text>{rightTitle}</Text>
+};
+
 export class ProFileInventoryScreen extends Component {
   constructor(props) {
     super(props);
@@ -67,11 +75,11 @@ export class ProFileInventoryScreen extends Component {
                   title={l.keywords}
                   titleStyle={{color: '#5A5A5A'}}
                   titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
-                  rightTitle={this.state.data?this.state.data[l.name]:''}
+                  rightTitle={<RightTitle keywords={l.name} data={this.state.data}/>}
                   rightTitleStyle={{color:'#BABABA', fontSize: 16}}
                 />
               )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>
-                您当前没有任何资格证书，赶紧去培训吧亲！
+                您当前没有任何证书！
               </Text>
             }
           </ScrollView>

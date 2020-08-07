@@ -73,7 +73,7 @@ export class TroubleShootScreen extends Component {
                       processingStatus={item.processingStatus}
                     />
                   )
-                }):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>亲，一切正常，没有任何隐患呢！</Text>
+                }):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>暂无任何隐患呢！</Text>
               }
             </View>
           </ScrollView>

@@ -7,7 +7,15 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {CheckBox} from "react-native-elements";
 export function JudgeTopicComponent(props) {
-  const questionOptions= props.safeTestQuestionOptionsList?[...props.safeTestQuestionOptionsList]:[...props.safeSubjectOptionList];
+  let questionOptions = [];
+  if (props.safeSubjectOptions) {
+    questionOptions = [...props.safeSubjectOptions]
+  }
+  else if (props.safeTestQuestionOptionsList) {
+    questionOptions = [...props.safeTestQuestionOptionsList]
+  } else {
+    questionOptions = [...props.safeSubjectOptionList]
+  }
   const arr = questionOptions.map(() => false);
   const [checked,setChecked] = useState(questionOptions.map(() => false));
   const checkOnPress = (index,res) => {
@@ -33,7 +41,7 @@ export function JudgeTopicComponent(props) {
         </View>
       </View>
       <View style={[styles.choose]}>
-        {
+       {/* {
           checked.map((item,index) => (
             <CheckBox
               key={`judge${index}`}
@@ -46,7 +54,7 @@ export function JudgeTopicComponent(props) {
               checked={item}
             />
           ))
-        }
+        }*/}
       </View>
     </View>
   );

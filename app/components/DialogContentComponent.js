@@ -6,7 +6,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableWithoutFeedback, ScrollView, Dimensions} from 'react-native';
 import Modal from 'react-native-translucent-modal';
-import {Button} from "react-native-elements";
 const {width, height} = Dimensions.get('window');
 export class DialogContentComponent extends Component{
   constructor(props) {
@@ -38,12 +37,18 @@ export class DialogContentComponent extends Component{
         visible={this.state.isVisible}
         transparent={true}
         onRequestClose={() => {
-          this.setState({isVisible: false});
+          this.setState({isVisible: false},() => {
+            this.props.onClose(false);
+          });
         }}
       >
         <View style={styles.container}>
           {/*START 遮罩层*/}
-          <TouchableWithoutFeedback onPress={() => this.setState({isVisible: false})}>
+          <TouchableWithoutFeedback onPress={() => {
+            this.setState({isVisible: false},() => {
+              this.props.onClose(false);
+            });
+          }}>
             <View style={styles.maskLayer}/>
           </TouchableWithoutFeedback>
           {/*END 遮罩层*/}

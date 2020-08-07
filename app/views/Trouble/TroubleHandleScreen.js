@@ -49,7 +49,7 @@ export class TroubleHandleScreen extends Component {
     this.hidDangerCode = props.route.params.hidDangerCode;
     this.hidDangerGrade = props.route.params.hidDangerGrade;
     this.title = TROUBLE_STATUS_LIST[parseInt(this.processingStatus-1)];
-    this.typeList = {hidTypePerson: props.route.params.hidTypePerson,hidTypeThing: props.route.params.hidTypePerson,hidTypeManage: props.route.params.hidTypeManage};
+    this.typeList = {hidTypePerson: props.route.params.hidTypePerson,hidTypeThing: props.route.params.hidTypeThing,hidTypeManage: props.route.params.hidTypeManage};
   }
 
   render() {

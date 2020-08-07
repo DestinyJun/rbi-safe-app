@@ -12,6 +12,7 @@ import {hiddenLoading, showLoading} from "../../util/ToolFunction";
 import {post} from "../../service/Interceptor";
 import {HomeApi} from "../../service/HomeApi";
 import {DialogContentComponent} from "../../components/DialogContentComponent";
+import EchartsLinerComponent from "../../components/EchartsLinerComponent";
 
 export class HomeScreen extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export class HomeScreen extends Component {
       infoList: null,
       contentModalShow: false,
       detailInfo: null,
+      troubleEcharts: {}
     };
   }
 
@@ -37,8 +39,8 @@ export class HomeScreen extends Component {
         />
         <View style={styles.content}>
           <ScrollView style={{flex: 1}}>
-            <View style={styles.imgBox}>
-              <Image source={IMAGE_HOME_ONE} style={{height: 220}} resizeMode={'contain'} />
+            <View style={[styles.imgBox,{height: 220}]}>
+              <EchartsLinerComponent option={Object.keys(this.state.troubleEcharts).length>0?this.state.troubleEcharts: null} />
             </View>
             <View style={styles.imgBox}>
               <Image source={IMAGE_HOME_TWO} style={{height: 300}} resizeMode={'contain'} />
@@ -75,12 +77,16 @@ export class HomeScreen extends Component {
                       subtitle={item.idt}
                       subtitleStyle={{paddingTop: 14}}
                     />
-                  )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>真棒！当前没有任何西事件通知呢！</Text>
+                  )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前没有任何事件通知！</Text>
                 }
               </View>
             </View>
           </ScrollView>
-          <DialogContentComponent isVisible={this.state.contentModalShow} title={'详细信息'}>
+          <DialogContentComponent isVisible={this.state.contentModalShow} title={'详细信息'} onClose={(res) => {
+            this.setState({
+              contentModalShow: res,
+            })
+          }}>
             <View style={styles.dialogContainer}>
               <Text style={[c_styles.h4,c_styles.pt_5,c_styles.pb_5,c_styles.text_center]}>{this.state.detailInfo?this.state.detailInfo.title:''}</Text>
               <Text style={{fontSize: 16,color: '#72827E'}}>
@@ -110,6 +116,16 @@ export class HomeScreen extends Component {
           hiddenLoading();
           this.setState({
             infoList: [...res.data.contents]
+          });
+        })
+        .catch(err => {
+          hiddenLoading();
+        });
+      post(HomeApi.ECHARTS_TROUBLE_MONTH,{})
+        .then(res => {
+          hiddenLoading();
+          this.setState({
+            troubleEcharts: {...res.data}
           });
         })
         .catch(err => {

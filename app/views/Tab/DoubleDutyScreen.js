@@ -67,7 +67,7 @@ export class DoubleDutyScreen extends Component {
                   rightTitle={'2020.06.18'}
                   rightTitleStyle={{color:'#BABABA', fontSize: 16}}
                 />
-              )): <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>您真棒，当前无任何责任清单！</Text>
+              )): <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前无任何责任清单！</Text>
             }
           </ScrollView>
         </View>
@@ -99,7 +99,7 @@ export class DoubleDutyScreen extends Component {
                     rounded: true
                   }}
                 />
-              )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>您当前没有待审核业务，赶快去整个一吧亲！</Text>
+              )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>您当前没有待审核业务！</Text>
             }
           </ScrollView>
         </View>

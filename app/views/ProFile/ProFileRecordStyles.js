@@ -13,5 +13,10 @@ export const ProFileRecordStyles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 10
+  },
+  dialogContainer: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    flex: 1
   }
 });

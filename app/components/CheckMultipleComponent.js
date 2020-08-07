@@ -20,6 +20,7 @@ export class CheckMultipleComponent extends Component{
     });
   }
   render(){
+    console.log(this.state.checked);
     return (
       <View style={[styles.container]}>
         {

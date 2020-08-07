@@ -15,7 +15,7 @@ import {ISLOADING, ISLOGIN} from "../redux/actionTypes";
  * @param option
  * @returns {string}
  */
-export const renderChart = (props,option) => {
+export const renderChart1 = (props,option) => {
   return `
       (function() {
         window.postMessage = function(data) {
@@ -217,4 +217,32 @@ export function percentage(divisor,dividend) {
   } else {
     return num;
   }
+}
+
+/**
+ * echart参数序列化函数
+ * @param props
+ * @param option
+ * @returns {string}
+ */
+export function renderChart(props,option){
+  return `
+      (function() {
+        window.postMessage = function(data) {
+          window.ReactNativeWebView.postMessage(data)
+        }
+        var myChart = echarts.init(document.getElementById('main'));
+        myChart.setOption(${JSON.stringify(option)});
+         setTimeout(() => {
+          myChart.dispatchAction({
+            type: 'showTip',
+            seriesIndex: 0,  // 显示第几个series
+            dataIndex: 6, // 显示第几个数据
+          });
+        },100);
+       })();
+        window.addEventListener("resize", function () {
+          myChart.resize();
+         });
+    `;
 }
