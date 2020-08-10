@@ -6,6 +6,7 @@
 import React, {Component} from 'react';
 import {View,StyleSheet} from 'react-native';
 import {CheckBox} from "react-native-elements";
+import {CheckMultipleComponent} from "./CheckMultipleComponent";
 
 export class CheckSingleComponent extends Component{
   constructor(props) {
@@ -29,6 +30,7 @@ export class CheckSingleComponent extends Component{
               title={`${this.props.options[index]}级`}
               titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
               size={20}
+              disabled={this.props.disabled}
               checkedIcon='dot-circle-o'
               uncheckedIcon='circle-o'
               onPress={this.checkOnPress.bind(this,index,this.props.options[index])}
@@ -49,7 +51,9 @@ export class CheckSingleComponent extends Component{
     });
   };
 }
-
+CheckMultipleComponent.defaultProps = {
+  disabled: false
+};
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',

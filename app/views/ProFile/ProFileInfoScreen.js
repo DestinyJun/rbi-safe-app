@@ -6,14 +6,18 @@
 import React, {Component} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {ProFileInfoStyles as styles} from "./ProFileInfoStyles";
-import {Header, Icon, ListItem} from "react-native-elements";
+import {Button, Header, Icon, Image, ListItem} from "react-native-elements";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
+import {DialogContentComponent} from "../../components/DialogContentComponent";
+import {singleRemind} from "../../util/ToolFunction";
 
 export class ProFileInfoScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.myInfo = {...props.route.params}
+    this.state = {
+      personShow: false
+    };
+    this.myInfo = {...props.route.params};
   }
 
   render() {
@@ -108,7 +112,15 @@ export class ProFileInfoScreen extends Component {
                   />
                   <ListItem
                     Component={TouchableOpacity}
-                    onPress={() => {}}
+                    onPress={() => {
+                      if (this.myInfo.harmNameDTOS.length>0) {
+                        this.setState({
+                          personShow: true
+                        })
+                      } else {
+                        singleRemind('','暂无岗位风险数据！')
+                      }
+                    }}
                     containerStyle={{backgroundColor: 'unset',paddingLeft: 5,paddingRight: 5}}
                     title={'我的岗位风险'}
                     chevron={true}
@@ -122,6 +134,31 @@ export class ProFileInfoScreen extends Component {
               </ScrollView>
             </View>
           </View>
+          <DialogContentComponent title='我的岗位风险' isVisible={this.state.personShow} onClose={(res) => {
+            this.setState({
+              personShow: res
+            })
+          }}>
+            <View style={styles.dialogContainer}>
+              <ScrollView style={{flex: 1}}>
+                {
+                  this.myInfo.harmNameDTOS.length&&
+                  this.myInfo.harmNameDTOS.map((item,index) => (
+                    <Text
+                      key={index}
+                      style={[c_styles.pt_2,c_styles.pb_2,c_styles.text_darkinfo,c_styles.h6]}>
+                      {(index + 1) + '：' + item.harmName}
+                    </Text>
+                  ))
+                }
+              </ScrollView>
+              <Button title={'关闭'} buttonStyle={c_styles.button} onPress={() => {
+                this.setState({
+                  personShow: false,
+                })
+              }}/>
+            </View>
+          </DialogContentComponent>
         </View>
       </View>
     );

@@ -20,12 +20,12 @@ export class CheckMultipleComponent extends Component{
     });
   }
   render(){
-    console.log(this.state.checked);
     return (
       <View style={[styles.container]}>
         {
           this.state.checked.map((item,index) => (
             <CheckBox
+              disabled={this.props.disabled}
               key={`checkBox${index}`}
               title={this.props.options[index]}
               titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
@@ -49,7 +49,9 @@ export class CheckMultipleComponent extends Component{
     });
   };
 }
-
+CheckMultipleComponent.defaultProps = {
+  disabled: false
+};
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',

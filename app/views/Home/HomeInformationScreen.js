@@ -18,7 +18,7 @@ export class HomeInformationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      infoList: null,
+      infoList: [],
       contentModalShow: false,
       detailInfo: null,
     };
@@ -36,7 +36,7 @@ export class HomeInformationScreen extends Component {
         <ScrollView style={[styles.container]}>
           <View style={styles.containerList}>
             {
-              this.state.infoList?this.state.infoList.map((item,index) => (
+              this.state.infoList.length>0?this.state.infoList.map((item,index) => (
                 <ListItem
                   Component={TouchableOpacity}
                   onPress={() =>{

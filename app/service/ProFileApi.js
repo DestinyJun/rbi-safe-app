@@ -9,6 +9,9 @@ export class ProFileApi {
   // 分页获取隐患排查档案
   static GET_RECORD_LIST = '/hid/findFinishByPage';
 
+  // 获取隐患排查详情
+  static GET_RECORD_DETAIL = 'hid/findFinishDetailByCode';
+
   // 分页获取培训档案
   static GET_TRAIN_LIST = '/getPersonalTrainingFiles';
 

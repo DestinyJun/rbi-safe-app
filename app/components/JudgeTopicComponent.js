@@ -41,7 +41,7 @@ export function JudgeTopicComponent(props) {
         </View>
       </View>
       <View style={[styles.choose]}>
-       {/* {
+        {
           checked.map((item,index) => (
             <CheckBox
               key={`judge${index}`}
@@ -54,7 +54,7 @@ export function JudgeTopicComponent(props) {
               checked={item}
             />
           ))
-        }*/}
+        }
       </View>
     </View>
   );

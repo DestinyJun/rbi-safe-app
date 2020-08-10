@@ -13,39 +13,41 @@ export class ExamCardComponent extends Component {
     super(props);
     this.state = {
       isVisible: true,
-      train: props.train,
-      exam: props.train.exam ? props.train.exam : null,
     };
+    this.train = props.train;
+    this.exam = props.train.exam ? props.train.exam : null;
 }
 
   render() {
+    const train = this.props.train;
+    const exam = this.props.train.exam ? this.props.train.exam : null;
     return (
       <View style={[styles.container]}>
         <View style={styles.title}>
           <Icon type={'font-awesome'} name={'list-alt'} size={20} color={'#3B86FF'} raised={true}/>
           <View style={{flex: 1}}>
-            <Text style={{fontSize: 20, color: '#333333', marginLeft: 6}} numberOfLines={1} ellipsizeMode={'tail'}>{this.state.train.trainingContent}</Text>
+            <Text style={{fontSize: 20, color: '#333333', marginLeft: 6}} numberOfLines={1} ellipsizeMode={'tail'}>{this.train.trainingContent}</Text>
           </View>
         </View>
         <View style={[styles.timer, c_styles.pl_5]}>
           {
-            this.state.train.startTime&&  <View style={[styles.timerBox]}>
+            train.startTime&&  <View style={[styles.timerBox]}>
               <Icon type={'font-awesome'} name={'calendar'} size={16} color={'#3B86FF'}/>
               <Text
-                style={[c_styles.h6, c_styles.ml_2]}>培训时间：{this.state.train.startTime.split(' ')[0]}—{this.state.train.endTime.split(' ')[0]}</Text>
+                style={[c_styles.h6, c_styles.ml_2]}>培训时间：{train.startTime.split(' ')[0]}—{train.endTime.split(' ')[0]}</Text>
             </View>
           }
           {
-            (this.state.exam&&this.state.exam.startTime) && <View style={[styles.timerBox]}>
+            (exam&&exam.startTime) && <View style={[styles.timerBox]}>
               <Icon type={'font-awesome'} name={'clock-o'} size={18} color={'#3B86FF'}/>
-              <Text style={[c_styles.h6, c_styles.ml_2]}>考试时间：{this.state.exam.startTime.split(' ')[0]}—{this.state.exam.endTime.split(' ')[0]}</Text>
+              <Text style={[c_styles.h6, c_styles.ml_2]}>考试时间：{exam.startTime.split(' ')[0]}—{exam.endTime.split(' ')[0]}</Text>
             </View>
           }
         </View>
         <View style={[styles.progress, c_styles.pl_5, c_styles.pt_3, c_styles.pb_3]}>
           <View style={[styles.progressTitle]}>
             <Text style={[c_styles.h5]}>学习进度</Text>
-            <Text style={[c_styles.h5, {color: '#307AEC'}]}>{this.state.train.finishStudyTime?Math.floor(percentage(this.state.train.finishStudyTime,this.state.train.trainingDuration)*100): 0}%</Text>
+            <Text style={[c_styles.h5, {color: '#307AEC'}]}>{train.finishStudyTime?Math.floor(percentage(train.finishStudyTime,train.trainingDuration)*100): 0}%</Text>
           </View>
           <Slider
             thumbStyle={{backgroundColor: 'transparent'}}
@@ -53,17 +55,17 @@ export class ExamCardComponent extends Component {
             trackStyle={{height: 8, borderRadius: 5}}
             maximumTrackTintColor={'#F2F2F2'}
             minimumTrackTintColor={'#3883FA'}
-            value={this.state.train.finishStudyTime?percentage(this.state.train.finishStudyTime,this.state.train.trainingDuration): 0}/>
+            value={train.finishStudyTime?percentage(train.finishStudyTime,train.trainingDuration): 0}/>
         </View>
         <View style={[styles.buttons]}>
           {
-            (this.state.exam && this.state.exam.processingStatus === 1) ?
+            (exam && exam.processingStatus === 1 && percentage(train.finishStudyTime,train.trainingDuration)>=1) ?
               <Button
                 title={'开始考试'}
                 TouchableComponent={TouchableOpacity}
                 buttonStyle={[styles.buttonsStyles, {backgroundColor: '#63DCAF'}]}
                 onPress={() => {
-                  Alert.alert('考前须知', this.state.exam.examNotes, [
+                  Alert.alert('考前须知', exam.examNotes, [
                     {
                       text: '取消考试', onPress: () => {
                       }, style: "cancel"
@@ -94,9 +96,9 @@ export class ExamCardComponent extends Component {
     this.props.navigation.navigate(
       'EducationExamScreen',
       {
-        title: this.state.exam.testPaperName,
+        title: this.exam.testPaperName,
         name: '开始考试',
-        exam: this.state.exam
+        exam: this.exam
       }
     );
   };
@@ -106,8 +108,8 @@ export class ExamCardComponent extends Component {
     this.props.navigation.navigate(
       'EducationTrainScreen',
       {
-        title: this.state.train.trainingContent,
-        train: this.state.train
+        title: this.train.trainingContent,
+        train: this.train
       })
   };
 

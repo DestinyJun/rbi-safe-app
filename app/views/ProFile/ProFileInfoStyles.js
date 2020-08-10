@@ -49,5 +49,10 @@ export const ProFileInfoStyles = StyleSheet.create({
     marginTop: 10,
     paddingLeft: 10,
     paddingRight: 10
+  },
+  dialogContainer: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    flex: 1
   }
 });

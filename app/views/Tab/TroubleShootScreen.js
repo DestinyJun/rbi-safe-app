@@ -90,7 +90,7 @@ export class TroubleShootScreen extends Component {
         .then((res) => {
           hiddenLoading();
           this.setState({
-            list: [...res.data.contents]
+            list: res.data.contents.map((res) => (res))
           });
         })
         .catch(err => {

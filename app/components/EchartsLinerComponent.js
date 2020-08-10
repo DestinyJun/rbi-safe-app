@@ -1,5 +1,5 @@
 /**
- * desc：  图表统计
+ * desc：  月隐患数量统计
  * author：DestinyJun
  * date：  2020/4/3 14:06
  */

@@ -7,21 +7,25 @@ import React, {Component} from 'react';
 import {View, BackHandler, ToastAndroid, Platform, ScrollView, Text, TouchableOpacity} from 'react-native';
 import {HomeStyle as styles} from "./HomeStyle";
 import {Button, Header, Image, ListItem} from "react-native-elements";
-import {IMAGE_HOME_ONE, IMAGE_HOME_TWO} from "../../util/Constant";
+// 自定义组件
+import {DialogContentComponent} from "../../components/DialogContentComponent";
+import EchartsLinerComponent from "../../components/EchartsLinerComponent";
+import EchartsBarDoubleComponent from "../../components/EchartsBarDoubleComponent";
+// 自定义工具类
 import {hiddenLoading, showLoading} from "../../util/ToolFunction";
 import {post} from "../../service/Interceptor";
 import {HomeApi} from "../../service/HomeApi";
-import {DialogContentComponent} from "../../components/DialogContentComponent";
-import EchartsLinerComponent from "../../components/EchartsLinerComponent";
+
 
 export class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      infoList: null,
+      infoList: [],
       contentModalShow: false,
       detailInfo: null,
-      troubleEcharts: {}
+      troubleEcharts: {},
+      safeEcharts: {},
     };
   }
 
@@ -39,22 +43,28 @@ export class HomeScreen extends Component {
         />
         <View style={styles.content}>
           <ScrollView style={{flex: 1}}>
-            <View style={[styles.imgBox,{height: 220}]}>
-              <EchartsLinerComponent option={Object.keys(this.state.troubleEcharts).length>0?this.state.troubleEcharts: null} />
+            <View style={styles.imgBox}>
+              <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>月隐患数量统计</Text>
+              <View style={{height: 220}}>
+                <EchartsLinerComponent option={Object.keys(this.state.troubleEcharts).length>0?this.state.troubleEcharts: null} />
+              </View>
             </View>
             <View style={styles.imgBox}>
-              <Image source={IMAGE_HOME_TWO} style={{height: 300}} resizeMode={'contain'} />
+              <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>安全管理培训计划统计</Text>
+              <View style={{height: 300}}>
+                <EchartsBarDoubleComponent option={Object.keys(this.state.safeEcharts).length>0?this.state.safeEcharts: null} />
+              </View>
             </View>
             <View style={styles.imgBox}>
               <View style={styles.imgBoxTitle}>
-                <Text style={[c_styles.h6,{color: '#555555'}]}>综合信息公告栏</Text>
+                <Text style={[c_styles.h5,{color: '#555555'}]}>综合信息公告栏</Text>
                 <Button onPress={() => {
                   this.props.navigation.navigate('HomeInformationScreen')
                 }} title={'查看更多'} titleStyle={{color: '#C0C0C0',fontSize: 14}} buttonStyle={{backgroundColor: 'unset'}} />
               </View>
               <View style={styles.imgBoxList}>
                 {
-                  this.state.infoList?this.state.infoList.map((item,index) => (
+                  this.state.infoList.length>0?this.state.infoList.map((item,index) => (
                     <ListItem
                       Component={TouchableOpacity}
                       onPress={() =>{
@@ -130,16 +140,40 @@ export class HomeScreen extends Component {
         })
         .catch(err => {
           hiddenLoading();
+        });
+      post(HomeApi.ECHARTS_SAFE_MANAGER,{})
+        .then(res => {
+          hiddenLoading();
+          this.safeManagerInit(res);
+        })
+        .catch(err => {
+          hiddenLoading();
         })
     });
 
   }
-
+   // 组件挂载生命周期
   componentWillUnmount() {
     this.unfocus();
     if (Platform.OS === 'android') {
       BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
     }
+  }
+
+  // 安全教育统计图数据初始化
+  safeManagerInit(res) {
+    const seriesName = [];
+    const threshold = [];
+    const avgTime = [];
+    const baseNum = 0.01;
+    res.data.forEach(value => {
+      seriesName.push(value.trainingContent);
+      avgTime.push((value.average + baseNum).toFixed(3));
+      threshold.push((value.averageClassHours + baseNum).toFixed(3));
+    });
+    this.setState({
+      safeEcharts: {seriesName,threshold,avgTime,baseNum}
+    })
   }
 
   // 二次返回退出App

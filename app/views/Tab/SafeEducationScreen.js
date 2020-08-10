@@ -80,15 +80,6 @@ export class SafeEducationScreen extends Component {
             train.data.contents.forEach((trainItem) => {
               exam.data.contents.forEach((examItem) => {
                 if (trainItem.id === examItem.trainingPlanId) {
-                 /* trainItem.examNotes = examItem.examNotes; // 考试须知
-                  trainItem.examId = examItem.id; // 试卷ID
-                  trainItem.examStartTime = examItem.StartTime; // 考试开始时间
-                  trainItem.examEndTime = examItem.endTime; // 考试结束时间
-                  trainItem.processingStatus = examItem.processingStatus; // 考试完成状态1是未完成，2是已完成
-                  trainItem.testPaperName = examItem.testPaperName; // 试卷名称
-                  trainItem.testResults = examItem.testResults; // 试卷结果
-                  trainItem.personnelTrainingRecordId = examItem.personnelTrainingRecordId; // 人员培训记录ID
-                  trainItem.duration = examItem.duration; // 考试时长*/
                   trainItem.exam = examItem;
                 }
               })

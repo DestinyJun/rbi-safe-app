@@ -21,8 +21,8 @@ export class EducationTrainScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fileList: null,
-      videoList: null,
+      filesList: [],
+      videosList: [],
       isStudy: false
     };
     this.train = {...props.route.params.train};
@@ -41,7 +41,7 @@ export class EducationTrainScreen extends Component {
           <View style={[styles.courseTitle]}>
             <View style={{flexDirection:'row',alignItems: 'center'}}>
               <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'} />
-              <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>培训课件（{this.state.fileList&&this.state.fileList.length}）</Text>
+              <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>培训课件（{this.state.filesList&&this.state.filesList.length}）</Text>
             </View>
             <Button
               title={'模拟考试'}
@@ -51,7 +51,7 @@ export class EducationTrainScreen extends Component {
           </View>
           <ScrollView style={{maxHeight: 190}}>
             {
-              this.state.fileList&&this.state.fileList.map((l, i) => (
+              (this.state.filesList.length>0)?this.state.filesList.map((l, i) => (
                 <ListItem
                   Component={TouchableOpacity}
                   key={i}
@@ -67,18 +67,18 @@ export class EducationTrainScreen extends Component {
                   rightTitleStyle={{color:'#3A86FF', fontSize: 16}}
                   onPress={this.studyOnPress.bind(this,'file',l)}
                 />
-              ))
+              )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前暂无培训资料，请联系管理员！</Text>
             }
           </ScrollView>
         </View>
         <View style={[styles.videos]}>
           <View style={[styles.videosTitle]}>
             <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'} />
-            <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>培训视频（{this.state.videoList&&this.state.videoList.length}）</Text>
+            <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>培训视频（{this.state.videosList&&this.state.videosList.length}）</Text>
           </View>
           <ScrollView style={{flex: 1}}>
             {
-              this.state.videoList?this.state.videoList.map((l, i) => (
+              (this.state.videosList.length>0)?this.state.videosList.map((l, i) => (
                 <ListItem
                   Component={TouchableOpacity}
                   key={i}
@@ -95,7 +95,7 @@ export class EducationTrainScreen extends Component {
                   checkmark={l.whetherStudy === 1?{type: 'font-awesome',name: 'check-circle',color: 'green'}:false}
                   onPress={this.studyOnPress.bind(this,'video',l)}
                 />
-              )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前暂无题目，请联系管理员！</Text>
+              )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前暂无培训视频，请联系管理员！</Text>
             }
           </ScrollView>
         </View>
@@ -109,11 +109,11 @@ export class EducationTrainScreen extends Component {
       showLoading();
       post(EducationApi.GET_TRAIN_INFO,{id: this.train.id})
         .then((res) => {
-          hiddenLoading();
           this.setState({
-            fileList: [...res.data.file],
-            videoList: [...res.data.video]
+            filesList: res.data.file?[...res.data.file]:[],
+            videosList: res.data.video?[...res.data.video]:[],
           });
+          hiddenLoading();
         })
         .catch((err) => {
           hiddenLoading();
