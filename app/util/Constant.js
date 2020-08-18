@@ -12,6 +12,10 @@ export const IMAGE_HOME_ONE = require('../assets/images/home1.png');
 export const IMAGE_HOME_TWO = require('../assets/images/home2.png');
 export const IMAGE_HOME_THREE = require('../assets/images/home3.png');
 
+// 服务器地址
+export const SERVER_ADDRESS_TEST = 'http://www.gyrbi.com/safetest';
+export const SERVER_ADDRESS_PROD = 'http://61.189.169.44:8090';
+
 // 个人信息导航菜单
 export const PROFILE_TOP_MENU_LIST = [
   {
@@ -61,7 +65,7 @@ export const INPUT_BACK_REMIND_MESSAGE = '您是否需要返回？若返回则�
 export const TROUBLE_ARR_TYPE = ['人','物','管理'];
 
 // 隐患等级数组信息
-export const TROUBLE_ARR_GRADE = ['Ⅰ','Ⅱ','Ⅲ','Ⅳ','Ⅴ'];
+export const TROUBLE_ARR_GRADE = ['一般隐患','重大隐患'];
 
 // 整改状态
 export const TROUBLE_STATUS_LIST = [

@@ -1159,6 +1159,13 @@
     color "^3.1.2"
     react-native-iphone-x-helper "^1.2.1"
 
+"@react-navigation/material-top-tabs@^5.2.16":
+  version "5.2.16"
+  resolved "https://registry.npm.taobao.org/@react-navigation/material-top-tabs/download/@react-navigation/material-top-tabs-5.2.16.tgz#96a366f9b2c257c9b46f889b95e4fcb2a9ff0a56"
+  integrity sha1-lqNm+bLCV8m0b4ibleT8sqn/ClY=
+  dependencies:
+    color "^3.1.2"
+
 "@react-navigation/native@^5.6.0":
   version "5.6.0"
   resolved "https://registry.npm.taobao.org/@react-navigation/native/download/@react-navigation/native-5.6.0.tgz#3b03a35dd1337d3d3c7d170e9b6f7d0a666109bd"
@@ -5377,6 +5384,11 @@ react-native-status-bar-height@^2.5.0:
   version "2.5.0"
   resolved "https://registry.npm.taobao.org/react-native-status-bar-height/download/react-native-status-bar-height-2.5.0.tgz#bc0fb85230603850aab9667ee8111a62954de90c"
   integrity sha1-vA+4UjBgOFCquWZ+6BEaYpVN6Qw=
+
+react-native-tab-view@^2.15.1:
+  version "2.15.1"
+  resolved "https://registry.npm.taobao.org/react-native-tab-view/download/react-native-tab-view-2.15.1.tgz#cf4df4ffdec504263a2e06a6becd8831b9a19ad9"
+  integrity sha1-z030/97FBCY6Lgamvs2IMbmhmtk=
 
 react-native-translucent-modal@^1.1.2:
   version "1.1.2"

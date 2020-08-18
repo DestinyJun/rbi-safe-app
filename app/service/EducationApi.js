@@ -30,4 +30,21 @@ export class EducationApi {
   //  添加学时
   static ADD_STUDY_TIME= '/addFinishStudyTime';
 
+  // 分页获取公司人员信息
+  static GET_PERSON_LIST = '/company_personnel/query/page';
+
+  // 分页获取题库列表
+  static GET_TOPIC_BANK = '/getAllSubjectStoreName';
+
+  // 根据题库ID分页查询题目
+  static GET_QUESTION_LIST = '/safeSubject/getSafeSubjectByPageAndSubjectStoreId';
+
+  // 发布班主活动试卷
+  static ISSUE_GRAND_EXAM = '/typeWorkTestPaper/releaseTypeWorkTestPaper';
+
+  // 发布班主活动试卷
+  static GET_GRAND_EXAM = '/typeWorkTestPaper/obtainTypeWorkTestPaper';
+
+  // 发布班主活动试卷
+  static GET_GRAND_TRAIN = '/typeWorkTestPaper/getTypeWorkTestPaper';
 }

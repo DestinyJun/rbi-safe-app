@@ -34,9 +34,7 @@ export class DoubleDutyScreen extends Component {
           centerComponent={{ text: '一岗双责', style: { color: '#fff', fontSize: 18 } }}
         />
         <Button
-          onPress={() => {this.props.navigation.navigate('DoubleInventoryCheckScreen',{
-            type: '1'
-          })}}
+          onPress={() => {this.props.navigation.navigate('DoubleInventoryFillScreen')}}
           icon={{name: 'add', color: '#84B3FF',size: 18}}
           title={'责任清单填写'}
           titleStyle={{color: '#84B3FF',fontSize: 16}}

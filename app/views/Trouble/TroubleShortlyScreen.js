@@ -68,6 +68,8 @@ export class TroubleShortlyScreen extends Component {
                     }}
                     treeData={this.state.orgList}
                     title={this.state.orgTitle?this.state.orgTitle:'点击选择'}
+                    selectType={'person'}
+                    centerTitle={'请选择组织'}
                     titleStyle={{color: '#9D9D9D'}}
                     buttonStyle={{backgroundColor: 'unset',padding: 0}}
                   />}

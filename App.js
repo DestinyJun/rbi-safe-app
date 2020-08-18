@@ -17,7 +17,6 @@ import {EducationTrainScreen} from "./app/views/Education/EducationTrainScreen";
 import {TroubleShortlyScreen} from "./app/views/Trouble/TroubleShortlyScreen";
 import {TroubleReportScreen} from "./app/views/Trouble/TroubleReportScreen";
 import {TroubleHandleScreen} from "./app/views/Trouble/TroubleHandleScreen";
-import {DoubleInventoryMakeScreen} from "./app/views/Double/DoubleInventoryMakeScreen";
 import {DoubleInventoryFillScreen} from "./app/views/Double/DoubleInventoryFillScreen";
 import {DoubleInventoryCheckScreen} from "./app/views/Double/DoubleInventoryCheckScreen";
 import {ProFileRecordScreen} from "./app/views/ProFile/ProFileRecordScreen";
@@ -42,6 +41,8 @@ import {UpdateVersionScreen} from "./app/views/Update/UpdateVersionScreen";
 import {singleRemind} from "./app/util/ToolFunction";
 import {DownFileScreen} from "./app/views/Download/DownFileScreen";
 import {ProFileFourEduScreen} from "./app/views/ProFile/ProFileFourEduScreen";
+import {ViewPDFScreen} from "./app/views/WebView/ViewPDFScreen";
+import {EducationIssueScreen} from "./app/views/Education/EducationIssueScreen";
 
 // 创建路由对象
 const Stack = createStackNavigator();
@@ -95,12 +96,12 @@ export default class App extends React.Component {
               <Stack.Screen name={'EducationExamScreen'} component={EducationExamScreen}/>
               <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen}/>
               <Stack.Screen name={'EducationErrorScreen'} component={EducationErrorScreen}/>
+              <Stack.Screen name={'EducationIssueScreen'} component={EducationIssueScreen}/>
               <Stack.Screen name={'TroubleShortlyScreen'} component={TroubleShortlyScreen}/>
               <Stack.Screen name={'TroubleReportScreen'} component={TroubleReportScreen}/>
               <Stack.Screen name={'TroubleHandleScreen'} component={TroubleHandleScreen}/>
-              <Stack.Screen name={'DoubleInventoryMakeScreen'} component={DoubleInventoryMakeScreen}/>
-              <Stack.Screen name={'DoubleInventoryFillScreen'} component={DoubleInventoryFillScreen}/>
               <Stack.Screen name={'DoubleInventoryCheckScreen'} component={DoubleInventoryCheckScreen}/>
+              <Stack.Screen name={'DoubleInventoryFillScreen'} component={DoubleInventoryFillScreen}/>
               <Stack.Screen name={'DoubleInventoryDetailScreen'} component={DoubleInventoryDetailScreen}/>
               <Stack.Screen name={'ProFileRecordScreen'} component={ProFileRecordScreen}/>
               <Stack.Screen name={'ProFileArchivesScreen'} component={ProFileArchivesScreen}/>
@@ -112,6 +113,7 @@ export default class App extends React.Component {
               <Stack.Screen name={'HomeInformationScreen'} component={HomeInformationScreen}/>
               <Stack.Screen name={'UpdateVersionScreen'} component={UpdateVersionScreen}/>
               <Stack.Screen name={'DownFileScreen'} component={DownFileScreen}/>
+              <Stack.Screen name={'ViewPDFScreen'} component={ViewPDFScreen}/>
             </Stack.Navigator>:
             <Stack.Navigator initialRouteName={'Login'} headerMode={'none'}>
               <Stack.Screen name="Login" component={LoginScreen}/>

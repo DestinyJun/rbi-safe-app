@@ -47,8 +47,10 @@ export class EducationExamScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topicList: []
+      topicList: [],
+      topicListAnswer: [],
     };
+    console.log(props);
     this.exam = {...props.route.params.exam};
     this.name = props.route.params.name;
     this.params = {
@@ -67,21 +69,33 @@ export class EducationExamScreen extends Component {
           leftComponent={<MyCustomLeftComponent {...navigation} />}
           centerComponent={{text: `${this.props.route.params.title}  ${this.props.route.params.name}`,style: {fontSize: 20,color: '#fff'}}}
         />
-      {/*  <View style={styles.timer}>
-          <Text style={[styles.timerText,c_styles.pl_3,c_styles.pr_3]}>模拟考试倒计时     00:35:09</Text>
-        </View>*/}
+        <View style={styles.timer}>
+          <Text style={[styles.timerText,c_styles.pl_3,c_styles.pr_3]}>当前进度  {this.state.topicListAnswer.length} / {this.state.topicList.length}</Text>
+        </View>
         <ScrollView style={[styles.topic,c_styles.mt_2]}>
            {/*4填空题 3判断题  2多选题 1单选题*/}
           {
             this.state.topicList?this.state.topicList.map((item,index) => {
               if (item.subjectType === 1) {
-                return ( <SingleTopicComponent serial={index} key={`single${index}`} name={this.name} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
+                return ( <SingleTopicComponent serial={index} key={`single${index}`} name={this.name} {...item} onPress={(res) => {
+                  console.log(res);
+                  this.params.safeAnswerRecordList[index] = res
+                }} />)
               }
               if (item.subjectType === 2) {
                 return ( <MultipleTopicComponent serial={index} key={`multiple${index}`} name={this.name} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
               }
               if (item.subjectType === 3) {
-                return ( <JudgeTopicComponent serial={index} key={`judge${index}`} name={this.name} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
+                return ( <JudgeTopicComponent serial={index} key={`judge${index}`} name={this.name} {...item} onPress={(res) => {
+                  if (!this.state.topicListAnswer.includes(res.testUestionsId)) {
+                    const arr = [...this.state.topicListAnswer];
+                    arr.push(res.testUestionsId);
+                    this.setState({
+                      topicListAnswer: arr
+                    })
+                  }
+                  this.params.safeAnswerRecordList[index] = res
+                }} />)
               }
               if (item.subjectType === 4) {
                 return ( <FillTopicComponent serial={index} key={`fill${index}`} name={this.name} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
@@ -105,6 +119,9 @@ export class EducationExamScreen extends Component {
       case '模拟考试':
         this.httpRequestExam(EducationApi.GET_EXAM_SIMULATION,{trainingPlanId: this.exam.id});
         break;
+      case '班主考试':
+        this.httpRequestExam(EducationApi.GET_GRAND_TRAIN,{twTestPapreId: this.exam.twTestPapreId});
+        break;
     }
   }
 
@@ -117,14 +134,19 @@ export class EducationExamScreen extends Component {
       case '模拟考试':
         this.httpRequestFinishExam(EducationApi.COMPLETE_SIMULATION_EXAM);
         break;
+      case '班主考试':
+        this.httpRequestFinishExam(EducationApi.COMPLETE_SIMULATION_EXAM);
+        break;
     }
   }
 
   // 请求获取试卷
   httpRequestExam(url,params) {
+    console.log(params);
     showLoading();
     post(url,params)
       .then((res) => {
+        console.log(res);
         this.setState({
           topicList: [
             ...res.data.completion,

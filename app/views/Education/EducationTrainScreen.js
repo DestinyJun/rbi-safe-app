@@ -16,6 +16,7 @@ import {IMAGE_VIDEO_1} from "../../util/Constant";
 import {errorRemind, hiddenLoading, showLoading} from "../../util/ToolFunction";
 import {post} from "../../service/Interceptor";
 import {EducationApi} from "../../service/EducationApi";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export class EducationTrainScreen extends Component {
   constructor(props) {
@@ -146,10 +147,10 @@ export class EducationTrainScreen extends Component {
       contentId: item.id,
     };
     post(EducationApi.ADD_STUDY_TIME,fields)
-      .then((res) => {
+      .then(async (res) => {
         hiddenLoading();
         if (name === 'file') {
-          this.props.navigation.navigate('DownFileScreen',item)
+          this.props.navigation.navigate('ViewPDFScreen',{data: item,accessToken: await AsyncStorage.getItem('accessToken')})
         } else {
           this.props.navigation.navigate('PlayVideoScreen',item)
         }

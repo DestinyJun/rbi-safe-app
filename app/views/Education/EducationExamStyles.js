@@ -19,9 +19,9 @@ export const EducationExamStyles = StyleSheet.create({
   timerText: {
     paddingTop: 5,
     paddingBottom: 5,
-    color: '#226AD5',
+    color: '#FF0000',
     fontSize: 16,
-    borderColor: '#226AD5',
+    borderColor: '#FF0000',
     borderWidth: 1,
     borderRadius: 20
   },

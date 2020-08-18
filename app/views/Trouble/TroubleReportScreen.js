@@ -67,6 +67,8 @@ export class TroubleReportScreen extends Component {
                     }}
                     treeData={this.state.orgList}
                     title={this.state.orgTitle?this.state.orgTitle:'点击选择'}
+                    centerTitle={'请选择组织'}
+                    selectType={'person'}
                     titleStyle={{color: '#9D9D9D'}}
                     buttonStyle={{backgroundColor: 'unset',padding: 0}}
                   />}

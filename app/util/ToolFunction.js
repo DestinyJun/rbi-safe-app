@@ -141,11 +141,18 @@ export function rpx (num) {
 /**
  * 组织树结构初始化函数
  */
-export const treeInit = (data) => {
+export const treeInit = (data,flag) => {
   const oneChild = [];
   for (const item of data) {
     let childnode: any = {};
-    childnode = Object.assign({},{id: item.id,name: item.organizationName,parentId: item.parentId});
+    if (flag === 'person') {
+      childnode = Object.assign({},{id: item.id,name: item.name,parentId: null});
+    } else if (flag === 'question') {
+      childnode = Object.assign({},{id: item.safeSubject.id,name: item.safeSubject.subject,parentId: null});
+    }
+    else {
+      childnode = Object.assign({},{id: item.id,name: item.organizationName,parentId: item.parentId});
+    }
     if (item.chiled != null && item.chiled.length !== 0) {
       childnode.children = treeInit(item.chiled);
     }

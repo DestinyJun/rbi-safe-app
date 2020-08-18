@@ -10,9 +10,18 @@ export const DoubleInventoryFillStyles = StyleSheet.create({
     flex: 1
   },
   content: {
-    paddingTop: 10,
     paddingLeft: 10,
     paddingRight: 10,
+    flex: 1
+  },
+  contentTitle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 15,
+    paddingBottom: 5,
+    marginBottom: 10
+  },
+  contentList: {
     flex: 1
   },
   // 公共样式

@@ -16,16 +16,18 @@ export class PickerTreeComponent extends Component {
     super(props);
     this.state = {
       isVisible: false,
-      treeselectData: treeInit(props.treeData),
+      treeselectData: treeInit(props.treeData,props.flag?props.flag: null),
       selectData: null
     };
   }
 
   render() {
+    const treeselectData = treeInit(this.props.treeData,this.props.flag?this.props.flag: null);
     return (
       <View>
         <Button
           buttonStyle={this.props.buttonStyle}
+          titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
           title={this.props.title}
           titleStyle={this.props.titleStyle} onPress={() => {
           this.setState({
@@ -51,7 +53,7 @@ export class PickerTreeComponent extends Component {
                 <Button title={'取消'} buttonStyle={{backgroundColor: 'unset'}} onPress={() => {
                   this.setState({isVisible: false});
                 }} />
-                <Text style={{fontSize: 16,color: '#fff'}}>请选择组织</Text>
+                <Text style={{fontSize: 16,color: '#fff'}}>{this.props.centerTitle}</Text>
                 <Button title={'确定'} buttonStyle={{backgroundColor: 'unset'}} onPress={() => {
                   this.setState({isVisible: false});
                   this.props.confirmPress(this.state.selectData);
@@ -59,9 +61,9 @@ export class PickerTreeComponent extends Component {
               </View>
               <View style={{flex: 1}}>
                 <TreeSelect
-                  data={this.state.treeselectData}
+                  data={treeselectData}
                   isShowTreeId={false}
-                  selectType="single"
+                  selectType={this.props.selectType}
                   itemStyle={{
                     fontSize: 16,
                     color: '#8A8B8C'
@@ -71,7 +73,13 @@ export class PickerTreeComponent extends Component {
                     fontSize: 16,
                     color: '#fff'
                   }}
-                  onClick={(res) => {this.setState({selectData: res.item})}}
+                  onClick={(res) => {
+                    if (this.props.selectType === 'multiple') {
+                      this.setState({selectData: res.currentNode})
+                    } else {
+                      this.setState({selectData: res.item})
+                    }
+                  }}
                   treeNodeStyle={{
                     openIcon: <Icon type={'font-awesome'} size={20} color="#24292E" name="angle-down"/>,
                     closeIcon: <Icon type={'font-awesome'} size={20} color="#24292E" name="angle-right"/>

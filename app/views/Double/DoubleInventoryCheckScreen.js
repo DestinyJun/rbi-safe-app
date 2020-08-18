@@ -34,41 +34,36 @@ export class DoubleInventoryCheckScreen extends Component {
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {
             this.props.navigation.goBack()
           }}/>}
-          centerComponent={{text: this.type === '1'?'责任清单填写':'责任清单审核', style: {fontSize: 20, color: '#fff'}}}
+          centerComponent={{text: '责任清单审核', style: {fontSize: 20, color: '#fff'}}}
         />
         <View style={[styles.content]}>
           <View style={[styles.contentTitle]}>
             <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'}/>
-            <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>责任清单分数检查</Text>
+            <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>{'责任清单分数审核'}</Text>
           </View>
           <View style={[styles.contentList]}>
             <ScrollView style={{flex: 1}} keyboardShouldPersistTaps={'always'}>
               {
-                this.state.list.length>0?this.state.list.map((item, i) => (<
-                  CardInputComponent
-                  type={this.type}
-                  onChangeSelfEvaluation={(text) => {
-                    if (this.type === '4') {
+                this.state.list.length>0?this.state.list.map((item, i) => {
+                  return (<
+                    CardInputComponent
+                    type={this.type}
+                    checkEvaluation={'符合'}
+                    checkNumber={item.fraction}
+                    onChangeSelfEvaluation={(text) => {
                       this.addFiled.content[i].checkResult = text;
-                    } else {
-                      this.addFiled.content[i].selfEvaluation = text;
-                    }
-
-                  }}
-                  onChangeSelfFraction={(text) => {
-                    if (this.type === '4') {
+                    }}
+                    onChangeSelfFraction={(text) => {
                       this.addFiled.content[i].checkFraction = text;
-                    } else {
-                      this.addFiled.content[i].selfFraction = text;
-                    }
-                  }}
-                  {...item} index={i}
-                  key={i}/>)): <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h4]}>
+                    }}
+                    {...item} index={i}
+                    key={i}/>)
+                }): <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h4]}>
                   没有任何需要填写的责任项，请联系管理员添加！
                 </Text>
               }
               {
-                (this.type === '4' && this.state.list.length>0) && (
+                this.state.list.length>0 && (
                   <View>
                     <View style={[styles.contentTitle]}>
                       <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'}/>
@@ -121,80 +116,35 @@ export class DoubleInventoryCheckScreen extends Component {
 
   // 组件挂载生命周期函
   componentDidMount() {
-    if (this.type === '4') {
-      const {baseInfo} = {...this.props.route.params};
-      this.addFiled = Object.assign({},{id: baseInfo.id,badeSituation: '',correctSituation: ''});
-      const baseInfoList = baseInfo.doubleDutyEvaluationContents;
-      const arr = baseInfoList.map((item) => {
-        return Object.assign({},{id: item.id, checkResult: item.selfEvaluation, checkFraction: item.selfFraction,});
+    const {baseInfo} = {...this.props.route.params};
+    this.addFiled = Object.assign({},{id: baseInfo.id,badeSituation: '',correctSituation: ''});
+    const baseInfoList = baseInfo.doubleDutyEvaluationContents;
+    const arr = baseInfoList.map((item) => {
+      return Object.assign({},{
+        id: item.id,
+        checkResult: '符合',
+        checkFraction: item.fraction,
       });
-      this.addFiled = Object.assign(this.addFiled,{content: arr});
-      this.setState({
-        list: [...baseInfo.doubleDutyEvaluationContents]
-      })
-    }
-    else {
-      showLoading();
-      post(DoubleDutyApi.GET_LIST_FILL, {})
-        .then((res) => {
-          hiddenLoading();
-          for (let key in res.data) {
-            if (res.data.hasOwnProperty(key)) {
-              if (key === 'idt' || key === 'udt') {
-                continue;
-              }
-              else if (key === 'id') {
-                this.addFiled = Object.assign({},{templateId: res.data[key]});
-              }
-              else if (key === 'name') {
-                this.addFiled = Object.assign(this.addFiled,{templateName: res.data[key]});
-              }
-              else if (key === 'doubleDutyTemplateContents') {
-                const arr = res.data[key].map((item) => {
-                  return  Object.assign({},{content: item.content,fraction: item.fraction,selfEvaluation: '',selfFraction: ''});
-                });
-                this.addFiled = Object.assign(this.addFiled,{content: arr});
-              }
-              else {
-                this.addFiled = Object.assign(this.addFiled,{[key]: res.data[key]});
-              }
-            }
-          }
-          this.setState({
-            list: [...res.data.doubleDutyTemplateContents]
-          })
-        })
-        .catch(err => {
-          hiddenLoading();
-        })
-    }
+    });
+    this.addFiled = Object.assign(this.addFiled,{content: arr});
+    this.setState({
+      list: [...baseInfo.doubleDutyEvaluationContents]
+    })
   }
 
   // 提交操作
   addOnPress() {
+    console.log(this.addFiled);
     showLoading();
-    if (this.type === 2) {
-      hiddenLoading();
-      post(DoubleDutyApi.ADD_LIST_CHECKED,this.addFiled)
-        .then((res) => {
-          hiddenLoading();
-          successRemind(res.message,this.props.navigation,'返回');
-        })
-        .catch(err => {
-          hiddenLoading();
-          errorRemind(err.message,this.props.navigation,'返回');
-        });
-    }
-    else {
-      post(DoubleDutyApi.ADD_LIST_FILL,this.addFiled)
-        .then((res) => {
-          hiddenLoading();
-          successRemind(res.message,this.props.navigation,'返回');
-        })
-        .catch(err => {
-          hiddenLoading();
-          errorRemind(err.message,this.props.navigation,'返回');
-        });
-    }
+    hiddenLoading();
+    post(DoubleDutyApi.ADD_LIST_CHECKED,this.addFiled)
+      .then((res) => {
+        hiddenLoading();
+        successRemind(res.message,this.props.navigation,'返回');
+      })
+      .catch(err => {
+        hiddenLoading();
+        errorRemind(err.message,this.props.navigation,'返回');
+      });
   }
 }

@@ -7,9 +7,15 @@ import React, {Component} from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import {TroubleHandleStyles as styles} from "./TroubleHandleStyles";
 import {Button, Header, Icon, Image, Input, ListItem} from "react-native-elements";
+// 自定义组件
 import {HeaderLeftBackComponent} from "../../components/HeaderLeftBackComponent";
 import {CheckMultipleComponent} from "../../components/CheckMultipleComponent";
 import {PickerImageComponent} from "../../components/PickerImageComponent";
+import {PickerTimeComponent} from "../../components/PickerTimeComponent";
+import {CheckSingleComponent} from "../../components/CheckSingleComponent";
+import {DialogContentComponent} from "../../components/DialogContentComponent";
+import {PickerListComponent} from "../../components/PickerListComponent";
+// 自定义工具类
 import {
   INPUT_BACK_REMIND_MESSAGE,
   TROUBLE_ARR_GRADE,
@@ -19,10 +25,6 @@ import {
 import {errorRemind, hiddenLoading, showLoading, successRemind} from "../../util/ToolFunction";
 import {post} from "../../service/Interceptor";
 import {TroubleApi} from "../../service/TroubleApi";
-import {PickerTimeComponent} from "../../components/PickerTimeComponent";
-import {CheckSingleComponent} from "../../components/CheckSingleComponent";
-import {DialogContentComponent} from "../../components/DialogContentComponent";
-import {PickerListComponent} from "../../components/PickerListComponent";
 
 export class TroubleHandleScreen extends Component {
   constructor(props) {
