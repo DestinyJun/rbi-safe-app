@@ -41,7 +41,7 @@ export const PROFILE_TOP_MENU_LIST = [
     icon: 'address-card-o',
     type: 'font-awesome',
     routerName: 'ProFileFourEduScreen'
-  },
+  }
 ];
 export const PROFILE_BOTTOM_MENU_LIST = [
   {

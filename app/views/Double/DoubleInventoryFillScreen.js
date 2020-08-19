@@ -4,9 +4,10 @@
  * date：  2020/7/3 11:18
  */
 import React, {Component} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, Alert} from 'react-native';
 import {DoubleInventoryFillStyles as styles} from "./DoubleInventoryFillStyles";
 import {Button, Header, Icon} from "react-native-elements";
+import AsyncStorage from "@react-native-community/async-storage";
 // 自定义组件
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
 import {CardInputComponent} from "../../components/CardInputComponent";
@@ -19,7 +20,7 @@ export class DoubleInventoryFillScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: []
+      list: [],
     };
     this.addFiled = null;
     this.type = '1';
@@ -32,7 +33,24 @@ export class DoubleInventoryFillScreen extends Component {
           statusBarProps={{backgroundColor: '#226AD5'}}
           containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {
-            this.props.navigation.goBack()
+            Alert.alert(
+              '','您确定要返回吗！',
+              [
+                {
+                  text: '取消',
+                  onPress: () => {},
+                  style: 'cancel'
+                },
+                {
+                  text: '确定',
+                  onPress: async () => {
+                    if (this.state.list.length>0) {
+                      await AsyncStorage.setItem('fill', JSON.stringify(this.addFiled.content));
+                    }
+                    this.props.navigation.goBack();
+                  }
+                }
+              ]);
           }}/>}
           centerComponent={{text: '责任清单填写', style: {fontSize: 20, color: '#fff'}}}
         />
@@ -47,8 +65,8 @@ export class DoubleInventoryFillScreen extends Component {
                 this.state.list.length>0?this.state.list.map((item, i) => (<
                   CardInputComponent
                   type={this.type}
-                  selfEvaluation={'符合'}
-                  selfFraction={item.fraction}
+                  selfEvaluation={item.selfEvaluation}
+                  selfFraction={item.selfFraction}
                   onChangeSelfEvaluation={(text) => {
                     this.addFiled.content[i].selfEvaluation = text;
                   }}
@@ -75,8 +93,9 @@ export class DoubleInventoryFillScreen extends Component {
   componentDidMount() {
     showLoading();
     post(DoubleDutyApi.GET_LIST_FILL, {})
-      .then((res) => {
+      .then(async (res) => {
         hiddenLoading();
+        let arr1 = [];
         for (let key in res.data) {
           if (res.data.hasOwnProperty(key)) {
             if (key === 'idt' || key === 'udt') {
@@ -99,13 +118,33 @@ export class DoubleInventoryFillScreen extends Component {
             }
           }
         }
-        this.setState({
-          list: [...res.data.doubleDutyTemplateContents]
-        },() => {
-          this.state.list.forEach((item,index) => {
-            this.addFiled.content[index].selfFraction = item.fraction;
-            this.addFiled.content[index].selfEvaluation = '符合';
+        await AsyncStorage.getItem('fill')
+          .then(result => {
+            arr1 = res.data.doubleDutyTemplateContents.map((item,index) =>(
+              {...item,selfEvaluation: JSON.parse(result)[index].selfEvaluation,selfFraction: JSON.parse(result)[index].selfFraction}
+            ));
           })
+          .catch(err => {
+            arr1 = res.data.doubleDutyTemplateContents.map((item) =>(
+              {...item,selfEvaluation: '符合',selfFraction: item.fraction}
+            ));
+          });
+        this.setState({
+          list: [...arr1]
+        },() => {
+          AsyncStorage.getItem('fill')
+            .then(result => {
+              this.state.list.forEach((item,index) => {
+                this.addFiled.content[index].selfFraction = JSON.parse(result)[index].selfFraction;
+                this.addFiled.content[index].selfEvaluation = JSON.parse(result)[index].selfEvaluation;
+              })
+            })
+            .catch(err => {
+              this.state.list.forEach((item,index) => {
+                this.addFiled.content[index].selfFraction = item.fraction;
+                this.addFiled.content[index].selfEvaluation = '符合';
+              })
+            });
         })
       })
       .catch(err => {
@@ -115,6 +154,7 @@ export class DoubleInventoryFillScreen extends Component {
 
   // 提交操作
   addOnPress() {
+    console.log(this.addFiled);
     showLoading();
     post(DoubleDutyApi.ADD_LIST_FILL,this.addFiled)
       .then((res) => {

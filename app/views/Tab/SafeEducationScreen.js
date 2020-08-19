@@ -7,6 +7,7 @@ import React, {Component} from 'react';
 import {View} from 'react-native';
 import {SafeEducationStyles as styles} from "./SafeEducationStyles";
 import {Header, Button} from "react-native-elements";
+import AsyncStorage from '@react-native-community/async-storage';
 // tab子路由
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import {EducationClassScreen} from "../EducationTopTab/EducationClassScreen";
@@ -33,8 +34,11 @@ function MyTabs() {
 }
 
 export class SafeEducationScreen extends Component {
-  constructor(props) {
+   constructor(props) {
     super(props);
+    this.state = {
+      issue: false
+    }
   }
   render() {
     return (
@@ -46,9 +50,9 @@ export class SafeEducationScreen extends Component {
             backgroundColor: '#226AD5',
             justifyContent: 'space-around',
           }}
-          leftComponent={<Button title={'发布'} buttonStyle={{backgroundColor:'#226AD5'}} onPress={() => {
+          leftComponent={this.state.issue?<Button title={'发布'} buttonStyle={{backgroundColor:'#226AD5'}} onPress={() => {
             this.props.navigation.navigate('EducationIssueScreen');
-          }} />}
+          }} />: null}
           centerComponent={{ text: '安全教育培训', style: { color: '#fff', fontSize: 18 } }}
           rightComponent={<Button title={'错题库'} buttonStyle={{backgroundColor:'#226AD5'}} onPress={this.errorTopicStart.bind(this)} />}
         />
@@ -57,6 +61,13 @@ export class SafeEducationScreen extends Component {
         </View>
       </View>
     );
+  }
+
+  async componentDidMount() {
+    const arr = JSON.parse(await AsyncStorage.getItem('limits')).filter((item) => item.name === 'issue');
+    this.setState({
+      issue: arr[0].limit
+    })
   }
 
   // 错题训练
@@ -68,5 +79,6 @@ export class SafeEducationScreen extends Component {
         name: '错题训练',
       }
     );
-  };
+  }
+
 }

@@ -11,7 +11,7 @@ import {IMAGE_FILE_LIST} from "../../util/Constant";
 import {Button, Icon, Input} from "react-native-elements";
 import {post} from "../../service/Interceptor";
 import {Api} from "../../service/Api";
-import {hiddenLoading, showLoading} from "../../util/ToolFunction";
+import {hiddenLoading, openTree} from "../../util/ToolFunction";
 
 export class LoginScreen extends Component {
   constructor(props) {
@@ -105,11 +105,22 @@ export class LoginScreen extends Component {
 
   // 登录操作
   login() {
-    showLoading();
+    // showLoading();
     Keyboard.dismiss();
     post(Api.LOGIN_URL, {username: this.state.username, password: this.state.password})
       .then( async (res) => {
+        const arr1 = [
+          {name: 'daily',value: 286, limit: false},
+          {name: 'issue',value: 288, limit: false}
+          ];
+        const arr = openTree(res.data).map((l) => l.id);
+        arr1.forEach(item => {
+          if (arr.includes(item.value)) {
+            item.limit = true
+          }
+        });
         await AsyncStorage.setItem('accessToken', res.token);
+        await AsyncStorage.setItem('limits', JSON.stringify(arr1));
         hiddenLoading();
         Store.dispatch(isLogin({type: ISLOGIN, isLogin: true}));
       })

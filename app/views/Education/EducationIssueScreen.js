@@ -9,15 +9,11 @@ import {EducationIssueStyles as styles} from "./EducationIssueStyles";
 import {useBackHandler} from "@react-native-community/hooks";
 import {Button, Header, ListItem} from "react-native-elements";
 // 自定义组件
-import {SingleTopicComponent} from "../../components/SingleTopicComponent";
-import {JudgeTopicComponent} from "../../components/JudgeTopicComponent";
-import {FillTopicComponent} from "../../components/FillTopicComponent";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
-import {MultipleTopicComponent} from "../../components/MultipleTopicComponent";
 // 工具函数类
 import {post} from "../../service/Interceptor";
 import {EducationApi} from "../../service/EducationApi";
-import {errorRemind, hiddenLoading, showLoading, successRemind} from "../../util/ToolFunction";
+import {hiddenLoading, showLoading, successRemind} from "../../util/ToolFunction";
 import {PickerTreeComponent} from "../../components/PickerTreeComponent";
 import {Picker} from "@react-native-community/picker";
 
@@ -51,6 +47,7 @@ export class EducationIssueScreen extends Component {
     this.state = {
       topicList: [],
       bankList: [],
+      bankTitle: '请选择题库',
       questionList: [],
       questionTitle: null,
       personList: [],
@@ -136,10 +133,10 @@ export class EducationIssueScreen extends Component {
             titleStyle={{color: '#9D9D9D'}}
             rightElement={
               <Picker
-                selectedValue={this.state.language}
+                selectedValue={this.state.bankTitle}
                 style={{height: 50, width: 200,flexDirection: 'row',justifyContent: 'flex-end'}}
                 onValueChange={(itemValue, itemIndex) =>{
-                  this.setState({language: itemValue});
+                  this.setState({bankTitle: itemValue});
                   this.getQuestionOnPress(itemValue);
                 }
                 }>
@@ -159,7 +156,7 @@ export class EducationIssueScreen extends Component {
             bottomDivider={true} title={'题目选择'}
             titleStyle={{color: '#9D9D9D'}}
             chevron={true}
-            rightElement={<PickerTreeComponent
+            rightElement={this.state.bankTitle === '请选择题库'?<Text style={{color: '#A4A4A4',fontSize: 16}}>请先先择题库</Text>:<PickerTreeComponent
               confirmPress={(res) => {
                 const arr = [];
                 res.forEach((item) => {
@@ -176,7 +173,6 @@ export class EducationIssueScreen extends Component {
                     }
                   }
                 });
-                // const personName = arr.map((item) => (item.name));
                 this.setState({
                   questionTitle: res.join(',')
                 });
@@ -191,7 +187,14 @@ export class EducationIssueScreen extends Component {
               buttonStyle={{backgroundColor: 'unset',padding: 0,width: 200,justifyContent: 'flex-end'}}
             />}
           />
-          <Button title={'确定发布'} buttonStyle={c_styles.button} onPress={this.sureIssue.bind(this)} />
+          <Button
+            disabled={!this.state.personTitle && !this.state.questionTitle}
+            disabledStyle={{backgroundColor: '#A0A0A0' }}
+            disabledTitleStyle={{color: '#fff'}}
+            title={'确定发布'}
+            buttonStyle={c_styles.button}
+            onPress={this.sureIssue.bind(this)}
+          />
         </ScrollView>
       </View>
     );
@@ -245,10 +248,12 @@ export class EducationIssueScreen extends Component {
     post(EducationApi.ISSUE_GRAND_EXAM,{typeWorkTestPaper:  this.submitField})
       .then((res) => {
         hiddenLoading();
+        successRemind(res.message,this.props.navigation,'返回');
       })
       .catch((err) => {
         console.log(err);
         hiddenLoading();
+        singleRemind(err.message)
       });
   }
 }

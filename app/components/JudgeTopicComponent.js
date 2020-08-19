@@ -28,6 +28,7 @@ export function JudgeTopicComponent(props) {
       score: props.score,
       testPapreId: props.testPapreId,
       questionBankSubjectId: props.questionBankSubjectId?props.questionBankSubjectId: '',
+      twTestPapreId: props.twTestPapreId?props.twTestPapreId: '',
     });
   };
   return (

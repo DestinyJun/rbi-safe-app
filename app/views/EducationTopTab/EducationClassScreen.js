@@ -45,12 +45,19 @@ export class EducationClassScreen extends Component {
                           <Text style={[c_styles.h6, c_styles.ml_2]}>发布人：{item.operatingStaff}</Text>
                         </View>
                       }
+                      {
+                        item.testResults && <View style={[styles.timerBox]}>
+                          <Icon type={'font-awesome'} name={'diamond'} size={16} color={'#3B86FF'}/>
+                          <Text style={[c_styles.h6, c_styles.ml_2]}>考试结果：{item.testResults}</Text>
+                        </View>
+                      }
                     </View>
                     <View style={[styles.buttons]}>
                       <Button
-                        disabledStyle={{backgroundColor: '#3883FA'}}
+                        disabled={item.processingStatus === 2}
+                        disabledStyle={{backgroundColor: '#BABABA'}}
                         disabledTitleStyle={{color: '#fff'}}
-                        title={`开始考试`}
+                        title={item.processingStatus === 2?`考试完成`:`开始考试`}
                         onPress={() => {
                           Alert.alert('考前须知', item.examNotes, [
                             {
@@ -106,7 +113,6 @@ export class EducationClassScreen extends Component {
     // 分页查询班主试卷
     post(EducationApi.GET_GRAND_EXAM, {pageNo: 1, pageSize: 10000})
       .then((train) => {
-        console.log(train);
         hiddenLoading();
         this.setState({
           seExamList: [...train.data.contents]

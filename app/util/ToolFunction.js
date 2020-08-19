@@ -226,6 +226,20 @@ export function percentage(divisor,dividend) {
   }
 }
 
+export function openTree(tree) {
+  let arr= [];
+  const expanded = datas => {
+    if (datas&& datas.length > 0){
+      datas.forEach(e => {
+        arr.push(e);
+        expanded(e.sysPermissionList);
+      })
+    }
+  };
+  expanded(tree);
+  return arr;
+}
+
 /**
  * echart参数序列化函数
  * @param props

@@ -50,7 +50,6 @@ export class EducationExamScreen extends Component {
       topicList: [],
       topicListAnswer: [],
     };
-    console.log(props);
     this.exam = {...props.route.params.exam};
     this.name = props.route.params.name;
     this.params = {
@@ -72,13 +71,19 @@ export class EducationExamScreen extends Component {
         <View style={styles.timer}>
           <Text style={[styles.timerText,c_styles.pl_3,c_styles.pr_3]}>当前进度  {this.state.topicListAnswer.length} / {this.state.topicList.length}</Text>
         </View>
-        <ScrollView style={[styles.topic,c_styles.mt_2]}>
+        <ScrollView style={[styles.topic,c_styles.mt_2]} keyboardShouldPersistTaps={'always'}>
            {/*4填空题 3判断题  2多选题 1单选题*/}
           {
             this.state.topicList?this.state.topicList.map((item,index) => {
               if (item.subjectType === 1) {
                 return ( <SingleTopicComponent serial={index} key={`single${index}`} name={this.name} {...item} onPress={(res) => {
-                  console.log(res);
+                  if (!this.state.topicListAnswer.includes(res.testUestionsId)) {
+                    const arr = [...this.state.topicListAnswer];
+                    arr.push(res.testUestionsId);
+                    this.setState({
+                      topicListAnswer: arr
+                    })
+                  }
                   this.params.safeAnswerRecordList[index] = res
                 }} />)
               }
@@ -98,7 +103,16 @@ export class EducationExamScreen extends Component {
                 }} />)
               }
               if (item.subjectType === 4) {
-                return ( <FillTopicComponent serial={index} key={`fill${index}`} name={this.name} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
+                return ( <FillTopicComponent serial={index} key={`fill${index}`} name={this.name} {...item} onPress={(res) => {
+                  if (!this.state.topicListAnswer.includes(res.testUestionsId)) {
+                    const arr = [...this.state.topicListAnswer];
+                    arr.push(res.testUestionsId);
+                    this.setState({
+                      topicListAnswer: arr
+                    })
+                  }
+                  this.params.safeAnswerRecordList[index] = res
+                }} />)
               }
             }): <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h4]}>暂时无考试题目，请您联系管理员添加！</Text>
           }
@@ -135,18 +149,16 @@ export class EducationExamScreen extends Component {
         this.httpRequestFinishExam(EducationApi.COMPLETE_SIMULATION_EXAM);
         break;
       case '班主考试':
-        this.httpRequestFinishExam(EducationApi.COMPLETE_SIMULATION_EXAM);
+        this.httpRequestFinishExam(EducationApi.SUBMIT_GRAND_TRAIN);
         break;
     }
   }
 
   // 请求获取试卷
   httpRequestExam(url,params) {
-    console.log(params);
     showLoading();
     post(url,params)
       .then((res) => {
-        console.log(res);
         this.setState({
           topicList: [
             ...res.data.completion,
@@ -166,6 +178,10 @@ export class EducationExamScreen extends Component {
   httpRequestFinishExam(url) {
     showLoading();
     const fields = {simulationSafeAnswerRecords: null};
+    const gradeFields = {
+      id: this.exam.id,
+      safeTWAnswerRecordList: null
+    };
     if (this.name === '模拟考试') {
       fields.simulationSafeAnswerRecords = this.params.safeAnswerRecordList.map((item) => ({
         id: item.testUestionsId,
@@ -174,7 +190,19 @@ export class EducationExamScreen extends Component {
         score: item.score,
       }));
     }
-    post(url,this.name === '模拟考试'?fields:this.params)
+    if (this.name === '班主考试') {
+      gradeFields.safeTWAnswerRecordList = this.params.safeAnswerRecordList.map((item) => {
+        return {
+          twTestUestionsId: item.testUestionsId,
+          answerResults: item.answerResults,
+          questionBankSubjectId: item.questionBankSubjectId,
+          rightKey: item.rightKey,
+          score: item.score,
+          twTestPapreId: item.twTestPapreId,
+        }
+      });
+    }
+    post(url,this.name === '模拟考试'?fields:this.name === '班主考试'?gradeFields:this.params)
       .then((res) => {
         hiddenLoading();
         successRemind(res.message,this.props.navigation,'返回');

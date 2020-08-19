@@ -47,4 +47,10 @@ export class EducationApi {
 
   // 发布班主活动试卷
   static GET_GRAND_TRAIN = '/typeWorkTestPaper/getTypeWorkTestPaper';
+
+  // 提交班主活动试卷
+  static SUBMIT_GRAND_TRAIN = '/typeWorkTestPaper/submitTypeWorkTestPaper';
+
+  // 获取班组活动列表
+  static GET_GRAND_LIST = '/typeWorkTestPaper/organizationTypeWorkTestPaper';
 }

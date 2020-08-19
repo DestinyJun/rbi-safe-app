@@ -63,6 +63,7 @@ export class MultipleTopicComponent extends Component{
         score: this.props.score,
         testPapreId: this.props.testPapreId,
         questionBankSubjectId: this.props.questionBankSubjectId?this.props.questionBankSubjectId: '',
+        twTestPapreId: props.twTestPapreId?props.twTestPapreId: '',
       });
     });
   };

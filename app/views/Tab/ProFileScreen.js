@@ -17,13 +17,15 @@ import {hiddenLoading, showLoading, singleRemind} from "../../util/ToolFunction"
 import {post} from "../../service/Interceptor";
 import {ProFileApi} from "../../service/ProFileApi";
 import {versionName} from "rn-app-upgrade";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export class ProFileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       proFileInfo: null,
-      updateState: Store.getState().isUpdateApp
+      updateState: Store.getState().isUpdateApp,
+      daily: false
     };
     this.unfocus = null;
   }
@@ -59,6 +61,14 @@ export class ProFileScreen extends Component {
               </View>
             </View>
             <View style={[styles.topMenu]}>
+              { this.state.daily?<ListItem
+                Component={TouchableOpacity}
+                containerStyle={{backgroundColor: 'unset'}}
+                onPress={this.routerOnPress.bind(this,{routerName: 'ViewOperationDailyScreen'})}
+                title={'生产运行日报'}
+                leftIcon={{ name: 'window-maximize',type: 'font-awesome',size: 18}}
+                bottomDivider={true}
+              />: null}
               {
                 PROFILE_TOP_MENU_LIST.map((item, i) => (
                   <ListItem
@@ -110,7 +120,7 @@ export class ProFileScreen extends Component {
   }
 
   // 组件挂载生命周期函
-  componentDidMount() {
+  async componentDidMount() {
     this.subscription = Store.subscribe(() => {
       this.setState({
         updateState: Store.getState().isUpdateApp
@@ -130,6 +140,10 @@ export class ProFileScreen extends Component {
         })
     });
     this.checkAppUpdate();
+    const arr = JSON.parse(await AsyncStorage.getItem('limits')).filter((item) => item.name === 'daily');
+    this.setState({
+      daily: arr[0].limit
+    });
   }
 
   // 组件卸载
@@ -163,7 +177,8 @@ export class ProFileScreen extends Component {
   }
 
   // 退出登录
-  loginOut() {
+  async loginOut() {
+    await AsyncStorage.clear();
     Store.dispatch(isLogin({type: ISLOGIN, isLogin: false}))
   }
 }

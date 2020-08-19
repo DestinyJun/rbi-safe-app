@@ -43,6 +43,7 @@ import {DownFileScreen} from "./app/views/Download/DownFileScreen";
 import {ProFileFourEduScreen} from "./app/views/ProFile/ProFileFourEduScreen";
 import {ViewPDFScreen} from "./app/views/WebView/ViewPDFScreen";
 import {EducationIssueScreen} from "./app/views/Education/EducationIssueScreen";
+import {ViewOperationDailyScreen} from "./app/views/WebView/ViewOperationDailyScreen";
 
 // 创建路由对象
 const Stack = createStackNavigator();
@@ -114,6 +115,7 @@ export default class App extends React.Component {
               <Stack.Screen name={'UpdateVersionScreen'} component={UpdateVersionScreen}/>
               <Stack.Screen name={'DownFileScreen'} component={DownFileScreen}/>
               <Stack.Screen name={'ViewPDFScreen'} component={ViewPDFScreen}/>
+              <Stack.Screen name={'ViewOperationDailyScreen'} component={ViewOperationDailyScreen}/>
             </Stack.Navigator>:
             <Stack.Navigator initialRouteName={'Login'} headerMode={'none'}>
               <Stack.Screen name="Login" component={LoginScreen}/>

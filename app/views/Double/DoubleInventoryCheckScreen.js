@@ -4,9 +4,10 @@
  * date：  2020/7/3 11:18
  */
 import React, {Component} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, Alert} from 'react-native';
 import {DoubleInventoryCheckStyles as styles} from "./DoubleInventoryCheckStyles";
 import {Button, Header, Icon, Input} from "react-native-elements";
+import AsyncStorage from "@react-native-community/async-storage";
 // 自定义组件
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
 import {CardInputComponent} from "../../components/CardInputComponent";
@@ -15,11 +16,14 @@ import {errorRemind, hiddenLoading, showLoading, successRemind} from "../../util
 import {post} from "../../service/Interceptor";
 import {DoubleDutyApi} from "../../service/DoubleDutyApi";
 
+
 export class DoubleInventoryCheckScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: []
+      list: [],
+      badeSituation: null,
+      correctSituation: null,
     };
     this.type = this.props.route.params.type;
     this.addFiled = null;
@@ -32,7 +36,24 @@ export class DoubleInventoryCheckScreen extends Component {
           statusBarProps={{backgroundColor: '#226AD5'}}
           containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {
-            this.props.navigation.goBack()
+            Alert.alert(
+              '','您确定要返回吗！',
+              [
+                {
+                  text: '取消',
+                  onPress: () => {},
+                  style: 'cancel'
+                },
+                {
+                  text: '确定',
+                  onPress: async () => {
+                    if (this.state.list.length>0) {
+                      await AsyncStorage.setItem('check', JSON.stringify(this.addFiled));
+                    }
+                    this.props.navigation.goBack();
+                  }
+                }
+              ]);
           }}/>}
           centerComponent={{text: '责任清单审核', style: {fontSize: 20, color: '#fff'}}}
         />
@@ -80,7 +101,7 @@ export class DoubleInventoryCheckScreen extends Component {
                         onChangeText={(text) => {
                           this.addFiled.badeSituation = text
                         }}
-                        placeholder={'请输入（最多200字）'}
+                        placeholder={this.state.badeSituation?this.state.badeSituation:'请输入（最多200字）'}
                         inputContainerStyle={{borderBottomWidth: 0}}
                         containerStyle={{paddingRight: 0, paddingLeft: 0}}
                         inputStyle={[c_styles.h6]}/>
@@ -96,7 +117,7 @@ export class DoubleInventoryCheckScreen extends Component {
                         onChangeText={(text) => {
                           this.addFiled.correctSituation = text
                         }}
-                        placeholder={'请输入（最多200字）'}
+                        placeholder={this.state.correctSituation?this.state.correctSituation:'请输入（最多200字）'}
                         inputContainerStyle={{borderBottomWidth: 0}}
                         containerStyle={{paddingRight: 0, paddingLeft: 0}}
                         inputStyle={[c_styles.h6]}/>
@@ -115,28 +136,51 @@ export class DoubleInventoryCheckScreen extends Component {
   }
 
   // 组件挂载生命周期函
-  componentDidMount() {
+  async componentDidMount() {
+    let arr1 = [];
     const {baseInfo} = {...this.props.route.params};
     this.addFiled = Object.assign({},{id: baseInfo.id,badeSituation: '',correctSituation: ''});
     const baseInfoList = baseInfo.doubleDutyEvaluationContents;
-    const arr = baseInfoList.map((item) => {
-      return Object.assign({},{
-        id: item.id,
-        checkResult: '符合',
-        checkFraction: item.fraction,
+    await AsyncStorage.getItem('check')
+      .then(result => {
+        this.addFiled = JSON.parse(result);
+        this.setState({
+          badeSituation: JSON.parse(result).badeSituation,
+          correctSituation:JSON.parse(result).badeSituation,
+        });
+        arr1 = baseInfoList.map((item,index) =>(
+          {
+            ...item,
+            checkEvaluation: JSON.parse(result).content[index].checkResult,
+            checkNumber: JSON.parse(result).content[index].checkFraction
+          }
+        ));
+      })
+      .catch(err => {
+        const arr = baseInfoList.map((item) => {
+          return Object.assign({},{
+            id: item.id,
+            checkResult: '符合',
+            checkFraction: item.fraction,
+          });
+        });
+        arr1 = baseInfoList.map((item,index) =>(
+          {
+            ...item,
+            checkEvaluation: '符合',
+            checkNumber: item.fraction
+          }
+        ));
+        this.addFiled = Object.assign(this.addFiled,{content: arr});
       });
-    });
-    this.addFiled = Object.assign(this.addFiled,{content: arr});
     this.setState({
-      list: [...baseInfo.doubleDutyEvaluationContents]
+      list: [...arr1]
     })
   }
 
   // 提交操作
   addOnPress() {
-    console.log(this.addFiled);
     showLoading();
-    hiddenLoading();
     post(DoubleDutyApi.ADD_LIST_CHECKED,this.addFiled)
       .then((res) => {
         hiddenLoading();
