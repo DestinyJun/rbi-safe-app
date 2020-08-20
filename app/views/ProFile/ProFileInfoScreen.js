@@ -6,7 +6,7 @@
 import React, {Component} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {ProFileInfoStyles as styles} from "./ProFileInfoStyles";
-import {Button, Header, Icon, Image, ListItem} from "react-native-elements";
+import {Button, Header, Icon, ListItem} from "react-native-elements";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
 import {DialogContentComponent} from "../../components/DialogContentComponent";
 import {singleRemind} from "../../util/ToolFunction";
@@ -89,7 +89,7 @@ export class ProFileInfoScreen extends Component {
                 <ListItem
                   containerStyle={{borderRadius: 10,marginTop: 10}}
                   title={'入厂时间'}
-                  rightTitle={this.myInfo.idt.split(' ')[0]}
+                  rightTitle={this.myInfo.idt?this.myInfo.idt.split(' ')[0]:''}
                 />
                 <View style={styles.baseListCenter}>
                   <ListItem

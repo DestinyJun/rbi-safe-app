@@ -105,6 +105,9 @@ export class EducationIssueScreen extends Component {
             chevron={true}
             rightElement={ this.state.personList.length>0?<PickerTreeComponent
               confirmPress={(res) => {
+                if (!res) {
+                  return;
+                }
                 const arr = [];
                 res.forEach((item) => {
                 for (let l of this.state.personList) {
@@ -161,7 +164,9 @@ export class EducationIssueScreen extends Component {
             chevron={true}
             rightElement={this.state.bankTitle === '0'?<Text style={{color: '#A4A4A4',fontSize: 16}}>请先先择题库</Text>:<PickerTreeComponent
               confirmPress={(res) => {
-                console.log(res);
+                if (!res) {
+                  return;
+                }
                 const arr = [];
                 res.forEach((item) => {
                   for (let l of this.state.questionList) {

@@ -59,6 +59,9 @@ export class TroubleReportScreen extends Component {
                   chevron={true}
                   rightElement={ this.state.orgList && <PickerTreeComponent
                     confirmPress={(res) => {
+                      if (!res) {
+                        return;
+                      }
                       this.submitField = Object.assign(this.submitField,{organizationId: res.id });
                       this.submitField = Object.assign(this.submitField,{organizationName: res.name });
                       this.setState({
