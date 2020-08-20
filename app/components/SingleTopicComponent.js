@@ -11,11 +11,17 @@ export function SingleTopicComponent(props) {
   let questionOptions = [];
   if (props.safeSubjectOptions) {
     questionOptions = [...props.safeSubjectOptions]
-  } else if (props.safeTestQuestionOptionsList) {
+  }
+  else if (props.safeTestQuestionOptionsList) {
     questionOptions = [...props.safeTestQuestionOptionsList]
-  } else {
+  }
+  else if (props.questionsOptionsList) {
+    questionOptions = [...props.questionsOptionsList]
+  }
+  else {
     questionOptions = [...props.safeSubjectOptionList]
   }
+
   const arr = questionOptions.map(() => false);
   const [checked,setChecked] = useState(questionOptions.map(() => false));
   const checkOnPress = (index,res) => {

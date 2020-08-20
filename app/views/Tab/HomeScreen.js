@@ -46,13 +46,19 @@ export class HomeScreen extends Component {
             <View style={styles.imgBox}>
               <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>月隐患数量统计</Text>
               <View style={{height: 220}}>
-                <EchartsLinerComponent option={Object.keys(this.state.troubleEcharts).length>0?this.state.troubleEcharts: null} />
+                {
+                  Object.keys(this.state.troubleEcharts).length>0?<EchartsLinerComponent option={Object.keys(this.state.troubleEcharts).length>0?this.state.troubleEcharts: null} />:
+                    <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>暂无统计数据！</Text>
+                }
               </View>
             </View>
             <View style={styles.imgBox}>
               <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>安全管理培训计划统计</Text>
               <View style={{height: 300}}>
-                <EchartsBarDoubleComponent option={Object.keys(this.state.safeEcharts).length>0?this.state.safeEcharts: null} />
+                {
+                  Object.keys(this.state.safeEcharts).length>0?<EchartsBarDoubleComponent option={Object.keys(this.state.safeEcharts).length>0?this.state.safeEcharts: null} />:
+                    <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>暂无统计数据！</Text>
+                }
               </View>
             </View>
             <View style={styles.imgBox}>
@@ -119,36 +125,31 @@ export class HomeScreen extends Component {
     if (Platform.OS === 'android') {
       BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
     }
+    showLoading();
+    post(HomeApi.ECHARTS_TROUBLE_MONTH)
+      .then(res => {
+        this.setState({
+          troubleEcharts: {...res.data}
+        });
+      })
+      .catch(err => {});
+    post(HomeApi.ECHARTS_SAFE_MANAGER,{})
+      .then(res => {
+        hiddenLoading();
+        this.safeManagerInit(res.data);
+      })
+      .catch(err => {
+        hiddenLoading();
+      });
     this.unfocus = this.props.navigation.addListener('focus',() => {
-      showLoading();
       post(HomeApi.GET_MINE_LIST,{pageNo: 1,pageSize: 3})
         .then(res => {
-          hiddenLoading();
           this.setState({
             infoList: [...res.data.contents]
           });
         })
         .catch(err => {
-          hiddenLoading();
         });
-      post(HomeApi.ECHARTS_TROUBLE_MONTH,{})
-        .then(res => {
-          hiddenLoading();
-          this.setState({
-            troubleEcharts: {...res.data}
-          });
-        })
-        .catch(err => {
-          hiddenLoading();
-        });
-      post(HomeApi.ECHARTS_SAFE_MANAGER,{})
-        .then(res => {
-          hiddenLoading();
-          this.safeManagerInit(res);
-        })
-        .catch(err => {
-          hiddenLoading();
-        })
     });
 
   }
@@ -161,19 +162,25 @@ export class HomeScreen extends Component {
   }
 
   // 安全教育统计图数据初始化
-  safeManagerInit(res) {
-    const seriesName = [];
-    const threshold = [];
-    const avgTime = [];
-    const baseNum = 0.01;
-    res.data.forEach(value => {
-      seriesName.push(value.trainingContent);
-      avgTime.push((value.average + baseNum).toFixed(3));
-      threshold.push((value.averageClassHours + baseNum).toFixed(3));
-    });
-    this.setState({
-      safeEcharts: {seriesName,threshold,avgTime,baseNum}
-    })
+  safeManagerInit(data) {
+    if(data.length>0) {
+      const seriesName = [];
+      const threshold = [];
+      const avgTime = [];
+      const baseNum = 0.01;
+      data.data.forEach(value => {
+        seriesName.push(value.trainingContent);
+        avgTime.push((value.average + baseNum).toFixed(3));
+        threshold.push((value.averageClassHours + baseNum).toFixed(3));
+      });
+      this.setState({
+        safeEcharts: {seriesName,threshold,avgTime,baseNum}
+      })
+    } else {
+      this.setState({
+        safeEcharts: {}
+      })
+    }
   }
 
   // 二次返回退出App

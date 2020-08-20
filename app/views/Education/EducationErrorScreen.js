@@ -1,5 +1,5 @@
 /**
- * desc：  考试页面
+ * desc：  错题训练
  * author：DestinyJun
  * date：  2020/7/2 14:51
  */
@@ -21,19 +21,24 @@ import {errorRemind, hiddenLoading, showLoading, successRemind} from "../../util
 
 function MyCustomLeftComponent(props) {
   const headerLeftOnPress = () => {
-    Alert.alert(
-      '','您正在考试，是否需要返回？一旦返回，则当前答案无效，需重新考试！',
-      [
-        {
-          text: '取消',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: '确定',
-          onPress: () => {props.goBack()}
-        }
-      ]);
+    if (props.remind) {
+      Alert.alert(
+        '','您正在考试，是否需要返回？一旦返回，则当前答案无效，需重新考试！',
+        [
+          {
+            text: '取消',
+            onPress: () => {},
+            style: 'cancel'
+          },
+          {
+            text: '确定',
+            onPress: () => {props.goBack()}
+          }
+        ]);
+    }
+    else {
+      props.goBack();
+    }
   };
   useBackHandler(() => {
     headerLeftOnPress();
@@ -62,27 +67,36 @@ export class EducationErrorScreen extends Component {
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
           containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
-          leftComponent={<MyCustomLeftComponent {...navigation} />}
+          leftComponent={<MyCustomLeftComponent {...navigation} remind={this.state.topicList.length>0} />}
           centerComponent={{text: `${this.name}`,style: {fontSize: 20,color: '#fff'}}}
         />
         {/*<View style={styles.timer}>
           <Text style={[styles.timerText,c_styles.pl_3,c_styles.pr_3]}>模拟考试倒计时     00:35:09</Text>
         </View>*/}
-        <ScrollView style={[styles.topic,c_styles.mt_2]}>
+        <ScrollView style={[styles.topic,c_styles.mt_2]} keyboardShouldPersistTaps={'always'} >
           {/* 4填空题 3判断题  2多选题 1单选题 */}
           {
             this.state.topicList.length>0?this.state.topicList.map((item,index) => {
               if (item.subjectType === 1) {
-                return ( <SingleTopicComponent serial={index} key={`single${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
+                return ( <SingleTopicComponent serial={index} key={`single${index}`} name={this.name} {...item} onPress={(res) => {
+                  this.params.handlePersonalMistakes[index] = res
+                }} />)
               }
               if (item.subjectType === 2) {
-                return ( <MultipleTopicComponent serial={index} key={`multiple${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
+                return ( <MultipleTopicComponent serial={index} key={`multiple${index}`} name={this.name} {...item} onPress={(res) => {
+                  this.params.handlePersonalMistakes[index] = res
+                }} />)
               }
               if (item.subjectType === 3) {
-                return ( <JudgeTopicComponent serial={index} key={`judge${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
+                return ( <JudgeTopicComponent serial={index} key={`judge${index}`} name={this.name} {...item} onPress={(res) => {
+                  this.params.handlePersonalMistakes[index] = res
+                }} />)
               }
               if (item.subjectType === 4) {
-                return ( <FillTopicComponent serial={index} key={`fill${index}`} name={this.name} {...item} onPress={(res) => {this.params.handlePersonalMistakes[index] = res}} />)
+                return ( <FillTopicComponent serial={index} key={`fill${index}`} name={this.name} {...item} onPress={(res) => {
+                  this.params.handlePersonalMistakes[index] = res
+                }}
+                />)
               }
             }):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h4]}>您太棒了，一个错题也没有！</Text>
           }
@@ -132,7 +146,13 @@ export class EducationErrorScreen extends Component {
         }
       }
     });
-    post(url,this.params)
+    const arr = [];
+    for (let item of this.params.handlePersonalMistakes) {
+      if (item) {
+        arr.push(item)
+      }
+    }
+    post(url,{handlePersonalMistakes: arr})
       .then((res) => {
         hiddenLoading();
         successRemind(res.message,this.props.navigation,'返回');

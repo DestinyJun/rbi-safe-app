@@ -21,26 +21,31 @@ import {errorRemind, hiddenLoading, showLoading, successRemind} from "../../util
 
 function MyCustomLeftComponent(props) {
   const headerLeftOnPress = () => {
-    Alert.alert(
-      '','您正在考试，是否需要返回？一旦返回，则当前答案无效，需重新考试！',
-      [
-        {
-          text: '取消',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: '确定',
-          onPress: () => {props.goBack()}
-        }
-      ]);
+    if (props.remind) {
+      Alert.alert(
+        '','您正在考试，是否需要返回？一旦返回，则当前答案无效，需重新考试！',
+        [
+          {
+            text: '取消',
+            onPress: () => {},
+            style: 'cancel'
+          },
+          {
+            text: '确定',
+            onPress: () => {props.goBack()}
+          }
+        ]);
+    }
+    else {
+      props.goBack();
+    }
   };
   useBackHandler(() => {
     headerLeftOnPress();
     return true;
   });
   return(
-   <HeaderLeftComponent headerLeftOnPress={headerLeftOnPress} />
+   <HeaderLeftComponent headerLeftOnPress={headerLeftOnPress}  />
   )
 }
 export class EducationExamScreen extends Component {
@@ -65,7 +70,7 @@ export class EducationExamScreen extends Component {
         <Header
           statusBarProps={{backgroundColor: '#226AD5'}}
           containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
-          leftComponent={<MyCustomLeftComponent {...navigation} />}
+          leftComponent={<MyCustomLeftComponent {...navigation} remind={this.state.topicList.length>0} />}
           centerComponent={{text: `${this.props.route.params.title}  ${this.props.route.params.name}`,style: {fontSize: 20,color: '#fff'}}}
         />
         <View style={styles.timer}>
@@ -74,7 +79,7 @@ export class EducationExamScreen extends Component {
         <ScrollView style={[styles.topic,c_styles.mt_2]} keyboardShouldPersistTaps={'always'}>
            {/*4填空题 3判断题  2多选题 1单选题*/}
           {
-            this.state.topicList?this.state.topicList.map((item,index) => {
+            this.state.topicList.length>0?this.state.topicList.map((item,index) => {
               if (item.subjectType === 1) {
                 return ( <SingleTopicComponent serial={index} key={`single${index}`} name={this.name} {...item} onPress={(res) => {
                   if (!this.state.topicListAnswer.includes(res.testUestionsId)) {
@@ -176,33 +181,54 @@ export class EducationExamScreen extends Component {
 
   // 考试处理请求
   httpRequestFinishExam(url) {
-    showLoading();
+    // showLoading();
     const fields = {simulationSafeAnswerRecords: null};
     const gradeFields = {
       id: this.exam.id,
       safeTWAnswerRecordList: null
     };
+    const startFields = {
+      personnelTrainingRecordId: this.params.personnelTrainingRecordId,
+      safeAnswerRecordList: null
+    };
+    const arr = [];
     if (this.name === '模拟考试') {
-      fields.simulationSafeAnswerRecords = this.params.safeAnswerRecordList.map((item) => ({
-        id: item.testUestionsId,
-        answerResults: item.answerResults,
-        rightKey: item.rightKey,
-        score: item.score,
-      }));
+      for (let item of this.params.safeAnswerRecordList) {
+        if (item) {
+          arr.push({
+            id: item.testUestionsId,
+            answerResults: item.answerResults,
+            rightKey: item.rightKey,
+            score: item.score,
+          })
+        }
+      }
+      fields.simulationSafeAnswerRecords = arr;
     }
     if (this.name === '班主考试') {
-      gradeFields.safeTWAnswerRecordList = this.params.safeAnswerRecordList.map((item) => {
-        return {
-          twTestUestionsId: item.testUestionsId,
-          answerResults: item.answerResults,
-          questionBankSubjectId: item.questionBankSubjectId,
-          rightKey: item.rightKey,
-          score: item.score,
-          twTestPapreId: item.twTestPapreId,
+      for (let item of this.params.safeAnswerRecordList) {
+        if (item) {
+          arr.push({
+            twTestUestionsId: item.testUestionsId,
+            answerResults: item.answerResults,
+            questionBankSubjectId: item.questionBankSubjectId,
+            rightKey: item.rightKey,
+            score: item.score,
+            twTestPapreId: item.twTestPapreId,
+          })
         }
-      });
+      }
+      gradeFields.safeTWAnswerRecordList = arr;
     }
-    post(url,this.name === '模拟考试'?fields:this.name === '班主考试'?gradeFields:this.params)
+    if (this.name === '开始考试') {
+      for (let item of this.params.safeAnswerRecordList) {
+        if (item) {
+          arr.push(item)
+        }
+      }
+      startFields.safeAnswerRecordList = arr;
+    }
+    post(url,this.name === '模拟考试'?fields:this.name === '班主考试'?gradeFields:startFields)
       .then((res) => {
         hiddenLoading();
         successRemind(res.message,this.props.navigation,'返回');

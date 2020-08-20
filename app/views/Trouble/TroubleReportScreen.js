@@ -166,7 +166,7 @@ export class TroubleReportScreen extends Component {
 
   // 整改提交操作
   onSubmitOnPress() {
-    showLoading();
+    // showLoading();
     const arr = ['hidTypePerson','hidTypeThing','hidTypeManage'];
     arr.forEach((k) => {
       if (k in this.submitField) {
@@ -185,12 +185,16 @@ export class TroubleReportScreen extends Component {
       beforeFileArr.push({file: item.uri});
     });
     this.submitField = Object.assign(this.submitField, {beforeImg: beforeFileArr});
+    console.log(this.submitField);
+    // return;
     post(TroubleApi.ADD_REPORT_TRO, this.submitField)
       .then((res) => {
+        console.log(res);
         hiddenLoading();
         successRemind(res.message, this.props.navigation, '返回');
       })
       .catch((err) => {
+        console.log(err);
         hiddenLoading();
         errorRemind(err.message, this.props.navigation);
       })

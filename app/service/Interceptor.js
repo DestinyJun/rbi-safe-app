@@ -20,6 +20,7 @@ function isSkipUrl(url) {
 // axios.defaults.baseURL = 'http://192.168.28.5:8090/security-platform';
 axios.defaults.baseURL = 'http://139.9.153.27:8090/security-platform';
 // axios.defaults.baseURL = 'http://61.189.169.44:8090/security-platform';
+// axios.defaults.baseURL = 'http://10.40.1.121:8090/security-platform';
 // axios.defaults.baseURL = 'http://120.77.171.73:8090/security-platform';
 // axios.defaults.baseURL = 'http://192.168.28.5:8090/security-platform';
 

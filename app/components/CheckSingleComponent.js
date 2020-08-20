@@ -27,7 +27,7 @@ export class CheckSingleComponent extends Component{
           this.state.checked.map((item,index) => (
             <CheckBox
               key={`checkBox${index}`}
-              title={`${this.props.options[index]}级`}
+              title={`${this.props.options[index]}`}
               titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
               size={20}
               disabled={this.props.disabled}

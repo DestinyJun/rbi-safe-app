@@ -13,7 +13,11 @@ export function JudgeTopicComponent(props) {
   }
   else if (props.safeTestQuestionOptionsList) {
     questionOptions = [...props.safeTestQuestionOptionsList]
-  } else {
+  }
+  else if (props.questionsOptionsList) {
+    questionOptions = [...props.questionsOptionsList]
+  }
+  else {
     questionOptions = [...props.safeSubjectOptionList]
   }
   const arr = questionOptions.map(() => false);

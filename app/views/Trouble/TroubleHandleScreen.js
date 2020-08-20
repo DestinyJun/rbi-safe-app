@@ -391,11 +391,13 @@ export class TroubleHandleScreen extends Component {
     // 获取隐患详情
     post(TroubleApi.TROUBLE_INFO_LIST,{hidDangerCode: this.hidDangerCode})
       .then(res => {
+        console.log(res);
         this.typeObj.hidTypeManage = res.data.hidDangerDO.hidTypeManage;
         this.typeObj.hidTypePerson = res.data.hidDangerDO.hidTypePerson;
         this.typeObj.hidTypeThing = res.data.hidDangerDO.hidTypeThing;
         this.submitField.rectificationOpinions = res.data.hidDangerDO.rectificationOpinions;
         this.submitField.specifiedRectificationTime = res.data.hidDangerDO.specifiedRectificationTime;
+        this.submitField.hidDangerGrade = res.data.hidDangerDO.hidDangerGrade;
         hiddenLoading();
         this.setState({
           isHandle: res.data.hidDangerDO.ifDeal === '是',

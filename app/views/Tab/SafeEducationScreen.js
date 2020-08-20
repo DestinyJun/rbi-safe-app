@@ -27,7 +27,7 @@ function MyTabs() {
       }}
     >
       <Tab.Screen name="EducationSafeScreen" options={{title: '培训'}} component={EducationSafeScreen} />
-      <Tab.Screen name="EducationClassScreen" options={{title: '班主'}}  component={EducationClassScreen} />
+      <Tab.Screen name="EducationClassScreen" options={{title: '班组'}}  component={EducationClassScreen} />
       <Tab.Screen name="EducationRecordScreen" options={{title: '记录'}} component={EducationRecordScreen} />
     </Tab.Navigator>
   );

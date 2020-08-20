@@ -10,10 +10,10 @@ export class MultipleTopicComponent extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      checked: props.safeSubjectOptionList?props.safeSubjectOptionList.map(() => false):props.safeTestQuestionOptionsList?props.safeTestQuestionOptionsList.map(() => false):props.safeSubjectOptions.map(() => false)
+      checked: props.safeSubjectOptionList ? props.safeSubjectOptionList.map(() => false):props.safeTestQuestionOptionsList? props.safeTestQuestionOptionsList.map(() => false):props.questionsOptionsList? props.questionsOptionsList.map(() => false):props.safeSubjectOptions.map(() => false)
     };
-    this.arr = props.safeSubjectOptionList?props.safeSubjectOptionList.map(() => false):props.safeTestQuestionOptionsList?props.safeTestQuestionOptionsList.map(() => false):props.safeSubjectOptions.map(() => false)
-    this.questionOptions= props.safeSubjectOptionList?[...props.safeSubjectOptionList]:props.safeTestQuestionOptionsList?[...props.safeTestQuestionOptionsList]:[...props.safeSubjectOptions];
+    this.arr = props.safeSubjectOptionList? props.safeSubjectOptionList.map(() => false):props.safeTestQuestionOptionsList? props.safeTestQuestionOptionsList.map(() => false):props.questionsOptionsList? props.questionsOptionsList.map(() => false):props.safeSubjectOptions.map(() => false);
+    this.questionOptions= props.safeSubjectOptionList? [...props.safeSubjectOptionList]:props.safeTestQuestionOptionsList? [...props.safeTestQuestionOptionsList]:props.questionsOptionsList?[...props.questionsOptionsList]:[...props.safeSubjectOptions];
   }
   render() {
     return (
@@ -63,7 +63,7 @@ export class MultipleTopicComponent extends Component{
         score: this.props.score,
         testPapreId: this.props.testPapreId,
         questionBankSubjectId: this.props.questionBankSubjectId?this.props.questionBankSubjectId: '',
-        twTestPapreId: props.twTestPapreId?props.twTestPapreId: '',
+        twTestPapreId: this.props.twTestPapreId?this.props.twTestPapreId: '',
       });
     });
   };

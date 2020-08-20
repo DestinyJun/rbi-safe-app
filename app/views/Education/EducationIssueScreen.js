@@ -47,7 +47,7 @@ export class EducationIssueScreen extends Component {
     this.state = {
       topicList: [],
       bankList: [],
-      bankTitle: '请选择题库',
+      bankTitle:'0',
       questionList: [],
       questionTitle: null,
       personList: [],
@@ -99,10 +99,11 @@ export class EducationIssueScreen extends Component {
           />
           <ListItem
             containerStyle={{backgroundColor: 'none'}}
-            bottomDivider={true} title={'考试人'}
+            bottomDivider={true}
+            title={'考试人'}
             titleStyle={{color: '#9D9D9D'}}
             chevron={true}
-            rightElement={ this.state.personList.length>0 && <PickerTreeComponent
+            rightElement={ this.state.personList.length>0?<PickerTreeComponent
               confirmPress={(res) => {
                 const arr = [];
                 res.forEach((item) => {
@@ -125,7 +126,7 @@ export class EducationIssueScreen extends Component {
               title={this.state.personTitle?this.state.personTitle:'点击选择考试人'}
               titleStyle={{color: '#9D9D9D'}}
               buttonStyle={{backgroundColor: 'unset',padding: 0,width: 200,justifyContent: 'flex-end'}}
-            />}
+            />: <Text style={{color: '#A4A4A4',fontSize: 16}}>暂无考试人可选</Text>}
           />
           <ListItem
             containerStyle={{backgroundColor: 'none'}}
@@ -136,7 +137,9 @@ export class EducationIssueScreen extends Component {
                 selectedValue={this.state.bankTitle}
                 style={{height: 50, width: 200,flexDirection: 'row',justifyContent: 'flex-end'}}
                 onValueChange={(itemValue, itemIndex) =>{
-                  this.setState({bankTitle: itemValue});
+                  this.setState({
+                    bankTitle: itemValue
+                  });
                   this.getQuestionOnPress(itemValue);
                 }
                 }>
@@ -156,8 +159,9 @@ export class EducationIssueScreen extends Component {
             bottomDivider={true} title={'题目选择'}
             titleStyle={{color: '#9D9D9D'}}
             chevron={true}
-            rightElement={this.state.bankTitle === '请选择题库'?<Text style={{color: '#A4A4A4',fontSize: 16}}>请先先择题库</Text>:<PickerTreeComponent
+            rightElement={this.state.bankTitle === '0'?<Text style={{color: '#A4A4A4',fontSize: 16}}>请先先择题库</Text>:<PickerTreeComponent
               confirmPress={(res) => {
+                console.log(res);
                 const arr = [];
                 res.forEach((item) => {
                   for (let l of this.state.questionList) {
@@ -220,7 +224,6 @@ export class EducationIssueScreen extends Component {
         this.setState({
           bankList: [...res.data]
         });
-        hiddenLoading();
       })
       .catch((err) => {
         hiddenLoading();
@@ -251,7 +254,6 @@ export class EducationIssueScreen extends Component {
         successRemind(res.message,this.props.navigation,'返回');
       })
       .catch((err) => {
-        console.log(err);
         hiddenLoading();
         singleRemind('请求异常',err.message)
       });
