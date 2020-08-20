@@ -13,7 +13,7 @@ import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
 // 工具函数类
 import {post} from "../../service/Interceptor";
 import {EducationApi} from "../../service/EducationApi";
-import {hiddenLoading, showLoading, successRemind} from "../../util/ToolFunction";
+import {hiddenLoading, showLoading, singleRemind, successRemind} from "../../util/ToolFunction";
 import {PickerTreeComponent} from "../../components/PickerTreeComponent";
 import {Picker} from "@react-native-community/picker";
 
@@ -253,7 +253,7 @@ export class EducationIssueScreen extends Component {
       .catch((err) => {
         console.log(err);
         hiddenLoading();
-        singleRemind(err.message)
+        singleRemind('请求异常',err.message)
       });
   }
 }

@@ -120,9 +120,15 @@ export class DoubleInventoryFillScreen extends Component {
         }
         await AsyncStorage.getItem('fill')
           .then(result => {
-            arr1 = res.data.doubleDutyTemplateContents.map((item,index) =>(
-              {...item,selfEvaluation: JSON.parse(result)[index].selfEvaluation,selfFraction: JSON.parse(result)[index].selfFraction}
-            ));
+            if (result) {
+              arr1 = res.data.doubleDutyTemplateContents.map((item,index) =>(
+                {...item,selfEvaluation: JSON.parse(result)[index].selfEvaluation,selfFraction: JSON.parse(result)[index].selfFraction}
+              ));
+            } else {
+              arr1 = res.data.doubleDutyTemplateContents.map((item) =>(
+                {...item,selfEvaluation: '符合',selfFraction: item.fraction}
+              ));
+            }
           })
           .catch(err => {
             arr1 = res.data.doubleDutyTemplateContents.map((item) =>(
@@ -134,10 +140,17 @@ export class DoubleInventoryFillScreen extends Component {
         },() => {
           AsyncStorage.getItem('fill')
             .then(result => {
-              this.state.list.forEach((item,index) => {
-                this.addFiled.content[index].selfFraction = JSON.parse(result)[index].selfFraction;
-                this.addFiled.content[index].selfEvaluation = JSON.parse(result)[index].selfEvaluation;
-              })
+              if (result) {
+                this.state.list.forEach((item,index) => {
+                  this.addFiled.content[index].selfFraction = JSON.parse(result)[index].selfFraction;
+                  this.addFiled.content[index].selfEvaluation = JSON.parse(result)[index].selfEvaluation;
+                })
+              } else {
+                this.state.list.forEach((item,index) => {
+                  this.addFiled.content[index].selfFraction = item.fraction;
+                  this.addFiled.content[index].selfEvaluation = '符合';
+                })
+              }
             })
             .catch(err => {
               this.state.list.forEach((item,index) => {
@@ -154,7 +167,6 @@ export class DoubleInventoryFillScreen extends Component {
 
   // 提交操作
   addOnPress() {
-    console.log(this.addFiled);
     showLoading();
     post(DoubleDutyApi.ADD_LIST_FILL,this.addFiled)
       .then((res) => {

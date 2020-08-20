@@ -143,18 +143,36 @@ export class DoubleInventoryCheckScreen extends Component {
     const baseInfoList = baseInfo.doubleDutyEvaluationContents;
     await AsyncStorage.getItem('check')
       .then(result => {
-        this.addFiled = JSON.parse(result);
-        this.setState({
-          badeSituation: JSON.parse(result).badeSituation,
-          correctSituation:JSON.parse(result).badeSituation,
-        });
-        arr1 = baseInfoList.map((item,index) =>(
-          {
-            ...item,
-            checkEvaluation: JSON.parse(result).content[index].checkResult,
-            checkNumber: JSON.parse(result).content[index].checkFraction
-          }
-        ));
+        if (result) {
+          this.addFiled = JSON.parse(result);
+          this.setState({
+            badeSituation: JSON.parse(result).badeSituation,
+            correctSituation:JSON.parse(result).badeSituation,
+          });
+          arr1 = baseInfoList.map((item,index) =>(
+            {
+              ...item,
+              checkEvaluation: JSON.parse(result).content[index].checkResult,
+              checkNumber: JSON.parse(result).content[index].checkFraction
+            }
+          ));
+        } else {
+          const arr = baseInfoList.map((item) => {
+            return Object.assign({}, {
+              id: item.id,
+              checkResult: '符合',
+              checkFraction: item.fraction,
+            });
+          });
+          arr1 = baseInfoList.map((item) => (
+            {
+              ...item,
+              checkEvaluation: '符合',
+              checkNumber: item.fraction
+            }
+          ));
+          this.addFiled = Object.assign(this.addFiled, {content: arr});
+        }
       })
       .catch(err => {
         const arr = baseInfoList.map((item) => {
@@ -164,7 +182,7 @@ export class DoubleInventoryCheckScreen extends Component {
             checkFraction: item.fraction,
           });
         });
-        arr1 = baseInfoList.map((item,index) =>(
+        arr1 = baseInfoList.map((item) =>(
           {
             ...item,
             checkEvaluation: '符合',
