@@ -3,8 +3,8 @@
  * author：DestinyJun
  * date：  2020/7/2 15:32
  */
-import {StyleSheet} from 'react-native';
-
+import {Dimensions, StyleSheet} from 'react-native';
+const {width, height} = Dimensions.get('window');
 export const EducationExamStyles = StyleSheet.create({
   Exam: {
     flex: 1
@@ -27,5 +27,26 @@ export const EducationExamStyles = StyleSheet.create({
   },
   topic: {
     flex: 1
+  },
+  maskLayer: {
+    position: 'absolute',
+    width,
+    height,
+    top: 0,
+    left: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  },
+  content: {
+    width,
+    height,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  scrollContent: {
+    width: '90%',
+    height: '90%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingBottom: 15
   }
 });

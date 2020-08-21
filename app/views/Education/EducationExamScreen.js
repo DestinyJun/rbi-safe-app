@@ -4,10 +4,11 @@
  * date：  2020/7/2 14:51
  */
 import React, {Component} from 'react';
-import {View, ScrollView, Alert, Text} from 'react-native';
+import {View, ScrollView, Alert, Text, TouchableWithoutFeedback} from 'react-native';
 import {EducationExamStyles as styles} from "./EducationExamStyles";
 import {useBackHandler} from "@react-native-community/hooks";
 import {Button, Header} from "react-native-elements";
+import Modal from "react-native-translucent-modal";
 // 自定义组件
 import {SingleTopicComponent} from "../../components/SingleTopicComponent";
 import {JudgeTopicComponent} from "../../components/JudgeTopicComponent";
@@ -54,6 +55,10 @@ export class EducationExamScreen extends Component {
     this.state = {
       topicList: [],
       topicListAnswer: [],
+      isVisible: false,
+      topicListCallback: [],
+      resultNumber: 0,
+      totalNumber: 0,
     };
     this.exam = {...props.route.params.exam};
     this.name = props.route.params.name;
@@ -125,6 +130,53 @@ export class EducationExamScreen extends Component {
             this.state.topicList.length>0&&<Button title={'结束考试'} buttonStyle={c_styles.button} onPress={this.edExamComplete.bind(this)} />
           }
         </ScrollView>
+       {/* <Modal
+        visible={this.state.isVisible}
+        transparent={true}
+        onRequestClose={() => {
+          this.setState({isVisible: false});
+        }}
+      >
+        <View style={styles.container}>
+          START 遮罩层
+          <TouchableWithoutFeedback onPress={() => {
+            this.setState({isVisible: false});
+          }}>
+            <View style={styles.maskLayer}/>
+          </TouchableWithoutFeedback>
+          END 遮罩层
+          <View style={styles.content}>
+            <View style={styles.scrollContent}>
+              <ScrollView style={[styles.topic,c_styles.mt_2]} keyboardShouldPersistTaps={'always'}>
+                4填空题 3判断题  2多选题 1单选题
+                {
+                  this.state.topicListCallback.length>0?this.state.topicListCallback.map((item,index) => {
+                    if (item.subjectType === 1) {
+                      return ( <SingleTopicComponent disabled={true} serial={index} key={`single${index}`} name={this.name} {...item} onPress={(res) => {}} />)
+                    }
+                    if (item.subjectType === 2) {
+                      return ( <MultipleTopicComponent disabled={true} serial={index} key={`multiple${index}`} name={this.name} {...item} onPress={(res) => {}} />)
+                    }
+                    if (item.subjectType === 3) {
+                      return ( <JudgeTopicComponent disabled={true} serial={index} key={`judge${index}`} name={this.name} {...item} onPress={(res) => {}} />)
+                    }
+                    if (item.subjectType === 4) {
+                      return ( <FillTopicComponent disabled={true} serial={index} key={`fill${index}`} name={this.name} {...item} onPress={(res) => {}} />)
+                    }
+                  }): <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h4]}>您没有回答任何一道题！</Text>
+                }
+                <View style={[c_styles.pl_5,c_styles.pr_5]}>
+                  <Text>当前得分：{this.state.resultNumber}</Text>
+                  <Text>总分：{this.state.totalNumber}</Text>
+                  <Button title={'返回'} onPress={() => {
+                    this.props.navigation.goBack();
+                  }} />
+                </View>
+              </ScrollView>
+            </View>
+          </View>
+        </View>
+      </Modal>*/}
       </View>
     );
   }
@@ -232,6 +284,27 @@ export class EducationExamScreen extends Component {
       .then((res) => {
         hiddenLoading();
         successRemind(res.message,this.props.navigation,'返回');
+       /* if (this.name === '模拟考试') {
+          const arr = [];
+          this.state.topicList.map((topic) => {
+            res.data.simulationSafeAnswerRecords.forEach((item) => {
+              if (item.id === topic.id) {
+                arr.push({...topic,correct: item.correct,answerResults: item.answerResults})
+              }
+            });
+          });
+          this.setState({
+            resultNumber:res.data.result,
+            totalNumber:res.data.totalScore,
+            topicListCallback: [...arr]
+          },() => {
+            this.setState({
+              isVisible: true
+            })
+          });
+        } else {
+          successRemind(res.message,this.props.navigation,'返回');
+        }*/
       })
       .catch(err => {
         hiddenLoading();
