@@ -73,7 +73,7 @@ export function TopicJudgeCheckedComponent(props) {
   );
 }
 
-JudgeTopicComponent.defaultProps = {
+TopicJudgeCheckedComponent.defaultProps = {
   disabled: false
 };
 

@@ -13,6 +13,8 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import {EducationClassScreen} from "../EducationTopTab/EducationClassScreen";
 import {EducationRecordScreen} from "../EducationTopTab/EducationRecordScreen";
 import {EducationSafeScreen} from "../EducationTopTab/EducationSafeScreen";
+import {EducationContentScreen} from "../EducationTopTab/EducationContentScreen";
+// 自定义组件
 import {TabTopButtonComponent} from "../../components/TabTopButtonComponent";
 
 const Tab = createMaterialTopTabNavigator();
@@ -29,6 +31,7 @@ function MyTabs() {
       <Tab.Screen name="EducationSafeScreen" options={{title: '培训'}} component={EducationSafeScreen} />
       <Tab.Screen name="EducationClassScreen" options={{title: '班组'}}  component={EducationClassScreen} />
       <Tab.Screen name="EducationRecordScreen" options={{title: '记录'}} component={EducationRecordScreen} />
+      <Tab.Screen name="EducationContentScreen" options={{title: '内容库'}} component={EducationContentScreen} />
     </Tab.Navigator>
   );
 }

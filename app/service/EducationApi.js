@@ -53,4 +53,13 @@ export class EducationApi {
 
   // 获取班组活动列表
   static GET_GRAND_LIST = '/typeWorkTestPaper/organizationTypeWorkTestPaper';
+
+  // 分页获取培训内容分类
+  static GET_TRAIN_TYPE = '/category/findByPage';
+
+  // 分页获取培训文件
+  static GET_TRAIN_FILES = '/training/findFileByCategory';
+
+  // 分页获取培训视频
+  static GET_TRAIN_VIDEO = '/training/findVideoByCategory';
 }

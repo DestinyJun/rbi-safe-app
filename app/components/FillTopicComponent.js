@@ -9,6 +9,16 @@ import {Input} from "react-native-elements";
 export function FillTopicComponent(props) {
   const arr = props.rightKey.split('#');
   const answer = arr.map(() => null);
+  props.onPress({
+    isInit: true,
+    answerResults: '',
+    testUestionsId: props.id,
+    rightKey: props.rightKey,
+    score: props.score,
+    testPapreId: props.testPapreId,
+    questionBankSubjectId: props.questionBankSubjectId?props.questionBankSubjectId: '',
+    twTestPapreId: props.twTestPapreId?props.twTestPapreId: '',
+  });
   const onInputChange = (index,text) => {
     answer[index] = text;
     props.onPress({

@@ -31,17 +31,17 @@ export class ExamCardComponent extends Component {
         </View>
         <View style={[styles.timer, c_styles.pl_5]}>
           {
-            train.startTime&&  <View style={[styles.timerBox]}>
+            train.startTime&&<View style={[styles.timerBox]}>
               <Icon type={'font-awesome'} name={'calendar'} size={16} color={'#3B86FF'}/>
               <Text
                 style={[c_styles.h6, c_styles.ml_2]}>培训时间：{train.startTime.split(' ')[0]}—{train.endTime.split(' ')[0]}</Text>
             </View>
           }
           {
-            (exam&&exam.startTime) && <View style={[styles.timerBox]}>
+            (exam&&exam.startTime)?<View style={[styles.timerBox]}>
               <Icon type={'font-awesome'} name={'clock-o'} size={18} color={'#3B86FF'}/>
               <Text style={[c_styles.h6, c_styles.ml_2]}>考试时间：{exam.startTime.split(' ')[0]}—{exam.endTime.split(' ')[0]}</Text>
-            </View>
+            </View>:null
           }
         </View>
         <View style={[styles.progress, c_styles.pl_5, c_styles.pt_3, c_styles.pb_3]}>
@@ -59,7 +59,7 @@ export class ExamCardComponent extends Component {
         </View>
         <View style={[styles.buttons]}>
           {
-            (exam && exam.processingStatus === 1 && percentage(train.finishStudyTime,train.trainingDuration)>=1) ?
+            (exam && exam.processingStatus === 1 && percentage(train.finishStudyTime,train.trainingDuration)>=1 ) ?
               <Button
                 title={'开始考试'}
                 TouchableComponent={TouchableOpacity}

@@ -23,7 +23,7 @@ function MyCustomLeftComponent(props) {
   const headerLeftOnPress = () => {
     if (props.remind) {
       Alert.alert(
-        '','您正在考试，是否需要返回？一旦返回，则当前答案无效，需重新考试！',
+        '','一旦返回，当前答案无效，需要重新填写！',
         [
           {
             text: '取消',

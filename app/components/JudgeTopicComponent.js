@@ -35,6 +35,16 @@ export function JudgeTopicComponent(props) {
       twTestPapreId: props.twTestPapreId?props.twTestPapreId: '',
     });
   };
+  props.onPress({
+    isInit: true,
+    answerResults: '',
+    testUestionsId: props.id,
+    rightKey: props.rightKey,
+    score: props.score,
+    testPapreId: props.testPapreId,
+    questionBankSubjectId: props.questionBankSubjectId?props.questionBankSubjectId: '',
+    twTestPapreId: props.twTestPapreId?props.twTestPapreId: '',
+  });
   return (
     <View style={[styles.container,c_styles.p_4]}>
       <View style={styles.title}>

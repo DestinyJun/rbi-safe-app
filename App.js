@@ -44,6 +44,7 @@ import {ProFileFourEduScreen} from "./app/views/ProFile/ProFileFourEduScreen";
 import {ViewPDFScreen} from "./app/views/WebView/ViewPDFScreen";
 import {EducationIssueScreen} from "./app/views/Education/EducationIssueScreen";
 import {ViewOperationDailyScreen} from "./app/views/WebView/ViewOperationDailyScreen";
+import {EducationContentScreen} from "./app/views/EducationTopTab/EducationContentScreen";
 
 // 创建路由对象
 const Stack = createStackNavigator();
@@ -98,6 +99,7 @@ export default class App extends React.Component {
               <Stack.Screen name={'EducationTrainScreen'} component={EducationTrainScreen}/>
               <Stack.Screen name={'EducationErrorScreen'} component={EducationErrorScreen}/>
               <Stack.Screen name={'EducationIssueScreen'} component={EducationIssueScreen}/>
+              <Stack.Screen name={'EducationContentScreen'} component={EducationContentScreen}/>
               <Stack.Screen name={'TroubleShortlyScreen'} component={TroubleShortlyScreen}/>
               <Stack.Screen name={'TroubleReportScreen'} component={TroubleReportScreen}/>
               <Stack.Screen name={'TroubleHandleScreen'} component={TroubleHandleScreen}/>

@@ -25,6 +25,16 @@ export const EducationExamStyles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20
   },
+  timerDuration: {
+    paddingTop: 5,
+    paddingBottom: 5,
+    color: '#47CF04',
+    fontSize: 16,
+    borderColor: '#47CF04',
+    borderWidth: 1,
+    borderRadius: 20,
+    marginLeft: 15
+  },
   topic: {
     flex: 1
   },

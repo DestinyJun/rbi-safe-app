@@ -59,9 +59,11 @@ export class EducationExamScreen extends Component {
       topicListCallback: [],
       resultNumber: 0,
       totalNumber: 0,
+      duration: [], // 考试时长
     };
     this.exam = {...props.route.params.exam};
     this.name = props.route.params.name;
+    this.timeControl = null;
     this.params = {
       personnelTrainingRecordId: props.route.params.exam.personnelTrainingRecordId,
       safeAnswerRecordList: []
@@ -79,7 +81,11 @@ export class EducationExamScreen extends Component {
           centerComponent={{text: `${this.props.route.params.title}  ${this.props.route.params.name}`,style: {fontSize: 20,color: '#fff'}}}
         />
         <View style={styles.timer}>
-          <Text style={[styles.timerText,c_styles.pl_3,c_styles.pr_3]}>当前进度  {this.state.topicListAnswer.length} / {this.state.topicList.length}</Text>
+          <Text style={[styles.timerText,c_styles.pl_3,c_styles.pr_3]}>当前进度 {this.state.topicListAnswer.length} / {this.state.topicList.length}</Text>
+          {
+            this.name !== '模拟考试'?<Text style={[styles.timerDuration,c_styles.pl_3,c_styles.pr_3]}>{this.state.duration.length>0?`${this.state.duration[0]}分${this.state.duration[1]}秒`:'考试中...'}</Text>:null
+          }
+
         </View>
         <ScrollView style={[styles.topic,c_styles.mt_2]} keyboardShouldPersistTaps={'always'}>
            {/*4填空题 3判断题  2多选题 1单选题*/}
@@ -117,11 +123,15 @@ export class EducationExamScreen extends Component {
                   if (!this.state.topicListAnswer.includes(res.testUestionsId)) {
                     const arr = [...this.state.topicListAnswer];
                     arr.push(res.testUestionsId);
-                    this.setState({
-                      topicListAnswer: arr
-                    })
+                    if (!('isInit' in res)) {
+                      this.setState({
+                        topicListAnswer: arr
+                      });
+                      this.params.safeAnswerRecordList[index] = res
+                    } else {
+                      this.params.safeAnswerRecordList[index] = res;
+                    }
                   }
-                  this.params.safeAnswerRecordList[index] = res
                 }} />)
               }
             }): <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h4]}>暂时无考试题目，请您联系管理员添加！</Text>
@@ -191,9 +201,15 @@ export class EducationExamScreen extends Component {
         this.httpRequestExam(EducationApi.GET_EXAM_SIMULATION,{trainingPlanId: this.exam.id});
         break;
       case '班主考试':
+        console.log('班主考试');
         this.httpRequestExam(EducationApi.GET_GRAND_TRAIN,{twTestPapreId: this.exam.twTestPapreId});
         break;
     }
+  }
+
+  // 组件销毁后生命周期函数
+  componentWillUnmount() {
+    clearInterval(this.timeControl);
   }
 
   // 结束考试操作
@@ -222,11 +238,16 @@ export class EducationExamScreen extends Component {
             ...res.data.multipleChoiceQuestions,
             ...res.data.judgmentQuestions,
             ...res.data.singleChoiceQuestions
-          ]
+          ],
+          duration: res.data.duration
         });
+        if (this.name !== '模拟考试') {
+          this.examCountdown(res.data.duration);
+        }
         hiddenLoading();
       })
       .catch((err) => {
+        console.log(err);
         hiddenLoading();
       })
   }
@@ -271,6 +292,7 @@ export class EducationExamScreen extends Component {
         }
       }
       gradeFields.safeTWAnswerRecordList = arr;
+      console.log(gradeFields);
     }
     if (this.name === '开始考试') {
       for (let item of this.params.safeAnswerRecordList) {
@@ -280,6 +302,7 @@ export class EducationExamScreen extends Component {
       }
       startFields.safeAnswerRecordList = arr;
     }
+    return;
     post(url,this.name === '模拟考试'?fields:this.name === '班主考试'?gradeFields:startFields)
       .then((res) => {
         hiddenLoading();
@@ -310,5 +333,38 @@ export class EducationExamScreen extends Component {
         hiddenLoading();
         errorRemind(err.message,this.props.navigation);
       })
+  }
+
+  // 考试倒计时
+  examCountdown(timer) {
+    clearInterval(this.timeControl);
+    if (timer === 0) {
+      return false
+    }
+    let totalTimer = timer*60;
+    this.timeControl = setInterval(() => {
+      totalTimer--;
+      if (totalTimer === 0) {
+        clearInterval(this.timeControl);
+        Alert.alert(
+          '','考试时间已到，请立即交卷或取消考试！',
+          [
+            {
+              text: '交卷',
+              onPress: () => {
+                this.edExamComplete();
+              },
+              style: 'cancel'
+            },
+            {
+              text: '取消考试',
+              onPress: () => {props.goBack()}
+            }
+          ]);
+      }
+      this.setState({
+        duration: [Math.trunc(totalTimer/60),totalTimer%60]
+      })
+    },1000);
   }
 }

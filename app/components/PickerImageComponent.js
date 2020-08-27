@@ -59,6 +59,8 @@ export class PickerImageComponent extends Component{
            takePhotoButtonTitle: '拍照', // 点击选择相机
            chooseFromLibraryButtonTitle: '相册', // 点击选择相册
            cancelButtonTitle: '取消',
+           maxWidth: 750,
+           quality: 0.5,
            storageOptions: {
              skipBackup: true,
              path: 'images',
@@ -77,19 +79,6 @@ export class PickerImageComponent extends Component{
              }
            });
          });
-         /*ImagePicker.launchImageLibrary({}, (response) => {
-           if (response.didCancel || this.state.avatarSource.length>6) {
-             return;
-           }
-           const source = { uri: 'data:image/jpeg;base64,' + response.data,fileName: response.fileName };
-           this.setState({
-             avatarSource: this.state.avatarSource.concat(source)
-           },() =>{
-             if (this.props.onSelect) {
-               this.props.onSelect(this.state.avatarSource);
-             }
-           });
-         });*/
        }
        else if (granted === PermissionsAndroid.RESULTS.DENIED) {
          singleRemind('权限提醒','您已拒接获取系统读写权限，应用可能无法升级！')
