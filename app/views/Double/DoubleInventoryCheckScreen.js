@@ -167,8 +167,8 @@ export class DoubleInventoryCheckScreen extends Component {
           arr1 = baseInfoList.map((item) => (
             {
               ...item,
-              checkEvaluation: '符合',
-              checkNumber: item.fraction
+              checkEvaluation: item.selfEvaluation,
+              checkNumber: item.selfFraction
             }
           ));
           this.addFiled = Object.assign(this.addFiled, {content: arr});
@@ -185,8 +185,8 @@ export class DoubleInventoryCheckScreen extends Component {
         arr1 = baseInfoList.map((item) =>(
           {
             ...item,
-            checkEvaluation: '符合',
-            checkNumber: item.fraction
+            checkEvaluation: item.selfEvaluation,
+            checkNumber: item.selfFraction
           }
         ));
         this.addFiled = Object.assign(this.addFiled,{content: arr});

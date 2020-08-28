@@ -6,22 +6,12 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Input} from "react-native-elements";
-export class FillTopicComponent extends Component{
+export class TopicFillCheckedComponent extends Component{
   constructor(props) {
     super(props);
     this.state = {};
-    this.arr = props.rightKey.split('#');
+    this.arr = props.answerResults.split('#');
     this.answer = this.arr.map(() => null);
-    props.onPress({
-      isInit: true,
-      answerResults: '',
-      testUestionsId: props.id,
-      rightKey: props.rightKey,
-      score: props.score,
-      testPapreId: props.testPapreId,
-      questionBankSubjectId: props.questionBankSubjectId?props.questionBankSubjectId: '',
-      twTestPapreId: props.twTestPapreId?props.twTestPapreId: '',
-    });
   }
   render() {
     return (
@@ -38,33 +28,24 @@ export class FillTopicComponent extends Component{
           {
             this.arr.map((item,index) => (
               <Input
+                editable={false}
                 key={`fill${index}`}
-                placeholder={`请输入第${index+1}个空的答案`}
+                placeholder={item}
                 placeholderTextColor={'#C9C9C9'}
                 inputContainerStyle={{borderColor: '#F5F5F5'}}
-                onChangeText={this.onInputChange.bind(this,index)}
               />
             ))
+          }
+          {
+            this.props.hasOwnProperty('correct')?<View>
+              {this.props.correct === 0?<Text style={{fontSize: 16,color: 'red',paddingLeft: 10}}>错误</Text>: <Text style={{fontSize: 16,color: 'green'}}>正确</Text>}
+            </View>:null
           }
         </View>
       </View>
     );
   }
-
-  onInputChange(index,text){
-    this.answer[index] = text;
-    this.props.onPress({
-      answerResults: this.answer.join('#')?this.answer.join('#'): null,
-      testUestionsId: this.props.id,
-      rightKey: this.props.rightKey,
-      score: this.props.score,
-      testPapreId: this.props.testPapreId,
-      questionBankSubjectId: this.props.questionBankSubjectId?this.props.questionBankSubjectId: '',
-      twTestPapreId: this.props.twTestPapreId?this.props.twTestPapreId: '',
-    });
-  };
 }
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff'
@@ -89,5 +70,4 @@ const styles = StyleSheet.create({
   titleContent: {
     flex: 5,
   },
-  choose:{}
 });

@@ -14,7 +14,7 @@ export class MultipleTopicComponent extends Component{
     };
     this.arr = props.safeSubjectOptionList? props.safeSubjectOptionList.map(() => false):props.safeTestQuestionOptionsList? props.safeTestQuestionOptionsList.map(() => false):props.questionsOptionsList? props.questionsOptionsList.map(() => false):props.safeSubjectOptions.map(() => false);
     this.questionOptions= props.safeSubjectOptionList? [...props.safeSubjectOptionList]:props.safeTestQuestionOptionsList? [...props.safeTestQuestionOptionsList]:props.questionsOptionsList?[...props.questionsOptionsList]:[...props.safeSubjectOptions];
-    this.props.onPress({
+    props.onPress({
       isInit: true,
       answerResults: '',
       testUestionsId: this.props.id,

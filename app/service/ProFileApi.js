@@ -15,6 +15,9 @@ export class ProFileApi {
   // 分页获取培训档案
   static GET_TRAIN_LIST = '/getPersonalTrainingFiles';
 
+  // 获取考试详情
+  static GET_EXAM_DETAIL = '/getTheExamDetails';
+
   // 获取资格证书
   static GET_MY_PROOF = '/training/findCertificate';
 

@@ -13,12 +13,18 @@ import Modal from "react-native-translucent-modal";
 import {SingleTopicComponent} from "../../components/SingleTopicComponent";
 import {JudgeTopicComponent} from "../../components/JudgeTopicComponent";
 import {FillTopicComponent} from "../../components/FillTopicComponent";
-import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
 import {MultipleTopicComponent} from "../../components/MultipleTopicComponent";
+import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
+import {TopicSingleCheckedComponent} from "../../components/TopicSingleCheckedComponent";
+import {TopicMultipleCheckedComponent} from "../../components/TopicMultipleCheckedComponent";
+import {TopicJudgeCheckedComponent} from "../../components/TopicJudgeCheckedComponent";
+import {TopicFillCheckedComponent} from "../../components/TopicFillCheckedComponent";
 // 工具函数类
 import {post} from "../../service/Interceptor";
 import {EducationApi} from "../../service/EducationApi";
 import {errorRemind, hiddenLoading, showLoading, successRemind} from "../../util/ToolFunction";
+import {CountdownComponent} from "../../components/CountdownComponent";
+
 
 function MyCustomLeftComponent(props) {
   const headerLeftOnPress = () => {
@@ -59,7 +65,7 @@ export class EducationExamScreen extends Component {
       topicListCallback: [],
       resultNumber: 0,
       totalNumber: 0,
-      duration: [], // 考试时长
+      duration: 0, // 考试时长
     };
     this.exam = {...props.route.params.exam};
     this.name = props.route.params.name;
@@ -83,7 +89,27 @@ export class EducationExamScreen extends Component {
         <View style={styles.timer}>
           <Text style={[styles.timerText,c_styles.pl_3,c_styles.pr_3]}>当前进度 {this.state.topicListAnswer.length} / {this.state.topicList.length}</Text>
           {
-            this.name !== '模拟考试'?<Text style={[styles.timerDuration,c_styles.pl_3,c_styles.pr_3]}>{this.state.duration.length>0?`${this.state.duration[0]}分${this.state.duration[1]}秒`:'考试中...'}</Text>:null
+            this.name !== '模拟考试'?<Text style={[styles.timerDuration,c_styles.pl_3,c_styles.pr_3]}>
+              {this.state.duration > 0 ? <CountdownComponent duration={this.state.duration} timerStop={() => {
+                Alert.alert(
+                  '', '考试时间已到，请立即交卷或取消考试！',
+                  [
+                    {
+                      text: '交卷',
+                      onPress: () => {
+                        this.edExamComplete();
+                      },
+                      style: 'cancel'
+                    },
+                    {
+                      text: '取消考试',
+                      onPress: () => {
+                        navigation.goBack()
+                      }
+                    }
+                  ]);
+              }}/> : '考试中...'}
+            </Text> : null
           }
 
         </View>
@@ -96,24 +122,39 @@ export class EducationExamScreen extends Component {
                   if (!this.state.topicListAnswer.includes(res.testUestionsId)) {
                     const arr = [...this.state.topicListAnswer];
                     arr.push(res.testUestionsId);
-                    this.setState({
-                      topicListAnswer: arr
-                    })
+                    if (!('isInit' in res)) {
+                      this.setState({
+                        topicListAnswer: arr
+                      });
+                    }
                   }
                   this.params.safeAnswerRecordList[index] = res
                 }} />)
               }
               if (item.subjectType === 2) {
-                return ( <MultipleTopicComponent serial={index} key={`multiple${index}`} name={this.name} {...item} onPress={(res) => {this.params.safeAnswerRecordList[index] = res}} />)
+                return ( <MultipleTopicComponent serial={index} key={`multiple${index}`} name={this.name} {...item} onPress={(res) => {
+                  if (!this.state.topicListAnswer.includes(res.testUestionsId)) {
+                    const arr = [...this.state.topicListAnswer];
+                    arr.push(res.testUestionsId);
+                    if (!('isInit' in res)) {
+                      this.setState({
+                        topicListAnswer: arr
+                      });
+                    }
+                  }
+                  this.params.safeAnswerRecordList[index] = res;
+                }} />)
               }
               if (item.subjectType === 3) {
                 return ( <JudgeTopicComponent serial={index} key={`judge${index}`} name={this.name} {...item} onPress={(res) => {
                   if (!this.state.topicListAnswer.includes(res.testUestionsId)) {
                     const arr = [...this.state.topicListAnswer];
                     arr.push(res.testUestionsId);
-                    this.setState({
-                      topicListAnswer: arr
-                    })
+                    if (!('isInit' in res)) {
+                      this.setState({
+                        topicListAnswer: arr
+                      });
+                    }
                   }
                   this.params.safeAnswerRecordList[index] = res
                 }} />)
@@ -127,11 +168,9 @@ export class EducationExamScreen extends Component {
                       this.setState({
                         topicListAnswer: arr
                       });
-                      this.params.safeAnswerRecordList[index] = res
-                    } else {
-                      this.params.safeAnswerRecordList[index] = res;
                     }
                   }
+                  this.params.safeAnswerRecordList[index] = res;
                 }} />)
               }
             }): <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h4]}>暂时无考试题目，请您联系管理员添加！</Text>
@@ -140,44 +179,44 @@ export class EducationExamScreen extends Component {
             this.state.topicList.length>0&&<Button title={'结束考试'} buttonStyle={c_styles.button} onPress={this.edExamComplete.bind(this)} />
           }
         </ScrollView>
-       {/* <Modal
-        visible={this.state.isVisible}
-        transparent={true}
-        onRequestClose={() => {
-          this.setState({isVisible: false});
-        }}
-      >
-        <View style={styles.container}>
-          START 遮罩层
+        <Modal
+          visible={this.state.isVisible}
+          transparent={true}
+          onRequestClose={() => {
+            this.setState({isVisible: false});
+          }}
+        >
+          <View style={styles.container}>
+          {/*START 遮罩层*/}
           <TouchableWithoutFeedback onPress={() => {
             this.setState({isVisible: false});
           }}>
             <View style={styles.maskLayer}/>
           </TouchableWithoutFeedback>
-          END 遮罩层
+          {/*END 遮罩层*/}
           <View style={styles.content}>
             <View style={styles.scrollContent}>
               <ScrollView style={[styles.topic,c_styles.mt_2]} keyboardShouldPersistTaps={'always'}>
-                4填空题 3判断题  2多选题 1单选题
+                {/*4填空题 3判断题  2多选题 1单选题*/}
                 {
                   this.state.topicListCallback.length>0?this.state.topicListCallback.map((item,index) => {
                     if (item.subjectType === 1) {
-                      return ( <SingleTopicComponent disabled={true} serial={index} key={`single${index}`} name={this.name} {...item} onPress={(res) => {}} />)
+                      return ( <TopicSingleCheckedComponent disabled={true} serial={index} key={`single${index}`} name={this.name} {...item} onPress={(res) => {}} />)
                     }
                     if (item.subjectType === 2) {
-                      return ( <MultipleTopicComponent disabled={true} serial={index} key={`multiple${index}`} name={this.name} {...item} onPress={(res) => {}} />)
+                      return ( <TopicMultipleCheckedComponent disabled={true} serial={index} key={`multiple${index}`} name={this.name} {...item} onPress={(res) => {}} />)
                     }
                     if (item.subjectType === 3) {
-                      return ( <JudgeTopicComponent disabled={true} serial={index} key={`judge${index}`} name={this.name} {...item} onPress={(res) => {}} />)
+                      return ( <TopicJudgeCheckedComponent disabled={true} serial={index} key={`judge${index}`} name={this.name} {...item} onPress={(res) => {}} />)
                     }
                     if (item.subjectType === 4) {
-                      return ( <FillTopicComponent disabled={true} serial={index} key={`fill${index}`} name={this.name} {...item} onPress={(res) => {}} />)
+                      return ( <TopicFillCheckedComponent disabled={true} serial={index} key={`fill${index}`} name={this.name} {...item} />)
                     }
                   }): <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h4]}>您没有回答任何一道题！</Text>
                 }
                 <View style={[c_styles.pl_5,c_styles.pr_5]}>
-                  <Text>当前得分：{this.state.resultNumber}</Text>
-                  <Text>总分：{this.state.totalNumber}</Text>
+                  <Text style={{fontSize: 16,paddingBottom: 10}}>当前得分：{this.state.resultNumber}</Text>
+                  <Text style={{fontSize: 16,paddingBottom: 10}}>总分：{this.state.totalNumber}</Text>
                   <Button title={'返回'} onPress={() => {
                     this.props.navigation.goBack();
                   }} />
@@ -186,7 +225,7 @@ export class EducationExamScreen extends Component {
             </View>
           </View>
         </View>
-      </Modal>*/}
+      </Modal>
       </View>
     );
   }
@@ -201,7 +240,6 @@ export class EducationExamScreen extends Component {
         this.httpRequestExam(EducationApi.GET_EXAM_SIMULATION,{trainingPlanId: this.exam.id});
         break;
       case '班主考试':
-        console.log('班主考试');
         this.httpRequestExam(EducationApi.GET_GRAND_TRAIN,{twTestPapreId: this.exam.twTestPapreId});
         break;
     }
@@ -241,20 +279,16 @@ export class EducationExamScreen extends Component {
           ],
           duration: res.data.duration
         });
-        if (this.name !== '模拟考试') {
-          this.examCountdown(res.data.duration);
-        }
         hiddenLoading();
       })
       .catch((err) => {
-        console.log(err);
         hiddenLoading();
       })
   }
 
   // 考试处理请求
   httpRequestFinishExam(url) {
-    // showLoading();
+    showLoading();
     const fields = {simulationSafeAnswerRecords: null};
     const gradeFields = {
       id: this.exam.id,
@@ -292,7 +326,6 @@ export class EducationExamScreen extends Component {
         }
       }
       gradeFields.safeTWAnswerRecordList = arr;
-      console.log(gradeFields);
     }
     if (this.name === '开始考试') {
       for (let item of this.params.safeAnswerRecordList) {
@@ -302,12 +335,10 @@ export class EducationExamScreen extends Component {
       }
       startFields.safeAnswerRecordList = arr;
     }
-    return;
     post(url,this.name === '模拟考试'?fields:this.name === '班主考试'?gradeFields:startFields)
       .then((res) => {
         hiddenLoading();
-        successRemind(res.message,this.props.navigation,'返回');
-       /* if (this.name === '模拟考试') {
+        if (this.name === '模拟考试') {
           const arr = [];
           this.state.topicList.map((topic) => {
             res.data.simulationSafeAnswerRecords.forEach((item) => {
@@ -325,46 +356,14 @@ export class EducationExamScreen extends Component {
               isVisible: true
             })
           });
-        } else {
+        }
+        else {
           successRemind(res.message,this.props.navigation,'返回');
-        }*/
+        }
       })
       .catch(err => {
         hiddenLoading();
         errorRemind(err.message,this.props.navigation);
       })
-  }
-
-  // 考试倒计时
-  examCountdown(timer) {
-    clearInterval(this.timeControl);
-    if (timer === 0) {
-      return false
-    }
-    let totalTimer = timer*60;
-    this.timeControl = setInterval(() => {
-      totalTimer--;
-      if (totalTimer === 0) {
-        clearInterval(this.timeControl);
-        Alert.alert(
-          '','考试时间已到，请立即交卷或取消考试！',
-          [
-            {
-              text: '交卷',
-              onPress: () => {
-                this.edExamComplete();
-              },
-              style: 'cancel'
-            },
-            {
-              text: '取消考试',
-              onPress: () => {props.goBack()}
-            }
-          ]);
-      }
-      this.setState({
-        duration: [Math.trunc(totalTimer/60),totalTimer%60]
-      })
-    },1000);
   }
 }

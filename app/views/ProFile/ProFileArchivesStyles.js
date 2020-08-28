@@ -3,8 +3,8 @@
  * author：DestinyJun
  * date：  2020/7/3 17:54
  */
-import {StyleSheet} from 'react-native';
-
+import {Dimensions, StyleSheet} from 'react-native';
+const {width, height} = Dimensions.get('window');
 export const ProFileArchivesStyles = StyleSheet.create({
   Archives: {
     flex: 1
@@ -48,5 +48,29 @@ export const ProFileArchivesStyles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     borderRadius: 20
+  },
+  topic: {
+    flex: 1
+  },
+  maskLayer: {
+    position: 'absolute',
+    width,
+    height,
+    top: 0,
+    left: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  },
+  maskContent: {
+    width,
+    height,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  scrollContent: {
+    width: '90%',
+    height: '90%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingBottom: 15
   }
 });

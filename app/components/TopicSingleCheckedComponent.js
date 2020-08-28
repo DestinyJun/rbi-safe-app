@@ -8,7 +8,6 @@ import {View, Text, StyleSheet} from 'react-native';
 import {CheckBox} from "react-native-elements";
 
 export function TopicSingleCheckedComponent(props) {
-  console.log(props);
   let questionOptions = [];
   if (props.safeSubjectOptions) {
     questionOptions = [...props.safeSubjectOptions]
@@ -22,23 +21,9 @@ export function TopicSingleCheckedComponent(props) {
   else {
     questionOptions = [...props.safeSubjectOptionList]
   }
-  const arr = questionOptions.map(() => false);
   const [checked,setChecked] = useState(questionOptions.map((item,index) => {
     return (props.hasOwnProperty(('answerResults')) && ((parseInt(props.answerResults) - 1) === index));
   }));
-  const checkOnPress = (index,res) => {
-    arr[index] = true;
-    setChecked(arr);
-    props.onPress({
-      answerResults: res,
-      testUestionsId: props.id,
-      rightKey: props.rightKey,
-      score: props.score,
-      testPapreId: props.testPapreId,
-      questionBankSubjectId: props.questionBankSubjectId?props.questionBankSubjectId: '',
-      twTestPapreId: props.twTestPapreId?props.twTestPapreId: '',
-    });
-  };
   return (
     <View style={[styles.container,c_styles.p_4]}>
       <View style={styles.title}>
@@ -53,31 +38,26 @@ export function TopicSingleCheckedComponent(props) {
         {
           checked.map((item,index) => (
             <CheckBox
-              disabled={props.disabled}
+              disabled={true}
               key={`checkBox${index}`}
               title={questionOptions[index].option}
               titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
               size={20}
               checkedIcon='dot-circle-o'
               uncheckedIcon='circle-o'
-              onPress={checkOnPress.bind(this,index,questionOptions[index].order)}
               checked={item}
             />
           ))
         }
         {
           props.hasOwnProperty('correct')?<View>
-            {props.correct === 0?<Text style={{fontSize: 16,color: 'red'}}>错误</Text>: <Text style={{fontSize: 16,color: 'green'}}>正确</Text>}
+            {props.correct === 0?<Text style={{fontSize: 16,color: 'red',paddingLeft: 10}}>错误</Text>: <Text style={{fontSize: 16,color: 'green'}}>正确</Text>}
           </View>:null
         }
       </View>
     </View>
   );
 }
-
-SingleTopicComponent.defaultProps = {
-  disabled: false
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -102,6 +82,5 @@ const styles = StyleSheet.create({
   },
   titleContent: {
     flex: 5,
-  },
-  choose:{}
+  }
 });

@@ -65,7 +65,7 @@ export function TopicJudgeCheckedComponent(props) {
         }
         {
           props.hasOwnProperty('correct')?<View>
-            {props.correct === 0?<Text style={{fontSize: 16,color: 'red'}}>错误</Text>: <Text style={{fontSize: 16,color: 'green'}}>正确</Text>}
+            {props.correct === 0?<Text style={{fontSize: 16,color: 'red',paddingLeft: 10}}>错误</Text>: <Text style={{fontSize: 16,color: 'green'}}>正确</Text>}
           </View>:null
         }
       </View>

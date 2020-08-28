@@ -3,77 +3,77 @@
  * author：DestinyJun
  * date：  2020/7/16 16:15
  */
-import React, {useState} from 'react';
+import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {CheckBox} from "react-native-elements";
 
-export function SingleTopicComponent(props) {
-  let questionOptions = [];
-  if (props.safeSubjectOptions) {
-    questionOptions = [...props.safeSubjectOptions]
-  }
-  else if (props.safeTestQuestionOptionsList) {
-    questionOptions = [...props.safeTestQuestionOptionsList]
-  }
-  else if (props.questionsOptionsList) {
-    questionOptions = [...props.questionsOptionsList]
-  }
-  else {
-    questionOptions = [...props.safeSubjectOptionList]
-  }
-  props.onPress({
-    isInit: true,
-    answerResults: '',
-    testUestionsId: props.id,
-    rightKey: props.rightKey,
-    score: props.score,
-    testPapreId: props.testPapreId,
-    questionBankSubjectId: props.questionBankSubjectId?props.questionBankSubjectId: '',
-    twTestPapreId: props.twTestPapreId?props.twTestPapreId: '',
-  });
-  const arr = questionOptions.map(() => false);
-  const [checked,setChecked] = useState(questionOptions.map(() => false));
-  const checkOnPress = (index,res) => {
-    arr[index] = true;
-    setChecked(arr);
+export class SingleTopicComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      checked: props.safeSubjectOptionList ? props.safeSubjectOptionList.map(() => false) : props.safeTestQuestionOptionsList ? props.safeTestQuestionOptionsList.map(() => false) : props.questionsOptionsList ? props.questionsOptionsList.map(() => false) : props.safeSubjectOptions.map(() => false)
+    };
+    this.arr = props.safeSubjectOptionList ? props.safeSubjectOptionList.map(() => false) : props.safeTestQuestionOptionsList ? props.safeTestQuestionOptionsList.map(() => false) : props.questionsOptionsList ? props.questionsOptionsList.map(() => false) : props.safeSubjectOptions.map(() => false);
+    this.questionOptions = props.safeSubjectOptionList ? [...props.safeSubjectOptionList] : props.safeTestQuestionOptionsList ? [...props.safeTestQuestionOptionsList] : props.questionsOptionsList ? [...props.questionsOptionsList] : [...props.safeSubjectOptions];
     props.onPress({
-      answerResults: res,
+      isInit: true,
+      answerResults: '',
       testUestionsId: props.id,
       rightKey: props.rightKey,
       score: props.score,
       testPapreId: props.testPapreId,
-      questionBankSubjectId: props.questionBankSubjectId?props.questionBankSubjectId: '',
-      twTestPapreId: props.twTestPapreId?props.twTestPapreId: '',
+      questionBankSubjectId: props.questionBankSubjectId ? props.questionBankSubjectId : '',
+      twTestPapreId: props.twTestPapreId ? props.twTestPapreId : '',
+    });
+  }
+  render() {
+    return (
+      <View style={[styles.container, c_styles.p_4]}>
+        <View style={styles.title}>
+          <View style={[styles.titleTag]}>
+            <Text style={[styles.titleTagText, c_styles.h5, c_styles.text_white]}>单选</Text>
+          </View>
+          <View style={[styles.titleContent, c_styles.pl_3]}>
+            <Text style={[c_styles.h6]}>{`${this.props.serial + 1}、${this.props.subject}`}</Text>
+          </View>
+        </View>
+        <View style={[styles.choose]}>
+          {
+            this.state.checked.map((item, index) => (
+              <CheckBox
+                key={`checkBox${index}`}
+                title={this.questionOptions[index].option}
+                titleProps={{numberOfLines: 1, ellipsizeMode: 'tail'}}
+                size={20}
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                onPress={this.checkOnPress.bind(this, index, this.questionOptions[index].order)}
+                checked={item}
+              />
+            ))
+          }
+        </View>
+      </View>
+    );
+  }
+
+  checkOnPress(index, res){
+    this.arr = this.arr.map(() => false);
+    this.arr[index] = true;
+    this.setState({
+      checked: this.arr.map(item => item)
+    },() => {
+      this.props.onPress({
+        answerResults: res,
+        testUestionsId: this.props.id,
+        rightKey: this.props.rightKey,
+        score: this.props.score,
+        testPapreId: this.props.testPapreId,
+        questionBankSubjectId: this.props.questionBankSubjectId ? this.props.questionBankSubjectId : '',
+        twTestPapreId: this.props.twTestPapreId ? this.props.twTestPapreId : '',
+      });
     });
   };
-  return (
-    <View style={[styles.container,c_styles.p_4]}>
-      <View style={styles.title}>
-        <View style={[styles.titleTag]}>
-          <Text style={[styles.titleTagText,c_styles.h5,c_styles.text_white]}>单选</Text>
-        </View>
-        <View style={[styles.titleContent,c_styles.pl_3]} >
-          <Text style={[c_styles.h6]}>{`${props.serial+1}、${props.subject}`}</Text>
-        </View>
-      </View>
-      <View style={[styles.choose]}>
-        {
-          checked.map((item,index) => (
-            <CheckBox
-              key={`checkBox${index}`}
-              title={questionOptions[index].option}
-              titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
-              size={20}
-              checkedIcon='dot-circle-o'
-              uncheckedIcon='circle-o'
-              onPress={checkOnPress.bind(this,index,questionOptions[index].order)}
-              checked={item}
-            />
-          ))
-        }
-      </View>
-    </View>
-  );
 }
 
 const styles = StyleSheet.create({
@@ -100,5 +100,4 @@ const styles = StyleSheet.create({
   titleContent: {
     flex: 5,
   },
-  choose:{}
 });
