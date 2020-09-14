@@ -69,7 +69,6 @@ export class EducationExamScreen extends Component {
     };
     this.exam = {...props.route.params.exam};
     this.name = props.route.params.name;
-    this.timeControl = null;
     this.params = {
       personnelTrainingRecordId: props.route.params.exam.personnelTrainingRecordId,
       safeAnswerRecordList: []
@@ -246,9 +245,7 @@ export class EducationExamScreen extends Component {
   }
 
   // 组件销毁后生命周期函数
-  componentWillUnmount() {
-    clearInterval(this.timeControl);
-  }
+  componentWillUnmount() {}
 
   // 结束考试操作
   edExamComplete() {

@@ -43,31 +43,45 @@ export const PlayVideoStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  videoBoxRepeatControl: {
+    position: 'absolute',
+    backgroundColor: 'rgba(9,12,21,0.8)',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   videoBoxProcessControl: {
     position: 'absolute',
     height: 50,
     width: '100%',
-    backgroundColor: 'yellow',
     left: 0,
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
   },
-  timer: {
+  playTime: {
     flex: 1,
     height: '100%',
-    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 5
   },
   slider: {
     flex: 5,
-    backgroundColor: 'orange',
     height: '100%',
+    justifyContent: 'center',
+    paddingLeft: 5,
+    paddingRight: 5
   },
   totalTime: {
-    flex: 1,
-    backgroundColor: 'green',
+    flex: 2,
     height: '100%',
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   videoContent: {
     flex: 1,
