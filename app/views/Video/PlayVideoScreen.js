@@ -4,10 +4,9 @@
  * date：  2020/7/25 22:12
  */
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, StatusBar, TouchableOpacity, Dimensions, ActivityIndicator} from 'react-native';
+import {ActivityIndicator, Dimensions, StatusBar, Text, View} from 'react-native';
 import Video from "react-native-video";
-import {Button, Icon, Slider} from "react-native-elements";
-import Orientation from 'react-native-orientation';
+import {Icon, Slider} from "react-native-elements";
 import {PlayVideoStyles as styles} from './PlayVideoStyles';
 
 const {width, height} = Dimensions.get('window');
@@ -17,13 +16,17 @@ export class PlayVideoScreen extends Component {
     super(props);
     this.state = {
       height: 250,
-      isLoading: true,
+      isLoading: true, // 视频是否加载中
       isPlay: false, // 控制播放
+      isPlayEnd: false, // 视频是否播放结束
       playTime: [], // 播放时刻表
       totalTime: [], // 总时长时刻表
       totalDuration: 0, // 视频总时长（秒）
       sliderTime: 0, // 进度条位置（百分比）
       currentTime: 0, // 当前播放位置（秒）
+      sliderStep: 0.1, // 进度条步长
+      isOperate: false, // 控制是否手动操作进度条
+      seekTime: 0, // 视频时间定位
     };
     this.playRate = 0;
     this.video = {...props.route.params};
@@ -74,48 +77,57 @@ export class PlayVideoScreen extends Component {
               }}
               style={{flex: 1}}
             />
-            <View style={[styles.videoBoxPlayControl, {height: this.state.height}]}>
-              {
-                this.state.isLoading ? <ActivityIndicator animating={true} size="large" color="#fff"/> :
-                  this.state.isPlay ?
-                    <Icon type={'font-awesome'} name={'pause-circle-o'} size={60} color={'#E7E7E7'} onPress={this._videoPause.bind(this)}/> :
-                    <Icon type={'font-awesome'} name={'play-circle-o'} size={60} color={'#E7E7E7'} onPress={this._videoPlay.bind(this)}/>
-              }
-            </View>
-            {/*<View style={[styles.videoBoxRepeatControl, {height: this.state.height}]}>
-              <Icon type={'font-awesome'} name={'repeat'} size={30} color={'#E7E7E7'} onPress={this._videoPause.bind(this)}/>
-              <Text style={[c_styles.h6,c_styles.text_white]}>重播</Text>
-            </View>*/}
-            <View style={styles.videoBoxProcessControl}>
-              <View style={styles.playTime}>
-                <Text style={{color: '#fff', fontSize: 16}}>
-                  {this.state.playTime.length === 0 ? '00:00' : `${this.state.playTime[0]}:${this.state.playTime[1]}`}
-                </Text>
-              </View>
-              <View style={styles.slider}>
-                <Slider
-                  minimumTrackTintColor={'#FB6667'}
-                  maximumTrackTintColor={'rgba(208,225,225,0.3)'}
-                  thumbStyle={{width: 15,height: 15,backgroundColor: '#FFFFFF'}}
-                  value={this.state.sliderTime}
-                />
-              </View>
-              <View style={styles.totalTime}>
-                <Text style={{color: '#fff', fontSize: 16}}>
-                  {this.state.totalTime.length === 0 ? '00:00' : `${this.state.totalTime[0]}:${this.state.totalTime[1]}`}
-                </Text>
-                <Icon
-                  containerStyle={{flex: 1, height: '100%', justifyContent: 'center'}}
-                  type='font-awesome' name={'expand'} color={'#fff'} size={20}
-                  onPress={() => {
+            {
+              this.state.isPlayEnd?
+              <View style={[styles.videoBoxRepeatControl, {height: this.state.height}]}>
+                <Icon type={'font-awesome'} name={'repeat'} size={30} color={'#E7E7E7'} onPress={this._videoRepeatPlay.bind(this)}/>
+                <Text style={[c_styles.h6,c_styles.text_white]}>重播</Text>
+              </View> :
+              <>
+                <View style={[styles.videoBoxPlayControl, {height: this.state.height}]}>
+                  {
+                    this.state.isLoading ? <ActivityIndicator animating={true} size="large" color="#fff"/> :
+                      this.state.isPlay ?
+                        <Icon type={'font-awesome'} name={'pause-circle-o'} size={60} color={'#E7E7E7'} onPress={this._videoPause.bind(this)}/> :
+                        <Icon type={'font-awesome'} name={'play-circle-o'} size={60} color={'#E7E7E7'} onPress={this._videoPlay.bind(this)}/>
+                  }
+                </View>
+                <View style={styles.videoBoxProcessControl}>
+                  <View style={styles.playTime}>
+                    <Text style={{color: '#fff', fontSize: 16}}>
+                      {this.state.playTime.length === 0 ? '00:00' : `${this.state.playTime[0]}:${this.state.playTime[1]}`}
+                    </Text>
+                  </View>
+                  <View style={styles.slider}>
+                    <Slider
+                      minimumTrackTintColor={'#FB6667'}
+                      maximumTrackTintColor={'rgba(208,225,225,0.3)'}
+                      thumbStyle={{width: 15,height: 15,backgroundColor: '#FFFFFF'}}
+                      step={this.state.sliderStep}
+                      value={this.state.sliderTime}
+                      onSlidingComplete={this._videoSeekPlay.bind(this)}
+                      onValueChange={this._videoSeek.bind(this)}
+                    />
+                  </View>
+                  <View style={styles.totalTime}>
+                    <Text style={{color: '#fff', fontSize: 16}}>
+                      {this.state.totalTime.length === 0 ? '00:00' : `${this.state.totalTime[0]}:${this.state.totalTime[1]}`}
+                    </Text>
+                    <Icon
+                      containerStyle={{flex: 1, height: '100%', justifyContent: 'center'}}
+                      type='font-awesome' name={'expand'} color={'#fff'} size={20}
+                      onPress={() => {
 
-                  }}/>
-              </View>
-            </View>
+                      }}/>
+                  </View>
+                </View>
+              </>
+            }
+
+
           </View>
           <View style={styles.videoContent}>
             <Text>{this.video.resourceName}</Text>
-            <Button title={'重播'} onPress={this._videoRepeatPlay.bind(this)} />
           </View>
         </View>
       </View>
@@ -138,6 +150,7 @@ export class PlayVideoScreen extends Component {
         minute >= 10 ? minute : minute > 1 ? `0${minute}` : '00',
         second > 9 ? second.toString() : `0${second}`
       ],
+      sliderStep: 1/duration
     })
   }
 
@@ -153,16 +166,47 @@ export class PlayVideoScreen extends Component {
 
   // 重新播放
   _videoRepeatPlay() {
-    this.player.seek(0); // 实现重新播放的关键
-    this.playRate = 0;
     this.setState({
       playTime: [],
-      sliderTime: 0
+      sliderTime: 0,
+      isPlayEnd: false,
+      isOperate: false,
+      seekTime: 0
+    },() => {
+      this.player.seek(0); // 实现重新播放的关键
+    })
+  }
+
+  // 时间定位
+  _videoSeek(value) {
+    this.playRate = value * this.state.totalDuration;
+    const minute = Math.trunc(this.playRate / 60);
+    const second = this.playRate % 60;
+    this.setState({
+      playTime: [
+        minute >= 10 ? minute : minute > 1 ? `0${minute}` : '00',
+        second > 9 ? second.toString() : `0${second}`,
+      ],
+      sliderTime: value,
+      isOperate: true,
+      seekTime: this.playRate
+    })
+  }
+
+  // 定位成功后播放
+  _videoSeekPlay(){
+    this.setState({
+      isOperate: false,
+    },() => {
+      this.player.seek(this.state.seekTime); // 实现重新播放的关键
     })
   }
 
   // 播放进度回调
   _videoOnProgress(event) {
+    if (this.state.isOperate) {
+      return;
+    }
     this.playRate++;
     const totalDuration = Math.ceil(event.seekableDuration)+1; // 向下取整
     const minute = Math.trunc(this.playRate / 60);
@@ -181,6 +225,7 @@ export class PlayVideoScreen extends Component {
     this.playRate = 0;
     this.setState({
       playTime: [],
+      isPlayEnd: true,
       sliderTime: 1
     })
   }
