@@ -13,7 +13,6 @@ export const PlayVideoStyles = StyleSheet.create({
     backgroundColor: '#E3E3E3',
   },
   videoBox: {
-    width: width,
     backgroundColor: '#000',
     justifyContent: 'center',
     position: 'relative',

@@ -4,10 +4,11 @@
  * date：  2020/7/25 22:12
  */
 import React, {Component} from 'react';
-import {ActivityIndicator, Dimensions, StatusBar, Text, View} from 'react-native';
-import Video from "react-native-video";
-import {Icon, Slider} from "react-native-elements";
+import {Dimensions, StatusBar, Text, View} from 'react-native';
+import {Icon} from "react-native-elements";
 import {PlayVideoStyles as styles} from './PlayVideoStyles';
+import VideoPlayer from 'react-native-video-controls';
+import Orientation from 'react-native-orientation';
 
 const {width, height} = Dimensions.get('window');
 
@@ -16,19 +17,13 @@ export class PlayVideoScreen extends Component {
     super(props);
     this.state = {
       height: 250,
+      width: width,
       isLoading: true, // 视频是否加载中
-      isPlay: false, // 控制播放
+      isPlay: true, // 控制播放
       isPlayEnd: false, // 视频是否播放结束
-      playTime: [], // 播放时刻表
-      totalTime: [], // 总时长时刻表
-      totalDuration: 0, // 视频总时长（秒）
-      sliderTime: 0, // 进度条位置（百分比）
-      currentTime: 0, // 当前播放位置（秒）
-      sliderStep: 0.1, // 进度条步长
-      isOperate: false, // 控制是否手动操作进度条
-      seekTime: 0, // 视频时间定位
+      resizeMode: 'contain',
+      hiddenStatus: false,
     };
-    this.playRate = 0;
     this.video = {...props.route.params};
     this.player = React.createRef();
   }
@@ -36,98 +31,57 @@ export class PlayVideoScreen extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <StatusBar translucent={false} backgroundColor={'#000000'} barStyle={'light-content'}/>
+        <StatusBar hidden={this.state.hiddenStatus} translucent={false} backgroundColor={'#000000'} barStyle={'light-content'}/>
         <View style={styles.container}>
-          <View style={[styles.videoBox, {height: this.state.height}]}>
-            <View style={styles.videoBoxHeader}>
-              <View style={styles.videoBoxHeaderLeft}>
-                <Icon
-                  containerStyle={{height: '100%', justifyContent: 'center'}}
-                  type='font-awesome' name={'angle-left'} color={'#fff'} size={30}
-                  onPress={() => {
-                    this.props.navigation.goBack()
-                  }}/>
-              </View>
-              <View style={styles.videoBoxHeaderRight}>
-
-              </View>
-            </View>
-            <Video
-              // source={{uri: this.video.resourcePath}}
+          <View style={[styles.videoBox, {width: this.state.width,height: this.state.height}]}>
+            <VideoPlayer
+              ref={(ref) => {this.player = ref}}
               source={{uri: 'http://192.168.28.67/video2.mp4'}}
-              resizeMode={'cover'}
-              posterResizeMode={'cover'}
-              fullscreen={false}
-              disableFocus={true}
-              hideShutterView={true}
-              paused={!this.state.isPlay}
-              repeat={false}
-              progressUpdateInterval={1000}
-              onProgress={this._videoOnProgress.bind(this)}
-              onLoad={this._videoOnLoadStart.bind(this)}
-              onEnd={this._videoPlayEnd.bind(this)}
-              bufferConfig={{
-                minBufferMs: 15000,
-                maxBufferMs: 50000,
-                bufferForPlaybackMs: 2500,
-                bufferForPlaybackAfterRebufferMs: 5000
-              }}
-              ref={(ref) => {
-                this.player = ref
-              }}
+              navigator={this.props.navigation}
+              paused={this.state.isPlay}
+              resizeMode={this.state.resizeMode}
+              toggleResizeModeOnFullscreen={false}
+              controlAnimationTiming={500}
+              controlTimeout={5000}
+              showOnStart={true}
+              videoStyle={{flex: 1}}
+              seekColor={'#fff'}
               style={{flex: 1}}
+              isFullscreen={false}
+              onEnterFullscreen={() => {
+                // 强制横屏
+                Orientation.lockToLandscape();
+                this.setState({
+                  width: height,
+                  height: width,
+                  resizeMode: 'cover',
+                  hiddenStatus: true,
+                  isPlay: false
+                })
+              }}
+              onExitFullscreen={() => {
+                // 强制竖屏
+                Orientation.lockToPortrait();
+                this.setState({
+                  width: width,
+                  height: 250,
+                  resizeMode: 'contain',
+                  hiddenStatus: false,
+                  isPlay: false
+                });
+              }}
+              onEnd={this._videoPlayEnd.bind(this)}
             />
             {
               this.state.isPlayEnd?
               <View style={[styles.videoBoxRepeatControl, {height: this.state.height}]}>
                 <Icon type={'font-awesome'} name={'repeat'} size={30} color={'#E7E7E7'} onPress={this._videoRepeatPlay.bind(this)}/>
                 <Text style={[c_styles.h6,c_styles.text_white]}>重播</Text>
-              </View> :
-              <>
-                <View style={[styles.videoBoxPlayControl, {height: this.state.height}]}>
-                  {
-                    this.state.isLoading ? <ActivityIndicator animating={true} size="large" color="#fff"/> :
-                      this.state.isPlay ?
-                        <Icon type={'font-awesome'} name={'pause-circle-o'} size={60} color={'#E7E7E7'} onPress={this._videoPause.bind(this)}/> :
-                        <Icon type={'font-awesome'} name={'play-circle-o'} size={60} color={'#E7E7E7'} onPress={this._videoPlay.bind(this)}/>
-                  }
-                </View>
-                <View style={styles.videoBoxProcessControl}>
-                  <View style={styles.playTime}>
-                    <Text style={{color: '#fff', fontSize: 16}}>
-                      {this.state.playTime.length === 0 ? '00:00' : `${this.state.playTime[0]}:${this.state.playTime[1]}`}
-                    </Text>
-                  </View>
-                  <View style={styles.slider}>
-                    <Slider
-                      minimumTrackTintColor={'#FB6667'}
-                      maximumTrackTintColor={'rgba(208,225,225,0.3)'}
-                      thumbStyle={{width: 15,height: 15,backgroundColor: '#FFFFFF'}}
-                      step={this.state.sliderStep}
-                      value={this.state.sliderTime}
-                      onSlidingComplete={this._videoSeekPlay.bind(this)}
-                      onValueChange={this._videoSeek.bind(this)}
-                    />
-                  </View>
-                  <View style={styles.totalTime}>
-                    <Text style={{color: '#fff', fontSize: 16}}>
-                      {this.state.totalTime.length === 0 ? '00:00' : `${this.state.totalTime[0]}:${this.state.totalTime[1]}`}
-                    </Text>
-                    <Icon
-                      containerStyle={{flex: 1, height: '100%', justifyContent: 'center'}}
-                      type='font-awesome' name={'expand'} color={'#fff'} size={20}
-                      onPress={() => {
-
-                      }}/>
-                  </View>
-                </View>
-              </>
+              </View>: null
             }
-
-
           </View>
           <View style={styles.videoContent}>
-            <Text>{this.video.resourceName}</Text>
+            <Text style={[c_styles.p_2,c_styles.h5]}>{this.video.resourceName}</Text>
           </View>
         </View>
       </View>
@@ -136,97 +90,24 @@ export class PlayVideoScreen extends Component {
 
   componentDidMount() {}
 
-  componentWillUnmount() {}
-
-// 视频初始化完成回调
-  _videoOnLoadStart(event) {
-    const duration = Math.round(event.duration);
-    const minute = Math.trunc(duration / 60);
-    const second = duration % 60;
-    this.setState({
-      isLoading: false,
-      totalDuration: duration,
-      totalTime: [
-        minute >= 10 ? minute : minute > 1 ? `0${minute}` : '00',
-        second > 9 ? second.toString() : `0${second}`
-      ],
-      sliderStep: 1/duration
-    })
-  }
-
-  // 播放事件
-  _videoPlay() {
-    this.setState({isPlay: true});
-  }
-
-  // 暂停事件
-  _videoPause() {
-    this.setState({isPlay: false})
+  componentWillUnmount() {
+    Orientation.lockToPortrait();
   }
 
   // 重新播放
   _videoRepeatPlay() {
     this.setState({
-      playTime: [],
-      sliderTime: 0,
       isPlayEnd: false,
-      isOperate: false,
-      seekTime: 0
+      isPlay: false
     },() => {
-      this.player.seek(0); // 实现重新播放的关键
-    })
-  }
-
-  // 时间定位
-  _videoSeek(value) {
-    this.playRate = value * this.state.totalDuration;
-    const minute = Math.trunc(this.playRate / 60);
-    const second = this.playRate % 60;
-    this.setState({
-      playTime: [
-        minute >= 10 ? minute : minute > 1 ? `0${minute}` : '00',
-        second > 9 ? second.toString() : `0${second}`,
-      ],
-      sliderTime: value,
-      isOperate: true,
-      seekTime: this.playRate
-    })
-  }
-
-  // 定位成功后播放
-  _videoSeekPlay(){
-    this.setState({
-      isOperate: false,
-    },() => {
-      this.player.seek(this.state.seekTime); // 实现重新播放的关键
-    })
-  }
-
-  // 播放进度回调
-  _videoOnProgress(event) {
-    if (this.state.isOperate) {
-      return;
-    }
-    this.playRate++;
-    const totalDuration = Math.ceil(event.seekableDuration)+1; // 向下取整
-    const minute = Math.trunc(this.playRate / 60);
-    const second = this.playRate % 60;
-    this.setState({
-      playTime: [
-        minute >= 10 ? minute : minute > 1 ? `0${minute}` : '00',
-        second > 9 ? second.toString() : `0${second}`,
-      ],
-      sliderTime: parseFloat((this.playRate / totalDuration).toFixed(2))
+      this.player.player.ref.seek(0); // 实现重新播放的关键
     })
   }
 
   // 播放结束回调
   _videoPlayEnd() {
-    this.playRate = 0;
     this.setState({
-      playTime: [],
-      isPlayEnd: true,
-      sliderTime: 1
+      isPlayEnd: true
     })
   }
 }
