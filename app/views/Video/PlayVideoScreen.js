@@ -36,7 +36,7 @@ export class PlayVideoScreen extends Component {
           <View style={[styles.videoBox, {width: this.state.width,height: this.state.height}]}>
             <VideoPlayer
               ref={(ref) => {this.player = ref}}
-              source={{uri: 'http://192.168.28.67/video2.mp4'}}
+              source={{uri: 'http://192.168.28.185/video2.mp4'}}
               navigator={this.props.navigation}
               paused={this.state.isPlay}
               resizeMode={this.state.resizeMode}

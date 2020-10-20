@@ -35,7 +35,7 @@ export class LoginScreen extends Component {
               <Text style={[c_styles.h2, c_styles.mb_3]}>
                 欢迎登陆
               </Text>
-              <Text style={[c_styles.h4,]} allowFontScaling={true}>安全生产信息化平台</Text>
+              <Text style={[c_styles.h4,]} allowFontScaling={true}>安全生产管理APP</Text>
             </View>
             <View style={[styles.forms]}>
               <Input
