@@ -13,7 +13,7 @@ import {SERVER_ADDRESS_TEST} from "../../util/Constant";
 export class ViewOperationDailyScreen extends Component {
   constructor(props) {
     super(props);
-    this.url = `${SERVER_ADDRESS_TEST}/#/operation-reporting`;
+    this.url = `${SERVER_ADDRESS_TEST}/#/operation-reporting?accessToken=${this.accessToken}`;
   }
 
   render() {
