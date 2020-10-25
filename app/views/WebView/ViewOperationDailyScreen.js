@@ -9,14 +9,20 @@ import {Header} from "react-native-elements";
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
 import WebView from "react-native-webview";
 import {SERVER_ADDRESS_TEST} from "../../util/Constant";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export class ViewOperationDailyScreen extends Component {
   constructor(props) {
     super(props);
-    this.url = `${SERVER_ADDRESS_TEST}/#/operation-reporting?accessToken=${this.accessToken}`;
+    // this.accessToken = props.route.params.accessToken;
+    this.state = {
+      url: null
+    };
+    this.dailyInit.bind(this);
+    this.dailyInit();
   }
 
-  render() {
+   render() {
     return (
       <View style={styles.container}>
         <Header
@@ -31,7 +37,7 @@ export class ViewOperationDailyScreen extends Component {
           <WebView
             scalesPageToFit={false}
             startInLoadingState={true}
-            source={{uri: this.url}}
+            source={{uri: this.state.url}}
           />
         </View>
       </View>
@@ -41,6 +47,13 @@ export class ViewOperationDailyScreen extends Component {
   // 组件挂载
   componentDidMount() {
 
+  }
+
+  async dailyInit() {
+    const url = `${SERVER_ADDRESS_TEST}/#/operation-reporting?accessToken=${await AsyncStorage.getItem('accessToken')}`;
+    this.setState({
+      url: url
+    })
   }
 }
 
