@@ -6,7 +6,7 @@
 import React, {Component} from 'react';
 import {View, ScrollView, Text} from 'react-native';
 import {DoubleInventoryDetailStyles as styles} from "./DoubleInventoryDetailStyles";
-import {Header, Icon} from "react-native-elements";
+import {Header, Icon, Input} from "react-native-elements";
 // 自定义组件
 import {HeaderLeftComponent} from "../../components/HeaderLeftComponent";
 import {CardInputComponent} from "../../components/CardInputComponent";
@@ -17,6 +17,8 @@ export class DoubleInventoryDetailScreen extends Component {
     this.state = {
       list: null,
       type: '2',
+      badSituation: '',
+      correctSituation: '',
     };
     this.addFiled = null;
   }
@@ -52,6 +54,49 @@ export class DoubleInventoryDetailScreen extends Component {
                   {...item} index={i}
                   key={i}/>)):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>亲，没有任何信息噢，赶快联系管理员吧！</Text>
               }
+              {
+                this.state.type === '3'? <View>
+                  <View style={[styles.contentTitle]}>
+                    <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'}/>
+                    <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>审核信息</Text>
+                  </View>
+                  <View style={[styles.textArea]}>
+                    <Text style={[c_styles.h6, {
+                      paddingLeft: 2,
+                      color: '#686868',
+                      paddingTop: 10,
+                      paddingBottom: 10
+                    }]}>未履职情况</Text>
+                    <Input
+                      onChangeText={(text) => {
+                        this.addFiled.badeSituation = text
+                      }}
+                      disabled
+                      placeholder={this.state.badSituation?this.state.badSituation:'请输入（最多200字）'}
+                      inputContainerStyle={{borderBottomWidth: 0}}
+                      containerStyle={{paddingRight: 0, paddingLeft: 0}}
+                      inputStyle={[c_styles.h6]}/>
+                  </View>
+                  <View style={[styles.textArea]}>
+                    <Text style={[c_styles.h6, {
+                      paddingLeft: 2,
+                      color: '#686868',
+                      paddingTop: 10,
+                      paddingBottom: 10
+                    }]}>纠正与考核情况</Text>
+                    <Input
+                      onChangeText={(text) => {
+                        this.addFiled.correctSituation = text
+                      }}
+                      disabled
+                      placeholder={this.state.correctSituation?this.state.correctSituation:'请输入（最多200字）'}
+                      inputContainerStyle={{borderBottomWidth: 0}}
+                      containerStyle={{paddingRight: 0, paddingLeft: 0}}
+                      inputStyle={[c_styles.h6]}/>
+                  </View>
+                </View>:null
+              }
+
             </ScrollView>
           </View>
         </View>
@@ -61,10 +106,14 @@ export class DoubleInventoryDetailScreen extends Component {
 
   // 组件挂载生命周期函
   componentDidMount() {
-    const baseInfo = {...this.props.route.params};
+    const baseInfo= {...this.props.route.params};
+    const {badSituation}= {...this.props.route.params}; // 未履职情况
+    const {correctSituation}= {...this.props.route.params}; // 就诊与核查
     this.setState({
       list: [...baseInfo.doubleDutyEvaluationContents],
-      type: baseInfo.status
+      type: baseInfo.status,
+      badSituation: badSituation,
+      correctSituation: correctSituation,
     })
   }
 }

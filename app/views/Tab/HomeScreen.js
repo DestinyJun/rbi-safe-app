@@ -47,7 +47,8 @@ export class HomeScreen extends Component {
               <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>月隐患数量统计</Text>
               <View style={{height: 220}}>
                 {
-                  Object.keys(this.state.troubleEcharts).length>0?<EchartsLinerComponent option={Object.keys(this.state.troubleEcharts).length>0?this.state.troubleEcharts: null} />:
+                  Object.keys(this.state.troubleEcharts).length>0?
+                    <EchartsLinerComponent option={Object.keys(this.state.troubleEcharts).length>0?this.state.troubleEcharts: null} />:
                     <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>暂无统计数据！</Text>
                 }
               </View>
@@ -56,7 +57,8 @@ export class HomeScreen extends Component {
               <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>安全管理培训计划统计</Text>
               <View style={{height: 300}}>
                 {
-                  Object.keys(this.state.safeEcharts).length>0?<EchartsBarDoubleComponent option={Object.keys(this.state.safeEcharts).length>0?this.state.safeEcharts: null} />:
+                  Object.keys(this.state.safeEcharts).length>0?
+                    <EchartsBarDoubleComponent option={Object.keys(this.state.safeEcharts).length>0?this.state.safeEcharts: null} />:
                     <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>暂无统计数据！</Text>
                 }
               </View>
@@ -168,7 +170,7 @@ export class HomeScreen extends Component {
       const threshold = [];
       const avgTime = [];
       const baseNum = 0.01;
-      data.data.forEach(value => {
+      data.forEach(value => {
         seriesName.push(value.trainingContent);
         avgTime.push((value.average + baseNum).toFixed(3));
         threshold.push((value.averageClassHours + baseNum).toFixed(3));

@@ -62,21 +62,11 @@ export default class EchartsBarDoubleComponent extends Component {
 										<span style="color:#3AB6EB;">   ● </span>${val[1].seriesName}: ${parseFloat((val[1].data - baseNum).toFixed(3))}`;
         }
       },
-      grid: [
-        {
-          left: '5%',
-          right: '12%',
-          bottom: 70,
-          top: '60px',
-        },
-        {
-          bottom: 70,
-          left: '11%', // 为了让第2个grid显示在2个柱状图中间，中间相隔百分比为100/14
-          right: '5%',
-          height: 0,  //  不显示第2个grid的图表，只显示label
-          // show: true,
-        }
-      ],
+      grid:  {
+        left: '5%',
+        right: '12%',
+        bottom: '10%',
+      },
       legend: {
         data: ['平均成绩', '平均学时'],
         right: '10%',
@@ -84,10 +74,9 @@ export default class EchartsBarDoubleComponent extends Component {
         textStyle: {
           color: '#AAAAAA'
         },
-        itemWidth: 16,
-        itemHeight: 16,
+        itemWidth: 10,
+        itemHeight: 10,
         borderRadius: 10,  // borderRadius最大为宽高最小值的一半，即为5
-        itemGap: 30
       },
       yAxis: [
         {
@@ -112,23 +101,10 @@ export default class EchartsBarDoubleComponent extends Component {
           axisLabel: {
             show: false,
           }
-        },
-        {
-          type: 'value',
-          gridIndex: 1,
-          axisLine: {
-            show: false,
-            onZero: true
-          },
-          splitLine: {
-            show: false,
-          },
-          axisLabel: {
-            show: false,
-          },
         }
       ],
-      xAxis: [{
+      xAxis: [
+        {
         type: 'category',
         gridIndex: 0,
         axisTick: {
@@ -149,32 +125,12 @@ export default class EchartsBarDoubleComponent extends Component {
         data: seriesName,
         zlevel: 2
       },
-        {
-          type: 'category',
-          gridIndex: 1,
-          axisLine: {
-            show: false,
-            lineStyle: {
-              color: '#A3B4E5',
-              fontSize: '14px'
-            }
-          },
-          zlevel: 1,
-          axisTick: {
-            show: false,
-          },
-          axisLabel: {
-            show: false,
-
-          },
-          data: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']  //  必须写data数据
-        }
       ],
       series: [
         {
           name: '平均成绩',
           type: 'bar',
-          barWidth: 10,
+          barWidth: 8,
           itemStyle: {
             normal: {
               color: '#226AD5',
@@ -193,13 +149,11 @@ export default class EchartsBarDoubleComponent extends Component {
             }
           },
           data: avgTime,
-          xAxisIndex: 0,
-          yAxisIndex: 0
         },
         {
           name: '平均学时',
           type: 'bar',
-          barWidth: 10,
+          barWidth: 8,
           barGap: '40%', // 不同系列的柱间距离  为barWidth的 1.5倍
           // barCateGoryGap: 40,  //同一系列的柱间距离，默认为类目间距的20%，可设固定值
           itemStyle: {
@@ -220,13 +174,6 @@ export default class EchartsBarDoubleComponent extends Component {
             }
           },
           data: threshold,
-          xAxisIndex: 0,
-          yAxisIndex: 0
-        },
-        {
-          type: 'bar',
-          xAxisIndex: 1, //  表示第2个grid的数据
-          yAxisIndex: 1
         }
       ]
     }

@@ -45,14 +45,15 @@ export default class EchartsLinerComponent extends Component {
   }
 
   chartsInit(data) {
-    const xAxis = [];
+    const xAxis = ['1月', '2月', '3月', '4月', '5月', '6月' ,'7月', '8月', '9月', '10月', '11月', '12月'];
     const datas = [];
-    if (data) {
-      Object.keys(data).reverse().forEach((item) => {
-        xAxis.push(item);
+    xAxis.forEach((item) => {
+      if (data[item]) {
         datas.push(data[item])
-      })
-    }
+      } else {
+        datas.push(0)
+      }
+    });
     return  {
       grid: {
         top: '11%',

@@ -1,5 +1,5 @@
 /**
- * desc：  班主考试
+ * desc：  班组考试
  * author：DestinyJun
  * date：  2020/7/2 14:51
  */
@@ -76,7 +76,7 @@ export class EducationClassScreen extends Component {
                   </View>
                 </View>
               ))
-              :<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>您还没有任何班主考试！</Text>
+              :<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>您还没有任何班组考试！</Text>
           }
         </ScrollView>
       </View>
@@ -102,7 +102,7 @@ export class EducationClassScreen extends Component {
       'EducationExamScreen',
       {
         title: item.testPaperName,
-        name: '班主考试',
+        name: '班组考试',
         exam: item
       }
     );
@@ -110,7 +110,7 @@ export class EducationClassScreen extends Component {
 
   // 数据初始化
   classEducationInit() {
-    // 分页查询班主试卷
+    // 分页查询班组试卷
     post(EducationApi.GET_GRAND_EXAM, {pageNo: 1, pageSize: 10000})
       .then((train) => {
         hiddenLoading();
