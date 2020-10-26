@@ -10,7 +10,7 @@ export class TroubleApi {
   static GET_PERSON_LIST= '/hid/findCorrector';
 
   // 获取组织树（测试通过）
-  static GET_ORG_LIST= '/getOrganizationTree';
+  static GET_ORG_LIST= '/getAllOrganizationTree';
 
   // 立即整改（测试通过）
   static ADD_STRAIGHTAWAY_TRO= '/hid/rectifyImmediately';

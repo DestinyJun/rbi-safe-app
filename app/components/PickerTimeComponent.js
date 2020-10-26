@@ -10,7 +10,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 export function PickerTimeComponent(props) {
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState('time');
   const [show, setShow] = useState(false);
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -20,8 +20,8 @@ export function PickerTimeComponent(props) {
       return;
     }
     const year = selectedDate.getFullYear();
-    const month = selectedDate.getMonth()>9?selectedDate.getMonth()+1:`0${selectedDate.getMonth()+1}`;
-    const day = selectedDate.getDate()>9?selectedDate.getDate():`0${selectedDate.getDate()}`;
+    const month = selectedDate.getMonth()>=9?selectedDate.getMonth()+1:`0${selectedDate.getMonth()+1}`;
+    const day = selectedDate.getDate()>=9?selectedDate.getDate():`0${selectedDate.getDate()}`;
     props.onSelectDate(`${year}.${month}.${day}`);
   };
 
@@ -51,15 +51,16 @@ export function PickerTimeComponent(props) {
           display="default"
           onChange={onChange}
         />
+       /* <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          dateFormat="dayofweek day month"
+          onChange={onChange}
+        />*/
       )}
-     {/* <DateTimePicker
-        testID="dateTimePicker"
-        value={date}
-        mode={mode}
-        is24Hour={true}
-        display="default"
-        onChange={onChange}
-      />*/}
     </View>
   );
 }
