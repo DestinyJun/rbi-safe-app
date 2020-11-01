@@ -3,7 +3,8 @@ import {PermissionsAndroid} from "react-native";
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from 'react-native-splash-screen';
+import Orientation from 'react-native-orientation';
 
 // 路由屏幕
 import {LoginScreen} from "./app/views/Login/LoginScreen";
@@ -128,6 +129,8 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    // 强制竖屏
+    Orientation.lockToPortrait();
     this.requestPermission();
     SplashScreen.hide();//关闭启动屏幕
   }
