@@ -5,6 +5,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import SplashScreen from 'react-native-splash-screen'
 import {Button} from 'react-native-elements'
+import Orientation from 'react-native-orientation';
 
 // 通知栏通知配置
 import PushNotification from 'react-native-push-notification';
@@ -132,7 +133,6 @@ export default class App extends React.Component {
     );
   }
   test() {
-    console.log('我执行了');
     PushNotification.localNotification({
       /* iOS and Android properties */
       id: 0,
@@ -184,6 +184,8 @@ export default class App extends React.Component {
     });
   }
   componentDidMount() {
+    // 强制竖屏
+    Orientation.lockToPortrait();
     this.requestPermission();
     SplashScreen.hide();//关闭启动屏幕
   }

@@ -32,7 +32,7 @@
   <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
   <!-- END OPTIONAL PERMISSIONS -->
 
-  <!-- android:screenOrientation="portrait" 设置强制竖屏-->
+  <!-- android:screenOrientation="portrait" 设置强制竖屏,如果设置此项，那么在Android8.0版中会出现闪退现象，要注意-->
   <application
       android:name=".MainApplication"
       android:label="@string/app_name"
@@ -47,7 +47,6 @@
         android:label="@string/app_name"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
         android:windowSoftInputMode="adjustResize"
-        android:screenOrientation="portrait"
     >
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
