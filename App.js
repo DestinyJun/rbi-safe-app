@@ -130,7 +130,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     // 强制竖屏
-    Orientation.lockToPortrait();
+   Orientation.lockToPortrait;
     this.requestPermission();
     SplashScreen.hide();//关闭启动屏幕
   }
