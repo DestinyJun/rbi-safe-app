@@ -19,7 +19,7 @@ function isSkipUrl(url) {
 // 设置全局请求的地址
 // axios.defaults.baseURL = 'http://192.168.28.5:8090/security-platform';
 // axios.defaults.baseURL = 'http://139.9.153.27:8090/security-platform';
-axios.defaults.baseURL = 'http://61.189.169.44:8000/security-platform';
+axios.defaults.baseURL = 'http://61.189.169.44:8090/security-platform';
 // axios.defaults.baseURL = 'http://10.40.1.121:8090/security-platform';
 // axios.defaults.baseURL = 'http://120.77.171.73:8090/security-platform';
 // axios.defaults.baseURL = 'http://192.168.28.5:8090/security-platform';

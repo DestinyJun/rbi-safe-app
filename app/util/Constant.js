@@ -13,7 +13,7 @@ export const IMAGE_HOME_TWO = require('../assets/images/home2.png');
 export const IMAGE_HOME_THREE = require('../assets/images/home3.png');
 
 // 服务器地址
-export const SERVER_ADDRESS_TEST = 'http://61.189.169.44:8000/safetest';
+export const SERVER_ADDRESS_TEST = 'http://61.189.169.44:8000/safe';
 export const SERVER_ADDRESS_PROD = 'http://61.189.169.44:8090';
 
 // 个人信息导航菜单
