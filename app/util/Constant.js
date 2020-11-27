@@ -116,3 +116,30 @@ export const HTML = `
 </html>
 `;
 
+// echarts模板
+export const HTML1 = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>echarts</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=320, user-scalable=no">
+  <script src="https://libs.cdnjs.net/echarts/4.7.0/echarts.min.js"></script>
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .line-box{
+      width: 500px;
+      overflow-x: scroll;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+<div id="main" class="line-box" ></div>
+</body>
+</html>
+`;
+

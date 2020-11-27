@@ -41,142 +41,237 @@ export default class EchartsBarDoubleComponent extends Component {
       </View>
     );
   }
-
+  // eecharts初始化
   chartsInit(item) {
-    const {seriesName, threshold, avgTime, baseNum} = {...item};
+    console.log(item.xdata);
+    const bardata = [];
+    const barBottomData = [];
+    const barTopData = [];
+    item.barData.forEach((item) => {
+      if (item < 0) {
+        bardata.push({
+          value: item,
+          itemStyle: {
+            normal: {
+              color: {
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                type: 'linear',
+                global: false,
+                colorStops: [{
+                  offset: 0,
+                  color: 'rgba(59,134,255)'
+                }, {
+                  offset: 1,
+                  color: '#58C1F9'
+                }]
+              }
+            }
+          },
+          label: {
+            show: true,
+            color: '#448BFF',
+            position: item > -10 ? ['10%', 20] : ['10%', '150%'],
+            formatter: '{c}%',
+            fontSize: 8
+          },
+        });
+        barBottomData.push({
+          value: item,
+          symbolOffset: [0, -10],
+          itemStyle: {
+            normal: {
+              color: 'rgba(61,138,254,1)'
+            }
+          },
+        });
+        barTopData.push({
+          value: item,
+          symbolOffset: [0, 10],
+        });
+      } else {
+        bardata.push({
+          value: item,
+          itemStyle: {
+            normal: {
+              color: {
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                type: 'linear',
+                global: false,
+                colorStops: [{
+                  offset: 0,
+                  color: '#58C1F9'
+                }, {
+                  offset: 1,
+                  color: 'rgba(59,134,255)'
+                }]
+              }
+            }
+          },
+          label: {
+            show: true,
+            color: '#448BFF',
+            position: [0, -25],
+            formatter: '{c}%',
+            fontSize: 8
+          },
+        });
+        barBottomData.push({
+          value: item,
+          symbolOffset: [0, 10],
+        });
+        barTopData.push({
+          value: item,
+          symbolOffset: [0, -10],
+        });
+      }
+
+    });
+
     return {
       tooltip: {
         trigger: 'axis',
+        formatter: '{b} : {c}%',
         axisPointer: { // 坐标轴指示器，坐标轴触发有效
           type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-        },
-        formatter: (val) => {
-          let color = '';
-          if ((val[0].axisValue === 'E' || val[0].axisValue === 'G') && val[0].value > threshold[val[0].dataIndex]) {
-            color = '#FCE149';
-          } else {
-            color = '#37C611';
-          }
-          return `${val[0].name}<br/>
-										<span style="color:${color};">   ● </span>${val[0].seriesName}: ${parseFloat((val[0].data - baseNum).toFixed(3))}<br/>
-										<span style="color:#3AB6EB;">   ● </span>${val[1].seriesName}: ${parseFloat((val[1].data - baseNum).toFixed(3))}`;
         }
       },
-      grid:  {
-        left: '5%',
-        right: '12%',
-        bottom: '10%',
+      grid: {
+        left: '7%',
+        top: '15%',
+        right: '5%',
+        bottom: '15%',
       },
       legend: {
-        data: ['平均成绩', '平均学时'],
-        right: '10%',
-        top: '3%',
+        show: true,
+        icon: 'circle',
+        orient: 'horizontal',
+        top: '90.5%',
+        right: 'center',
+        itemWidth: 16.5,
+        itemHeight: 6,
         textStyle: {
-          color: '#AAAAAA'
+          color: '#C9C8CD',
+          fontSize: 14
+        }
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        axisLabel: {
+          margin: 30,
+          color: '#B8B8B8',
+          fontSize: 8,
         },
-        itemWidth: 10,
-        itemHeight: 10,
-        borderRadius: 10,  // borderRadius最大为宽高最小值的一半，即为5
+        axisTick: {
+          show: true,
+          length: 25,
+          lineStyle: {
+            color: 'rgba(255,255,255,0.1)'
+          }
+        },
+        axisLine: {
+          show: true,
+          lineStyle: {
+            color: 'rgba(255,0,0,0.5)',
+            width: 2
+          }
+        },
+        splitLine: {
+          show: true,
+          lineStyle: {
+            color: 'rgba(255,255,255,0.1)'
+          }
+        },
+        data: item.xdata,
       },
       yAxis: [
         {
           type: 'value',
-          gridIndex: 0,
-          min: (value) => {
-            return baseNum * 10;
-          },
-          max: (value) => {
-            return value.max > 10 ? value.max : 10;
-          },
-          axisLine: {
-            show: false,
-            onZero: true
+          position: 'left',
+          axisLabel: {
+            margin: 8,
+            color: '#B8B8B8',
+            fontSize: 8
           },
           axisTick: {
-            show: false,
+            show: true,
+            length: 15,
+            lineStyle: {
+              color: 'rgba(255,255,255,0.1)'
+            }
           },
           splitLine: {
-            show: false,
+            show: true,
           },
-          axisLabel: {
-            show: false,
+          axisLine: {
+            lineStyle: {
+              color: '#fff',
+              width: 2
+            }
           }
         }
-      ],
-      xAxis: [
-        {
-        type: 'category',
-        gridIndex: 0,
-        axisTick: {
-          show: false
-        },
-        axisLine: {
-          show: false,
-          align: 'center',
-          lineStyle: {
-            color: '#A3',
-            fontSize: '14px'
-          }
-        },
-        axisLabel: {
-          show: true,
-          color: '#A7A7A7',
-        },
-        data: seriesName,
-        zlevel: 2
-      },
       ],
       series: [
+        // 柱底圆片
         {
-          name: '平均成绩',
-          type: 'bar',
-          barWidth: 8,
+          name: '',
+          type: 'pictorialBar',
+          symbolSize: [20, 15],
+          z: 12,
           itemStyle: {
             normal: {
-              color: '#226AD5',
-              barBorderRadius: 12,
-            },
-          },
-          label: {
-            normal: {
-              show: false,
-              position: 'top',
-              fontSize: 11,
-              color: '#3AC712',
-              formatter: (val) => {
-                return `${val.value}s`;
-              }
+              color: 'rgba(61,138,254,1)'
             }
           },
-          data: avgTime,
+          data: barBottomData
         },
+        // 柱体
         {
-          name: '平均学时',
+          name: '',
           type: 'bar',
-          barWidth: 8,
-          barGap: '40%', // 不同系列的柱间距离  为barWidth的 1.5倍
-          // barCateGoryGap: 40,  //同一系列的柱间距离，默认为类目间距的20%，可设固定值
-          itemStyle: {
-            normal: {
-              color: '#63DCAF',
-              barBorderRadius: 11,
+          barWidth: 20,
+          barGap: '0%',
+          data: bardata
+        },
+        // 柱顶圆片
+        {
+          name: '',
+          type: 'pictorialBar',
+          symbolSize: [20, 15],
+          z: 12,
+          symbolPosition: 'end',
+          'itemStyle': {
+            'normal': {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#58C1F9'
+                  },
+                  {
+                    offset: 1,
+                    color: '#3F8EFE'
+                  }
+                ],
+                global: false // 缺省为 false
+              },
             }
           },
-          label: {
-            normal: {
-              show: false,
-              position: 'top',
-              fontSize: 11,
-              color: '#48FAB1',
-              formatter: (val) => {
-                return `${val.value}s`;
-              }
-            }
-          },
-          data: threshold,
+          data: barTopData
         }
       ]
-    }
+    };
   }
 }
 

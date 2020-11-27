@@ -45,132 +45,257 @@ export default class EchartsLinerComponent extends Component {
   }
 
   chartsInit(data) {
-    const xAxis = ['1月', '2月', '3月', '4月', '5月', '6月' ,'7月', '8月', '9月', '10月', '11月', '12月'];
-    const datas = [];
-    xAxis.forEach((item) => {
-      if (data[item]) {
-        datas.push(data[item])
-      } else {
-        datas.push(0)
+    const series = [];
+    const colors = ['#00FF00','#9F0099','#5B9BD5','#FFC000','#FF0000'];
+    data.data.forEach((item, index) => {
+      if (index === 0) {
+        series.push({
+          name: item.name,
+          type: 'line',
+          smooth: true, // 是否平滑曲线显示
+          symbol: 'circle',
+          symbolSize: 8,
+          label: {
+            show: false,
+            position: 'top',
+            textStyle: {
+              color: '#fff',
+            }
+          },
+          lineStyle: {
+            type: item.isShowDotted ? 'dashed' : 'solid'
+          },
+          data: item.value,
+        });
+      }
+      else if (index === 1) {
+        series.push({
+          name: item.name,
+          type: 'line',
+          smooth: true, // 是否平滑曲线显示
+          symbol: 'circle',
+          symbolSize: 8,
+          label: {
+            show: false,
+            position: 'top',
+            textStyle: {
+              color: '#fff',
+            }
+          },
+          lineStyle: {
+            type: item.isShowDotted ? 'dashed' : 'solid'
+          },
+          data: item.value,
+        });
+      }
+      else if (index === 2) {
+        series.push({
+          name: item.name,
+          type: 'line',
+          smooth: true, // 是否平滑曲线显示
+          symbol: 'circle',
+          symbolSize: 8,
+          label: {
+            show: false,
+            position: 'top',
+            textStyle: {
+              color: '#fff',
+            }
+          },
+          stack: '阈值',
+          areaStyle: {
+            color:  'rgb(0,0,255)',
+            origin: 'start',
+            opacity: 1
+          },
+          lineStyle: {
+            type: item.isShowDotted ? 'dashed' : 'solid'
+          },
+          data: item.value,
+        });
+      }
+      else if (index === 3) {
+        series.push({
+          name: item.name,
+          type: 'line',
+          smooth: true, // 是否平滑曲线显示
+          symbol: 'circle',
+          stack: '阈值',
+          symbolSize: 8,
+          label: {
+            show: false,
+            position: 'top',
+            textStyle: {
+              color: '#fff',
+            }
+          },
+          areaStyle: {
+            color: 'rgb(255,255,0)',
+            opacity: 1
+          },
+          lineStyle: {
+            type: item.isShowDotted ? 'dashed' : 'solid'
+          },
+          data: item.value,
+        });
+      }
+      else {
+        series.push({
+          name: item.name,
+          type: 'line',
+          smooth: true, // 是否平滑曲线显示
+          symbol: 'circle',
+          stack: '阈值',
+          symbolSize: 8,
+          label: {
+            show: false,
+            position: 'top',
+            textStyle: {
+              color: '#fff',
+            }
+          },
+          areaStyle: {
+            color: 'rgb(255,97,0)',
+            opacity: 1
+          },
+          lineStyle: {
+            type: item.isShowDotted ? 'dashed' : 'solid'
+          },
+          data: item.value,
+        });
       }
     });
     return  {
+      color: colors,
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        },
+        formatter: (val) => {
+          let str = '';
+          val.forEach((item) => {
+            if (!(item.seriesName)) {
+              str += ``;
+            } else {
+              str += `<span style="color:${item.color};">●</span><span style="font-size: 6px">${item.seriesName}: ${parseFloat((item.data).toFixed(3))}</span><br/>`;
+            }
+          });
+          return `<span style="font-size: 8px">${val[0].name}</span><br/>${str}`;
+        }
+      },
       grid: {
-        top: '11%',
-        left: '1%',
-        right: '4%',
+        top: '15%',
+        left: '2%',
+        right: '3%',
         bottom: '8%',
         containLabel: true,
       },
-      tooltip: {
-        show: true,
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow',
-          shadowStyle: {
-            opacity: 0.3
+      legend: [
+        {
+          show: true,
+          right: '5%',
+          top: '3%',
+          itemWidth: 15,
+          itemHeight: 8,
+          textStyle: {
+            color: '#AAAAAA',
+            fontSize: 8
           },
+          data: [
+            {name: 'SPI实际值'}
+          ]
         },
-        formatter: (params) => {
-          return '<div>' +
-            '<p style="padding: 0 5px 0 5px;margin: 0">' + params[0].name + ':00</p>' +
-            '<p style="padding: 0 5px 0 5px;margin: 0">' +
-            '<span style="display: inline-block;width: 10px;height: 10px;border-radius: 50%;background-color: #468F80"></span>' +
-            '<span style="margin-left:5px">' + params[0].seriesName + params[0].value + '</span>' +
-            '</p>' +
-            '</div>';
+        {
+          show: true,
+          right: '30%',
+          top: '3%',
+          itemWidth: 15,
+          itemHeight: 8,
+          textStyle: {
+            color: '#AAAAAA',
+            fontSize: 8
+          },
+          data: [
+            {name: 'SPI预测值'}
+          ]
         },
-        backgroundColor: '#FFFFFF',
-        textStyle: {
-          color: '#6A6A6A'
-        },
-      },
+      ],
+      dataZoom: [
+        {
+          type: 'slider',
+          show: true, //flase直接隐藏图形
+          xAxisIndex: [0],
+          left: '3%', //滚动条靠左侧的百分比
+          right: '3%',
+          height: 15,
+          top: '94%',
+          start: 0,//滚动条的起始位置
+          end: 50 //滚动条的截止位置（按比例分割你的柱状图x轴长度）
+        }
+      ],
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: xAxis,
+        splitNumber: 50,
         axisLabel: {
-          // margin: 30,
-          color: '#575757'
+          margin: 10,
+          color: '#B8B8B8',
+          fontSize: 8,
+          width: 5
+        },
+        axisTick: {
+          show: true,
+          length: 25,
+          lineStyle: {
+            color: 'rgba(255,255,255,0.1)'
+          }
         },
         axisLine: {
           show: false
         },
-        axisTick: {
-          show: false,
-        },
         splitLine: {
-          show: true,
+          show: false,
           lineStyle: {
-            color: '#DDEAE7',
-            opacity: 0.2
-          },
+            color: 'rgba(255,255,255,0.1)'
+          }
         },
+        data: data.xData,
       },
-      yAxis: [{
-        type: 'value',
-        position: 'left',
-        axisLabel: {
-          color: '#575757'
-        },
-        axisTick: {
-          show: false,
-        },
-        splitLine: {
-          show: true,
-          lineStyle: {
-            color: '#DDEAE7',
-            opacity: 0.2,
-          }
-        },
-        axisLine: {
-          lineStyle: {
-            color: '#fff',
-            width: 2
-          }
-        }
-      }],
-      series: [
+      yAxis: [
         {
-          name: '月隐患数',
-          type: 'line',
-          showSymbol: false,
-          smooth: true, //是否平滑曲线显示
-          showAllSymbol: true,
-          symbol: 'circle',
-          symbolSize: 2,
-          lineStyle: {
-            color: "#609E91", // 线条颜色
+          type: 'value',
+          position: 'left',
+          axisLabel: {
+            margin: 8,
+            color: '#B8B8B8',
+            fontSize: 8
           },
-          label: {
+          splitArea: {
             show: true,
-            position: 'top',
-            textStyle: {
-              color: '#434343',
+            areaStyle: {
+              color: 'red'
             }
           },
-          itemStyle: {
-            color: "#468F80",
-          },
-          areaStyle: {
-            normal: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0, color: '#eb64fb' // 0% 处的颜色
-                }, {
-                  offset: 1, color: '#3fbbff' // 100% 处的颜色
-                }],
-                global: false // 缺省为 false
-              },
+          axisTick: {
+            show: true,
+            length: 15,
+            lineStyle: {
+              color: 'rgba(255,255,255,0.1)'
             }
           },
-          data: datas
-        }]
+          splitLine: {
+            show: false,
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#fff',
+              width: 2
+            }
+          },
+        }
+      ],
+      series: series
     };
   }
 }

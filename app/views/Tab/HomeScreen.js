@@ -6,7 +6,7 @@
 import React, {Component} from 'react';
 import {View, BackHandler, ToastAndroid, Platform, ScrollView, Text, TouchableOpacity} from 'react-native';
 import {HomeStyle as styles} from "./HomeStyle";
-import {Button, Header, Image, ListItem} from "react-native-elements";
+import {Button, Header, ListItem} from "react-native-elements";
 // 自定义组件
 import {DialogContentComponent} from "../../components/DialogContentComponent";
 import EchartsLinerComponent from "../../components/EchartsLinerComponent";
@@ -44,8 +44,8 @@ export class HomeScreen extends Component {
         <View style={styles.content}>
           <ScrollView style={{flex: 1}}>
             <View style={styles.imgBox}>
-              <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>月隐患数量统计</Text>
-              <View style={{height: 220}}>
+              <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>综合监测预警值</Text>
+              <View style={{height: 440}}>
                 {
                   Object.keys(this.state.troubleEcharts).length>0?
                     <EchartsLinerComponent option={Object.keys(this.state.troubleEcharts).length>0?this.state.troubleEcharts: null} />:
@@ -54,8 +54,8 @@ export class HomeScreen extends Component {
               </View>
             </View>
             <View style={styles.imgBox}>
-              <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>安全管理培训计划统计</Text>
-              <View style={{height: 300}}>
+              <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>综合监测预警指标分类占比</Text>
+              <View style={{height: 440}}>
                 {
                   Object.keys(this.state.safeEcharts).length>0?
                     <EchartsBarDoubleComponent option={Object.keys(this.state.safeEcharts).length>0?this.state.safeEcharts: null} />:
@@ -128,21 +128,28 @@ export class HomeScreen extends Component {
       BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
     }
     showLoading();
-    post(HomeApi.ECHARTS_TROUBLE_MONTH)
+
+    // 折线图
+    post(HomeApi.ECHARTS_TROUBLE_MONTH, {})
       .then(res => {
+        hiddenLoading();
+        const xData = res.data.abscissa;
+        const data = [
+          {name: 'SPI实际值', value: res.data.value, isShowDotted: false},
+          {name: 'SPI预测值', value: res.data.predictiveValue, isShowDotted: true},
+          {name: 'a', value: res.data.thresholdOne, isShowDotted: false},
+          {name: 'b', value: res.data.thresholdTwo, isShowDotted: false},
+          {name: 'c', value: res.data.thresholdThree, isShowDotted: false},
+        ];
         this.setState({
-          troubleEcharts: {...res.data}
+          troubleEcharts: {
+           xData: xData,
+           data: data}
         });
+        this.monitorChartBarHttp({organizationId: res.data.organizationId, time: res.data.time})
       })
       .catch(err => {});
-    post(HomeApi.ECHARTS_SAFE_MANAGER,{})
-      .then(res => {
-        hiddenLoading();
-        this.safeManagerInit(res.data);
-      })
-      .catch(err => {
-        hiddenLoading();
-      });
+
     this.unfocus = this.props.navigation.addListener('focus',() => {
       post(HomeApi.GET_MINE_LIST,{pageNo: 1,pageSize: 3})
         .then(res => {
@@ -163,26 +170,17 @@ export class HomeScreen extends Component {
     }
   }
 
-  // 安全教育统计图数据初始化
-  safeManagerInit(data) {
-    if(data.length>0) {
-      const seriesName = [];
-      const threshold = [];
-      const avgTime = [];
-      const baseNum = 0.01;
-      data.forEach(value => {
-        seriesName.push(value.trainingContent);
-        avgTime.push((value.average + baseNum).toFixed(3));
-        threshold.push((value.averageClassHours + baseNum).toFixed(3));
-      });
-      this.setState({
-        safeEcharts: {seriesName,threshold,avgTime,baseNum}
+  // 柱状图数据获取
+  monitorChartBarHttp(params) {
+    post(HomeApi.ECHARTS_SAFE_MANAGER, params)
+      .then(res => {
+        const xdata = res.data.abscissa;
+        const barData = res.data.percentage;
+        this.setState({
+          safeEcharts: {xdata, barData}
+        });
       })
-    } else {
-      this.setState({
-        safeEcharts: {}
-      })
-    }
+      .catch(err => {});
   }
 
   // 二次返回退出App

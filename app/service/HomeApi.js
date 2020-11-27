@@ -9,8 +9,8 @@ export class HomeApi {
   static GET_MINE_LIST = '/notice/findByPage';
 
   // 获取月隐患折现统计图
-  static ECHARTS_TROUBLE_MONTH = '/hid/findByMonth';
+  static ECHARTS_TROUBLE_MONTH = '/monitor_warning/findIndex';
 
   // 安全管理培训计划统计
-  static ECHARTS_SAFE_MANAGER = '/getAver';
+  static ECHARTS_SAFE_MANAGER = '/monitor_warning/findPercentage';
 }
