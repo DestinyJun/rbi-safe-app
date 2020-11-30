@@ -43,7 +43,6 @@ export default class EchartsBarDoubleComponent extends Component {
   }
   // eecharts初始化
   chartsInit(item) {
-    console.log(item.xdata);
     const bardata = [];
     const barBottomData = [];
     const barTopData = [];
@@ -132,7 +131,6 @@ export default class EchartsBarDoubleComponent extends Component {
       }
 
     });
-
     return {
       tooltip: {
         trigger: 'axis',

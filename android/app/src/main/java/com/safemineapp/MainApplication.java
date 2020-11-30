@@ -1,4 +1,4 @@
-package com.rbisafeapp;
+package com.safemineapp;
 
 
 import android.app.Application;

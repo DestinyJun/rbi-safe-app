@@ -61,14 +61,14 @@ export class ProFileScreen extends Component {
               </View>
             </View>
             <View style={[styles.topMenu]}>
-              { this.state.daily?<ListItem
+            {/*  { this.state.daily?<ListItem
                 Component={TouchableOpacity}
                 containerStyle={{backgroundColor: 'unset'}}
                 onPress={this.routerOnPress.bind(this,{routerName: 'ViewOperationDailyScreen'})}
                 title={'生产运行日报'}
                 leftIcon={{ name: 'window-maximize',type: 'font-awesome',size: 18}}
                 bottomDivider={true}
-              />: null}
+              />: null}*/}
               {
                 PROFILE_TOP_MENU_LIST.map((item, i) => (
                   <ListItem
