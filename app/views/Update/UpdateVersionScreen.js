@@ -31,8 +31,8 @@ export class UpdateVersionScreen extends Component {
       <View style={styles.container}>
         <Header
           ViewComponent={View}
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5',zIndex: 1,borderWidth: 0}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E',zIndex: 1,borderWidth: 0}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
           centerComponent={{text: `版本更新`, style: {fontSize: 20, color: '#fff'}}}
         />
@@ -50,7 +50,7 @@ export class UpdateVersionScreen extends Component {
           <Button
             disabled={this.state.btnDisable}
             disabledTitleStyle={{color: '#fff'}}
-            disabledStyle={{backgroundColor: '#3A86FF'}}
+            disabledStyle={{backgroundColor: '#23344E'}}
             title={this.state.showTitle?'立即升级': null}
             icon={!this.state.showTitle?<ActivityIndicator size="small" color="#fff" />: null}
             buttonStyle={c_styles.button} onPress={this.updateOnPress.bind(this)} />

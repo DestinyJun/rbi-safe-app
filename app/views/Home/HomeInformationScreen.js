@@ -28,8 +28,8 @@ export class HomeInformationScreen extends Component {
     return (
       <View style={styles.HomeInformation}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
           centerComponent={{text: `综合信息公告`, style: {fontSize: 20, color: '#fff'}}}
         />
@@ -48,10 +48,10 @@ export class HomeInformationScreen extends Component {
                   key={index}
                   containerStyle={{backgroundColor: '#fff',borderWidth: 1,borderRadius: 5,borderColor: '#F4F4F4',marginBottom: 10}}
                   leftAvatar={{
-                    containerStyle: {backgroundColor: '#226AD5',paddingTop: 8,paddingLeft: 8,paddingRight: 8,borderRadius: 8},
+                    containerStyle: {backgroundColor: '#23344E',paddingTop: 8,paddingLeft: 8,paddingRight: 8,borderRadius: 8},
                     size: 60,
                     icon: {name: 'comment',type: 'material',color: '#fff',size: 40},
-                    iconStyle: {backgroundColor: '#226AD5'},
+                    iconStyle: {backgroundColor: '#23344E'},
                     rounded: false
                   }}
                   title={item.title}

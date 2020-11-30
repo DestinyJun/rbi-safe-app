@@ -29,14 +29,14 @@ export class ProFileSafeScreen extends Component {
     return (
       <View style={styles.Safe}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
           centerComponent={{text: `账号与安全`, style: {fontSize: 20, color: '#fff'}}}
         />
         <View style={styles.content}>
           <View style={[styles.title]}>
-            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'} />
+            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#23344E'} />
             <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>修改密码</Text>
           </View>
           <View style={styles.inputs}>

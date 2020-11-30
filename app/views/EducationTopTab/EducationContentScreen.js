@@ -60,7 +60,7 @@ export class EducationContentScreen extends Component {
         <View style={[styles.course]}>
           <View style={[styles.courseTitle]}>
             <View style={{flexDirection:'row',alignItems: 'center'}}>
-              <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'} />
+              <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#23344E'} />
               <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>培训课件（{this.state.filesList.length>0&&this.state.filesList.length}）</Text>
             </View>
           </View>
@@ -74,10 +74,10 @@ export class EducationContentScreen extends Component {
                   title={l.resourceName}
                   titleStyle={{color: '#AFAFAF'}}
                   titleProps={{numberOfLines: 1,ellipsizeMode: 'tail'}}
-                  rightIcon={{type: 'font-awesome', name: 'angle-right',color: '#3B86FF',size: 18}}
+                  rightIcon={{type: 'font-awesome', name: 'angle-right',color: '#23344E',size: 18}}
                   rightTitle={'开始学习'}
                   checkmark={l.whetherStudy === 1?{type: 'font-awesome',name: 'check-circle',color: 'green'}:false}
-                  rightTitleStyle={{color:'#3A86FF', fontSize: 16}}
+                  rightTitleStyle={{color:'#23344E', fontSize: 16}}
                   onPress={this.studyOnPress.bind(this,'file',l)}
                 />
               )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前暂无培训资料，请联系管理员！</Text>
@@ -86,7 +86,7 @@ export class EducationContentScreen extends Component {
         </View>
         <View style={[styles.videos]}>
           <View style={[styles.videosTitle]}>
-            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'} />
+            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#23344E'} />
             <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>培训视频（{this.state.videosList&&this.state.videosList.length}）</Text>
           </View>
           <ScrollView style={{flex: 1}}>

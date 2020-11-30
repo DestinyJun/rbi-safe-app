@@ -46,7 +46,7 @@ export function TabButtonComponent({state, descriptors, navigation}) {
           });
         };
         // 字体颜色
-        const textColor = isFocused ? '#3B86FF' : '#BABABA';
+        const textColor = isFocused ? '#23344E' : '#BABABA';
         // 字体图标
         const icons = [
           {

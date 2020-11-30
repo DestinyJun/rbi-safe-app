@@ -14,7 +14,7 @@ export const ProFileInfoStyles = StyleSheet.create({
     position: 'relative'
   },
   contentBack: {
-    backgroundColor: '#226AD5',
+    backgroundColor: '#23344E',
     height: 50,
     ...c_styles.w_100,
     position: 'absolute',

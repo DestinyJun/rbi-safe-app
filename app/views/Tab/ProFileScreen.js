@@ -34,10 +34,10 @@ export class ProFileScreen extends Component {
     return (
       <View style={styles.ProFile}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          backgroundColor={'#23344E'}
           containerStyle={{
-            backgroundColor: '#226AD5',
+            backgroundColor: '#23344E',
             justifyContent: 'space-around',
           }}
           centerComponent={{ text: '个人中心', style: { color: '#fff', fontSize: 18 } }}
@@ -47,13 +47,13 @@ export class ProFileScreen extends Component {
             <View style={[styles.baseInfo]}>
               <Avatar
                 size={'large'}
-                icon={{name: 'account-circle',type: 'material',color: '#2289DC',size: 76}}
+                icon={{name: 'account-circle',type: 'material',color: '#23344E',size: 76}}
                 iconStyle={{backgroundColor: '#fff'}}
                 rounded={true}/>
               <View style={[styles.baseInfoText]}>
                 <Text style={[c_styles.h5,{color:'#353535'}]}>{this.state.proFileInfo&&this.state.proFileInfo.name}</Text>
                 <View style={[c_styles.mt_2,{flexDirection: 'row', alignItems:'center'}]}>
-                  <Icon type={'material'} name={'people'} size={16} color={'#226AD5'} />
+                  <Icon type={'material'} name={'people'} size={16} color={'#23344E'} />
                   <Text style={[c_styles.ml_1,{color:'#A5A5A5', fontSize: 14}]}>
                     {this.state.proFileInfo&&this.state.proFileInfo.position}： {this.state.proFileInfo&&this.state.proFileInfo.employeeNumber}
                   </Text>
@@ -110,7 +110,7 @@ export class ProFileScreen extends Component {
             </View>
             <Button
               containerStyle={[{borderRadius: 30}]}
-              buttonStyle={{paddingTop: 10,paddingBottom: 10}}
+              buttonStyle={{paddingTop: 10,paddingBottom: 10,backgroundColor: '#23344E'}}
               title={'退出登录'}
               onPress={this.loginOut.bind(this)}/>
           </ScrollView>

@@ -65,8 +65,8 @@ export class EducationErrorScreen extends Component {
     return (
       <View style={styles.Exam}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E',zIndex: 1}}
           leftComponent={<MyCustomLeftComponent {...navigation} remind={this.state.topicList.length>0} />}
           centerComponent={{text: `${this.name}`,style: {fontSize: 20,color: '#fff'}}}
         />

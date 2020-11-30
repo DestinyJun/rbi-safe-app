@@ -27,7 +27,7 @@ export class EducationClassScreen extends Component {
                 <View style={styles.content} key={index}>
                   <View style={[styles.examCard]}>
                     <View style={styles.title}>
-                      <Icon type={'font-awesome'} name={'list-alt'} size={20} color={'#3B86FF'} raised={true}/>
+                      <Icon type={'font-awesome'} name={'list-alt'} size={20} color={'#23344E'} raised={true}/>
                       <View style={{flex: 1}}>
                         <Text style={{fontSize: 20, color: '#333333', marginLeft: 6}} numberOfLines={1} ellipsizeMode={'tail'}>{item.testPaperName}</Text>
                       </View>
@@ -35,19 +35,19 @@ export class EducationClassScreen extends Component {
                     <View style={[c_styles.pl_5,c_styles.pt_3]}>
                       {
                         item.idt &&  <View style={[styles.timerBox]}>
-                          <Icon type={'font-awesome'} name={'calendar'} size={16} color={'#3B86FF'}/>
+                          <Icon type={'font-awesome'} name={'calendar'} size={16} color={'#23344E'}/>
                           <Text style={[c_styles.h6, c_styles.ml_2]}>创建时间：{item.idt}</Text>
                         </View>
                       }
                       {
                         item.operatingStaff && <View style={[styles.timerBox]}>
-                          <Icon type={'font-awesome'} name={'user-o'} size={18} color={'#3B86FF'}/>
+                          <Icon type={'font-awesome'} name={'user-o'} size={18} color={'#23344E'}/>
                           <Text style={[c_styles.h6, c_styles.ml_2]}>发布人：{item.operatingStaff}</Text>
                         </View>
                       }
                       {
                         item.testResults && <View style={[styles.timerBox]}>
-                          <Icon type={'font-awesome'} name={'diamond'} size={16} color={'#3B86FF'}/>
+                          <Icon type={'font-awesome'} name={'diamond'} size={16} color={'#23344E'}/>
                           <Text style={[c_styles.h6, c_styles.ml_2]}>考试结果：{item.testResults}</Text>
                         </View>
                       }
@@ -55,6 +55,7 @@ export class EducationClassScreen extends Component {
                     <View style={[styles.buttons]}>
                       <Button
                         disabled={item.processingStatus === 2}
+                        buttonStyle={{backgroundColor: '#23344E'}}
                         disabledStyle={{backgroundColor: '#BABABA'}}
                         disabledTitleStyle={{color: '#fff'}}
                         title={item.processingStatus === 2?`考试完成`:`开始考试`}

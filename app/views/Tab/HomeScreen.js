@@ -33,10 +33,10 @@ export class HomeScreen extends Component {
     return (
       <View style={[styles.home]}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          backgroundColor={'#23344E'}
           containerStyle={{
-            backgroundColor: '#226AD5',
+            backgroundColor: '#23344E',
             justifyContent: 'space-around',
           }}
           centerComponent={{text: '安全生产信息化', style: {color: '#fff', fontSize: 18}}}
@@ -84,10 +84,10 @@ export class HomeScreen extends Component {
                       key={index}
                       containerStyle={{backgroundColor: '#fff',borderWidth: 1,borderRadius: 5,borderColor: '#F4F4F4',marginBottom: 10}}
                       leftAvatar={{
-                        containerStyle: {backgroundColor: '#226AD5',paddingTop: 8,paddingLeft: 8,paddingRight: 8,borderRadius: 8},
+                        containerStyle: {backgroundColor: '#23344E',paddingTop: 8,paddingLeft: 8,paddingRight: 8,borderRadius: 8},
                         size: 60,
                         icon: {name: 'comment',type: 'material',color: '#fff',size: 40},
-                        iconStyle: {backgroundColor: '#226AD5'},
+                        iconStyle: {backgroundColor: '#23344E'},
                         rounded: false
                       }}
                       title={item.title}
@@ -100,7 +100,7 @@ export class HomeScreen extends Component {
               </View>
             </View>
           </ScrollView>
-          <DialogContentComponent isVisible={this.state.contentModalShow} title={'详细信息'} onClose={(res) => {
+          <DialogContentComponent isVisible={this.state.contentModalShow} title={'详细信息'} bgcColor={'#23344E'} onClose={(res) => {
             this.setState({
               contentModalShow: res,
             })

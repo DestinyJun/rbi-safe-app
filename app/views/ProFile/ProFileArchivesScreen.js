@@ -33,8 +33,8 @@ export class ProFileArchivesScreen extends Component {
     return (
       <View style={styles.Archives}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5', zIndex: 1}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E', zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {
             this.props.navigation.goBack()
           }}/>}
@@ -47,7 +47,7 @@ export class ProFileArchivesScreen extends Component {
                   <View style={styles.content} key={index}>
                     <View style={[styles.examCard]}>
                       <View style={styles.title}>
-                        <Icon type={'font-awesome'} name={'list-alt'} size={20} color={'#3B86FF'} raised={true}/>
+                        <Icon type={'font-awesome'} name={'list-alt'} size={20} color={'#23344E'} raised={true}/>
                         <View style={{flex: 1}}>
                           <Text style={{fontSize: 20, color: '#333333', marginLeft: 6}} numberOfLines={1} ellipsizeMode={'tail'}>{item.trainingContent}</Text>
                         </View>
@@ -55,20 +55,20 @@ export class ProFileArchivesScreen extends Component {
                       <View style={[c_styles.pl_5,c_styles.pt_3]}>
                         {
                           item.trainingime &&  <View style={[styles.timerBox]}>
-                            <Icon type={'font-awesome'} name={'calendar'} size={16} color={'#3B86FF'}/>
+                            <Icon type={'font-awesome'} name={'calendar'} size={16} color={'#23344E'}/>
                             <Text
                               style={[c_styles.h6, c_styles.ml_2]}>培训时间：{item.trainingime}</Text>
                           </View>
                         }
                         {
                           item.examinationTime && <View style={[styles.timerBox]}>
-                            <Icon type={'font-awesome'} name={'clock-o'} size={18} color={'#3B86FF'}/>
+                            <Icon type={'font-awesome'} name={'clock-o'} size={18} color={'#23344E'}/>
                             <Text style={[c_styles.h6, c_styles.ml_2]}>考试时间：{item.examinationTime}</Text>
                           </View>
                         }
                         {
                           item.testResults && <View style={[styles.timerBox]}>
-                            <Icon type={'font-awesome'} name={'graduation-cap'} size={18} color={'#3B86FF'}/>
+                            <Icon type={'font-awesome'} name={'graduation-cap'} size={18} color={'#23344E'}/>
                             <Text style={[c_styles.h6, c_styles.ml_2]}>考试成绩：{item.testResults}</Text>
                           </View>
                         }

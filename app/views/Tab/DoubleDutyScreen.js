@@ -28,20 +28,20 @@ export class DoubleDutyScreen extends Component {
     return (
       <View style={styles.DoubleDuty}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
-          containerStyle={{backgroundColor: '#226AD5', justifyContent: 'space-around',}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          backgroundColor={'#23344E'}
+          containerStyle={{backgroundColor: '#23344E', justifyContent: 'space-around',}}
           centerComponent={{ text: '一岗双责', style: { color: '#fff', fontSize: 18 } }}
         />
         <Button
           onPress={() => {this.props.navigation.navigate('DoubleInventoryFillScreen')}}
-          icon={{name: 'add', color: '#84B3FF',size: 18}}
+          icon={{name: 'add', color: '#23344E',size: 18}}
           title={'责任清单填写'}
-          titleStyle={{color: '#84B3FF',fontSize: 16}}
+          titleStyle={{color: '#23344E',fontSize: 16}}
           buttonStyle={{paddingTop: 10,paddingBottom: 10,backgroundColor: '#fff'}} />
         <View style={[styles.mine]}>
           <View style={[styles.mineTitle]}>
-            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'} />
+            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#23344E'} />
             <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>我的责任清单（{this.state.pendingList?this.state.pendingList.length: '0'}）</Text>
           </View>
           <ScrollView style={{maxHeight: 190}}>
@@ -71,7 +71,7 @@ export class DoubleDutyScreen extends Component {
         </View>
         <View style={[styles.pending]}>
           <View style={[styles.pendingTitle]}>
-            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'} />
+            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#23344E'} />
             <Text style={[c_styles.h5,c_styles.pl_3,{color:'#333333'}]}>待审核责任清单（{this.state.dutyList?this.state.dutyList.length: '0'}）</Text>
           </View>
           <ScrollView style={{flex: 1}}>

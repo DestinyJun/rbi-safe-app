@@ -33,8 +33,8 @@ export class EducationTrainScreen extends Component {
     return (
       <View style={styles.Train}>
          <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
           centerComponent={{text: `${this.props.route.params.title}`,style: {fontSize: 20,color: '#fff'}}}
         />

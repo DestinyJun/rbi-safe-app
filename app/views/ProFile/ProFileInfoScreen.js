@@ -25,8 +25,8 @@ export class ProFileInfoScreen extends Component {
       <View style={styles.Info}>
         <Header
           ViewComponent={View}
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5',zIndex: 1,borderWidth: 0}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E',zIndex: 1,borderWidth: 0}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {this.props.navigation.goBack()}} />}
           centerComponent={{text: `我的信息`, style: {fontSize: 20, color: '#fff'}}}
         />
@@ -38,14 +38,14 @@ export class ProFileInfoScreen extends Component {
                 containerStyle={{backgroundColor: 'unset'}}
                 leftAvatar={{
                   size: 'large',
-                  icon: {name: 'account-circle',type: 'material',color: '#2289DC',size: 76},
+                  icon: {name: 'account-circle',type: 'material',color: '#23344E',size: 76},
                   iconStyle: {backgroundColor: '#fff'},
                   rounded: true
                 }}
                 title={this.myInfo.name}
                 titleStyle={{color: '#3A3A3A'}}
                 subtitle={<View style={styles.baseInfoPerson}>
-                  <Icon type={'material'} name={'people'} size={16} color={'#226AD5'} />
+                  <Icon type={'material'} name={'people'} size={16} color={'#23344E'} />
                   <Text style={[c_styles.ml_1,{color:'#A5A5A5', fontSize: 14}]}>{this.myInfo.position}： {this.myInfo.employeeNumber}</Text>
                 </View>}
               />

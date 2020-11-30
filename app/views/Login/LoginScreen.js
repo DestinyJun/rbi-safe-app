@@ -11,7 +11,7 @@ import {IMAGE_FILE_LIST} from "../../util/Constant";
 import {Button, Icon, Input} from "react-native-elements";
 import {post} from "../../service/Interceptor";
 import {Api} from "../../service/Api";
-import {hiddenLoading, openTree} from "../../util/ToolFunction";
+import {hiddenLoading, openTree, showLoading} from "../../util/ToolFunction";
 
 export class LoginScreen extends Component {
   constructor(props) {
@@ -81,10 +81,10 @@ export class LoginScreen extends Component {
             <View style={[styles.button]}>
               <Button
                 disabled={(!this.state.username || !this.state.password)}
-                disabledStyle={{backgroundColor: '#8EB9F5'}}
+                disabledStyle={{backgroundColor: '#3E4D63'}}
                 disabledTitleStyle={{color: '#ffffff'}}
                 onPress={this.login.bind(this)}
-                buttonStyle={{backgroundColor: '#337DF1', borderRadius: 30, paddingTop: 15, paddingBottom: 15}}
+                buttonStyle={{backgroundColor: '#23344E', borderRadius: 30, paddingTop: 15, paddingBottom: 15}}
                 title="登录"
                 titleStyle={{letterSpacing: 5, fontSize: 18}}
               />

@@ -40,8 +40,8 @@ export class TroubleShortlyScreen extends Component {
     return (
       <View style={styles.TroubleShortly}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E',zIndex: 1}}
           leftComponent={<HeaderLeftBackComponent {...this.props} message={this.remindMessage}/>}
           centerComponent={{text: `立即整改`, style: {fontSize: 20, color: '#fff'}}}
         />
@@ -49,7 +49,7 @@ export class TroubleShortlyScreen extends Component {
           <ScrollView style={[c_styles.pl_3,c_styles.pr_3,{flex: 1}]}>
             <View>
               <View style={[styles.title]}>
-                <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'}/>
+                <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#23344E'}/>
                 <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>基本信息</Text>
               </View>
               <View style={[styles.infoList]}>
@@ -125,21 +125,21 @@ export class TroubleShortlyScreen extends Component {
             </View>
             <View>
               <View style={[styles.title]}>
-                <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'}/>
+                <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#23344E'}/>
                 <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>隐患现场情况</Text>
               </View>
               <View>
                 <View style={[styles.siteBox,c_styles.mb_3]}>
                   <View style={[styles.siteBoxTitle]}>
                     <Text style={[{color: '#858585'}]}>整改前</Text>
-                    <Text style={[{backgroundColor: '#3B86FF',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
+                    <Text style={[{backgroundColor: '#23344E',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
                   </View>
                   <PickerImageComponent onSelect={(f) => {this.beforeFile = f}} />
                 </View>
                 <View style={[styles.siteBox]}>
                   <View style={[styles.siteBoxTitle]}>
                     <Text style={[{color: '#858585'}]}>整改后</Text>
-                    <Text style={[{backgroundColor: '#3B86FF',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
+                    <Text style={[{backgroundColor: '#23344E',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
                   </View>
                   <PickerImageComponent onSelect={(f) => {this.afterFile = f}} />
                 </View>

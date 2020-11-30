@@ -38,8 +38,8 @@ export class DownFileScreen extends Component {
     return (
       <View style={styles.container}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5', zIndex: 1}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E', zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {
             this.props.navigation.goBack()
           }}/>}
@@ -52,7 +52,7 @@ export class DownFileScreen extends Component {
           </View>
           <Button
             icon={this.state.downLoading ? <ActivityIndicator size="small" color="#fff"/> : null}
-            buttonStyle={[c_styles.button, {backgroundColor: this.state.downComplete ? '#227346' : '#3A86FF'}]}
+            buttonStyle={[c_styles.button, {backgroundColor: this.state.downComplete ? '#227346' : '#23344E'}]}
             title={this.state.downLoading ? null : (this.state.downComplete ? '点击打开' : '点击下载')}
             onPress={this.downOnPress.bind(this, this.state.downComplete ? '点击打开' : '点击下载')}
           />

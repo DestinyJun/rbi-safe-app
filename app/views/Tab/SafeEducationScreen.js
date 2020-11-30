@@ -47,17 +47,17 @@ export class SafeEducationScreen extends Component {
     return (
       <View style={[styles.SafeEducation]}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          backgroundColor={'#23344E'}
           containerStyle={{
-            backgroundColor: '#226AD5',
+            backgroundColor: '#23344E',
             justifyContent: 'space-around',
           }}
-          leftComponent={this.state.issue?<Button title={'发布'} buttonStyle={{backgroundColor:'#226AD5'}} onPress={() => {
+          leftComponent={this.state.issue?<Button title={'发布'} buttonStyle={{backgroundColor:'#3E4D63'}} onPress={() => {
             this.props.navigation.navigate('EducationIssueScreen');
           }} />: null}
           centerComponent={{ text: '安全教育培训', style: { color: '#fff', fontSize: 18 } }}
-          rightComponent={<Button title={'错题库'} buttonStyle={{backgroundColor:'#226AD5'}} onPress={this.errorTopicStart.bind(this)} />}
+          rightComponent={<Button title={'错题库'} buttonStyle={{backgroundColor:'#3E4D63'}} onPress={this.errorTopicStart.bind(this)} />}
         />
         <View style={{flex: 1}}>
           <MyTabs />

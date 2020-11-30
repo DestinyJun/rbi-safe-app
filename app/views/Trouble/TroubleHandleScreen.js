@@ -58,8 +58,8 @@ export class TroubleHandleScreen extends Component {
     return (
       <View style={styles.TroubleHandle}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E',zIndex: 1}}
           leftComponent={<HeaderLeftBackComponent {...this.props} message={INPUT_BACK_REMIND_MESSAGE}/>}
           centerComponent={{text: `${this.title}隐患`, style: {fontSize: 20, color: '#fff'}}}
         />
@@ -68,7 +68,7 @@ export class TroubleHandleScreen extends Component {
             {/*不可编辑*/}
             <View>
               <View style={[styles.title]}>
-                <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'}/>
+                <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#23344E'}/>
                 <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>基本信息</Text>
               </View>
               <View style={[styles.infoList]}>
@@ -179,7 +179,7 @@ export class TroubleHandleScreen extends Component {
             {
               this.state.isHandle&&<View>
                 <View style={[styles.title]}>
-                  <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'}/>
+                  <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#23344E'}/>
                   <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>处理信息</Text>
                 </View>
                 <View style={[styles.infoList]}>
@@ -253,7 +253,7 @@ export class TroubleHandleScreen extends Component {
                         <View style={[styles.siteBox]}>
                           <View style={[styles.siteBoxTitle]}>
                             <Text style={[{color: '#858585'}]}>整改后</Text>
-                            <Text style={[{backgroundColor: '#3B86FF',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
+                            <Text style={[{backgroundColor: '#23344E',borderRadius: 10},c_styles.pl_1,c_styles.pr_1,c_styles.text_white,c_styles.ml_1]}>最多6张</Text>
                           </View>
                           <PickerImageComponent onSelect={(f) => {this.afterFile = f}} />
                         </View>

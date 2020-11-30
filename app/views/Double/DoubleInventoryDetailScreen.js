@@ -27,8 +27,8 @@ export class DoubleInventoryDetailScreen extends Component {
     return (
       <View style={styles.InventoryCheck}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {
             this.props.navigation.goBack()
           }}/>}
@@ -36,7 +36,7 @@ export class DoubleInventoryDetailScreen extends Component {
         />
         <View style={[styles.content]}>
           <View style={[styles.contentTitle]}>
-            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'}/>
+            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#23344E'}/>
             <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>责任清单详情</Text>
           </View>
           <View style={[styles.contentList]}>
@@ -57,7 +57,7 @@ export class DoubleInventoryDetailScreen extends Component {
               {
                 this.state.type === '3'? <View>
                   <View style={[styles.contentTitle]}>
-                    <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'}/>
+                    <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#23344E'}/>
                     <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>审核信息</Text>
                   </View>
                   <View style={[styles.textArea]}>

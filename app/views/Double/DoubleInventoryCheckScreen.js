@@ -33,8 +33,8 @@ export class DoubleInventoryCheckScreen extends Component {
     return (
       <View style={styles.InventoryCheck}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E',zIndex: 1}}
           leftComponent={<HeaderLeftComponent headerLeftOnPress={() => {
             Alert.alert(
               '','您确定要返回吗！',
@@ -59,7 +59,7 @@ export class DoubleInventoryCheckScreen extends Component {
         />
         <View style={[styles.content]}>
           <View style={[styles.contentTitle]}>
-            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#3B86FF'}/>
+            <Icon type={'font-awesome'} name={'circle-o'} size={16} color={'#23344E'}/>
             <Text style={[c_styles.h5, c_styles.pl_3, {color: '#333333'}]}>{'责任清单分数审核'}</Text>
           </View>
           <View style={[styles.contentList]}>

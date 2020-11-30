@@ -69,7 +69,7 @@ export class PickerTreeComponent extends Component {
                     color: '#8A8B8C'
                   }}
                   selectedItemStyle={{
-                    backgroudColor: '#226AD5',
+                    backgroudColor: '#23344E',
                     fontSize: 16,
                     color: '#fff'
                   }}
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
   contentTitle: {
-    backgroundColor: '#226AD5',
+    backgroundColor: '#23344E',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

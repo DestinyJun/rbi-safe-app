@@ -30,7 +30,7 @@ export const TroubleReportStyles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 30,
     marginBottom: 30,
-    backgroundColor: '#3B86FF',
+    backgroundColor: '#23344E',
     marginRight: 30,
     marginLeft: 30
   },

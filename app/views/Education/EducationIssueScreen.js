@@ -1,5 +1,5 @@
 /**
- * desc：  考试页面
+ * desc：  帮助活动发布
  * author：DestinyJun
  * date：  2020/7/2 14:51
  */
@@ -61,8 +61,8 @@ export class EducationIssueScreen extends Component {
     return (
       <View style={styles.Issue}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          containerStyle={{backgroundColor: '#226AD5',zIndex: 1}}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          containerStyle={{backgroundColor: '#23344E',zIndex: 1}}
           leftComponent={<MyCustomLeftComponent {...navigation} />}
           centerComponent={{text: `班组活动发布`,style: {fontSize: 20,color: '#fff'}}}
         />

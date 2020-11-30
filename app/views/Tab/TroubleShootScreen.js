@@ -25,10 +25,10 @@ export class TroubleShootScreen extends Component {
     return (
       <View style={styles.TroubleShoot}>
         <Header
-          statusBarProps={{backgroundColor: '#226AD5'}}
-          backgroundColor={'#226AD5'}
+          statusBarProps={{backgroundColor: '#23344E'}}
+          backgroundColor={'#23344E'}
           containerStyle={{
-            backgroundColor: '#226AD5',
+            backgroundColor: '#23344E',
             justifyContent: 'space-around',
           }}
           centerComponent={{ text: '隐患排查', style: { color: '#fff',fontSize: 18 } }}
@@ -40,16 +40,16 @@ export class TroubleShootScreen extends Component {
                 containerStyle={{flex: 1}}
                 buttonStyle={{backgroundColor: '#FFFFFF'}}
                 title={'立即整改'}
-                titleStyle={{color: '#4F93FF'}}
-                icon={{name: 'add',color: '#4F93FF'}}
+                titleStyle={{color: '#23344E'}}
+                icon={{name: 'add',color: '#23344E'}}
                 onPress={() => {this.props.navigation.navigate('TroubleShortlyScreen')}}
               />
               <Button
                 containerStyle={[styles.borderLeft,{flex: 1}]}
                 buttonStyle={[{backgroundColor: '#FFFFFF'}]}
                 title={'上报整改'}
-                titleStyle={{color: '#4F93FF'}}
-                icon={{name: 'add',color: '#4F93FF'}}
+                titleStyle={{color: '#23344E'}}
+                icon={{name: 'add',color: '#23344E'}}
                 onPress={() => {this.props.navigation.navigate('TroubleReportScreen')}}
               />
             </View>
