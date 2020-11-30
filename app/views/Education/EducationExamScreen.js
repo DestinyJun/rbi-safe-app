@@ -232,16 +232,14 @@ export class EducationExamScreen extends Component {
 
   // 组件挂在后生命周期
   componentDidMount() {
-    switch (this.name) {
-      case '开始考试':
-        this.httpRequestExam(EducationApi.GET_EXAM_PAPER,{id: this.exam.id});
-        break;
-      case '模拟考试':
-        this.httpRequestExam(EducationApi.GET_EXAM_SIMULATION,{trainingPlanId: this.exam.id});
-        break;
-      case '班主考试':
-        this.httpRequestExam(EducationApi.GET_GRAND_TRAIN,{twTestPapreId: this.exam.twTestPapreId});
-        break;
+    if (this.name === '开始考试') {
+      this.httpRequestExam(EducationApi.GET_EXAM_PAPER,{id: this.exam.id});
+    }
+    else if (this.name === '模拟考试') {
+      this.httpRequestExam(EducationApi.GET_EXAM_SIMULATION,{trainingPlanId: this.exam.id});
+    }
+    else {
+      this.httpRequestExam(EducationApi.GET_GRAND_TRAIN,{twTestPapreId: this.exam.twTestPapreId});
     }
   }
 
@@ -252,16 +250,14 @@ export class EducationExamScreen extends Component {
 
   // 结束考试操作
   edExamComplete() {
-    switch (this.name) {
-      case '开始考试':
-        this.httpRequestFinishExam(EducationApi.COMPLETE_EXAM);
-        break;
-      case '模拟考试':
-        this.httpRequestFinishExam(EducationApi.COMPLETE_SIMULATION_EXAM);
-        break;
-      case '班主考试':
-        this.httpRequestFinishExam(EducationApi.SUBMIT_GRAND_TRAIN);
-        break;
+    if (this.name === '开始考试') {
+      this.httpRequestFinishExam(EducationApi.COMPLETE_EXAM);
+    }
+    else if (this.name === '模拟考试') {
+      this.httpRequestFinishExam(EducationApi.COMPLETE_SIMULATION_EXAM);
+    }
+    else {
+      this.httpRequestFinishExam(EducationApi.SUBMIT_GRAND_TRAIN);
     }
   }
 

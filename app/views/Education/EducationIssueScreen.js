@@ -1,5 +1,5 @@
 /**
- * desc：  考试页面
+ * desc：  班组活动发布
  * author：DestinyJun
  * date：  2020/7/2 14:51
  */

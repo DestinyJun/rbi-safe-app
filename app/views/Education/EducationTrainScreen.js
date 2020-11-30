@@ -1,5 +1,5 @@
 /**
- * desc：  培训计划界面
+ * desc：  继续学习界面
  * author：DestinyJun
  * date：  2020/7/2 16:12
  */
