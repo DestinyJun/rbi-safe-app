@@ -154,7 +154,7 @@ export class TroubleHandleScreen extends Component {
                           width: 100,
                           borderColor: '#E5E5E5',
                           borderWidth: 1,
-                          marginRight: 10,}} resizeMode={'contain'} />
+                          marginRight: 10,}} resizeMode={'cover'} />
                       ))
                     }
                   </View>

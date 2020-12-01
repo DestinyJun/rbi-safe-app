@@ -263,11 +263,9 @@ export class EducationExamScreen extends Component {
 
   // 请求获取试卷
   httpRequestExam(url,params) {
-    console.log('我是班主考试');
     showLoading();
     post(url,params)
       .then((res) => {
-        console.log(res);
         this.setState({
           topicList: [
             ...res.data.completion,
@@ -310,7 +308,7 @@ export class EducationExamScreen extends Component {
       }
       fields.simulationSafeAnswerRecords = arr;
     }
-    if (this.name === '班主考试') {
+    if (this.name === '班组考试') {
       for (let item of this.params.safeAnswerRecordList) {
         if (item) {
           arr.push({
@@ -333,8 +331,9 @@ export class EducationExamScreen extends Component {
       }
       startFields.safeAnswerRecordList = arr;
     }
-    post(url,this.name === '模拟考试'?fields:this.name === '班主考试'?gradeFields:startFields)
+    post(url,this.name === '模拟考试'?fields:this.name === '班组考试'?gradeFields:startFields)
       .then((res) => {
+        console.log(res);
         hiddenLoading();
         if (this.name === '模拟考试') {
           const arr = [];

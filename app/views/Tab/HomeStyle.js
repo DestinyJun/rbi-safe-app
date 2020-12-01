@@ -37,5 +37,9 @@ export const HomeStyle = StyleSheet.create({
   dialogContainer: {
     paddingLeft: 15,
     paddingRight: 15
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    paddingTop: 10
   }
 });

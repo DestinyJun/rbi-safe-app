@@ -143,3 +143,28 @@ export const HTML1 = `
 </html>
 `;
 
+/*(function() {
+  window.postMessage = function(data) {
+    window.ReactNativeWebView.postMessage(data)
+  };
+  function btn1() {
+    /!**这里给RN发送消息**!/
+    window.postMessage("我是WebView", "*");
+  }
+  var myChart = echarts.init(document.getElementById('main'));
+  myChart.setOption(${JSON.stringify(option)});
+  setTimeout(() => {
+    myChart.dispatchAction({
+      type: 'showTip',
+      seriesIndex: 0,  // 显示第几个series
+      dataIndex: 6, // 显示第几个数据
+    });
+  },100);
+  myChart.on('click', function (params) {
+    window.postMessage(params);
+  });
+  window.addEventListener("resize", function () {
+    myChart.resize();
+  });
+})();*/
+

@@ -15,6 +15,7 @@ import EchartsBarDoubleComponent from "../../components/EchartsBarDoubleComponen
 import {hiddenLoading, showLoading} from "../../util/ToolFunction";
 import {post} from "../../service/Interceptor";
 import {HomeApi} from "../../service/HomeApi";
+import AsyncStorage from "@react-native-community/async-storage";
 
 
 export class HomeScreen extends Component {
@@ -22,10 +23,14 @@ export class HomeScreen extends Component {
     super(props);
     this.state = {
       infoList: [],
+      catList: [],
+      wheatList: [],
       contentModalShow: false,
       detailInfo: null,
       troubleEcharts: {},
       safeEcharts: {},
+      cat: false,
+      wheat: false,
     };
   }
 
@@ -39,12 +44,12 @@ export class HomeScreen extends Component {
             backgroundColor: '#23344E',
             justifyContent: 'space-around',
           }}
-          centerComponent={{text: '安全生产信息化', style: {color: '#fff', fontSize: 18}}}
+          centerComponent={{text: '矿业公司矿山安全监测预警系统', style: {color: '#fff', fontSize: 18}}}
         />
         <View style={styles.content}>
           <ScrollView style={{flex: 1}}>
             <View style={styles.imgBox}>
-              <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>综合监测预警值</Text>
+              <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>综合监测预警</Text>
               <View style={{height: 440}}>
                 {
                   Object.keys(this.state.troubleEcharts).length>0?
@@ -63,6 +68,85 @@ export class HomeScreen extends Component {
                 }
               </View>
             </View>
+            {/*猫厂铝矿监测预警*/}
+            <View style={styles.imgBox}>
+              <View style={styles.imgBoxTitle}>
+                <Text style={[c_styles.h5,{color: '#555555'}]}>猫厂铝矿监测预警</Text>
+              </View>
+              <View style={styles.imgBoxList}>
+                {
+                  this.state.cat?<>
+                    <View style={styles.tableHeader}>
+                      <View style={{flex: 1}}>
+                        <Text style={[c_styles.text_center, c_styles.text_darkinfo,c_styles.h5]}>传感器名称</Text>
+                      </View>
+                      <View style={{flex: 1}}>
+                        <Text style={[c_styles.text_center, c_styles.text_darkinfo,c_styles.h5]}>位置</Text>
+                      </View>
+                      <View style={{flex: 1}}>
+                        <Text style={[c_styles.text_center, c_styles.text_darkinfo,c_styles.h5]}>实时数据</Text>
+                      </View>
+                    </View>
+                    {
+                      this.state.catList.length>0?this.state.catList.map((item,index) => (
+                        <View key={`cat_${index}`} style={styles.tableHeader}>
+                          <View style={{flex: 1}}>
+                            <Text style={[c_styles.text_center, c_styles.text_danger]}>{item.name}</Text>
+                          </View>
+                          <View style={{flex: 1}}>
+                            <Text style={[c_styles.text_center, c_styles.text_danger]}>{item.location}</Text>
+                          </View>
+                          <View style={{flex: 1}}>
+                            <Text style={[c_styles.text_center, c_styles.text_danger]}>{item.value}</Text>
+                          </View>
+                        </View>
+                      )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前暂无监测预警！</Text>
+                    }
+                  </>: null
+                }
+
+              </View>
+            </View>
+            {/*麦坝铝矿监测预警*/}
+            <View style={styles.imgBox}>
+              <View style={styles.imgBoxTitle}>
+                <Text style={[c_styles.h5,{color: '#555555'}]}>麦坝铝矿监测预警</Text>
+              </View>
+              <View style={styles.imgBoxList}>
+                {
+                  this.state.wheat?<>
+                    <View style={styles.tableHeader}>
+                      <View style={{flex: 1}}>
+                        <Text style={[c_styles.text_center, c_styles.text_darkinfo,c_styles.h5]}>传感器名称</Text>
+                      </View>
+                      <View style={{flex: 1}}>
+                        <Text style={[c_styles.text_center, c_styles.text_darkinfo,c_styles.h5]}>位置</Text>
+                      </View>
+                      <View style={{flex: 1}}>
+                        <Text style={[c_styles.text_center, c_styles.text_darkinfo,c_styles.h5]}>传感器采集数字量</Text>
+                      </View>
+                    </View>
+                    {
+                      this.state.wheatList.length>0?this.state.wheatList.map((item,index) => (
+                        <View key={`cat_${index}`} style={styles.tableHeader}>
+                          <View style={{flex: 1}}>
+                            <Text style={[c_styles.text_center, c_styles.text_danger]}>{item.name}</Text>
+                          </View>
+                          <View style={{flex: 1}}>
+                            <Text style={[c_styles.text_center, c_styles.text_danger]}>{item.place}</Text>
+                          </View>
+                          <View style={{flex: 1}}>
+                            <Text style={[c_styles.text_center, c_styles.text_danger]}>{item.value}</Text>
+                          </View>
+                        </View>
+                      )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前暂无监测预警！</Text>
+                    }
+                  </>: null
+                }
+
+              </View>
+            </View>
+            {/*综合信息公告栏*/}
             <View style={styles.imgBox}>
               <View style={styles.imgBoxTitle}>
                 <Text style={[c_styles.h5,{color: '#555555'}]}>综合信息公告栏</Text>
@@ -123,11 +207,11 @@ export class HomeScreen extends Component {
   }
 
   // 生命周期
-  componentDidMount() {
+  async componentDidMount() {
     if (Platform.OS === 'android') {
       BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
     }
-    showLoading();
+    // showLoading();
 
     // 折线图
     post(HomeApi.ECHARTS_TROUBLE_MONTH, {})
@@ -151,17 +235,43 @@ export class HomeScreen extends Component {
       .catch(err => {});
 
     this.unfocus = this.props.navigation.addListener('focus',() => {
+      // 综合信息
       post(HomeApi.GET_MINE_LIST,{pageNo: 1,pageSize: 3})
         .then(res => {
           this.setState({
             infoList: [...res.data.contents]
           });
         })
-        .catch(err => {
-        });
+        .catch(err => {});
+
+      // 猫厂监测
+      post(HomeApi.GET_CAT_LIST,{pageNo: 1,pageSize: 10000})
+        .then(res => {
+          this.setState({
+            catList: [...res.data.filter((item) => (!item.isNormal))]
+          });
+        })
+        .catch(err => {});
+
+      // 麦坝铝矿监测预警
+      post(HomeApi.GET_WHEAT_LIST,{pageNo: 1,pageSize: 10000})
+        .then(res => {
+          this.setState({
+            wheatList: [...res.data.filter((item) => (!item.isNormal))]
+          });
+        })
+        .catch(err => {});
+    });
+
+    const arrCat = JSON.parse(await AsyncStorage.getItem('limits')).filter((item) => item.name === 'cat');
+    const arrWheat = JSON.parse(await AsyncStorage.getItem('limits')).filter((item) => item.name === 'wheat');
+    this.setState({
+      wheat: arrWheat[0].limit,
+      cat: arrCat[0].limit,
     });
 
   }
+
    // 组件挂载生命周期
   componentWillUnmount() {
     this.unfocus();

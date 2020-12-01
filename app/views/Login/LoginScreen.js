@@ -35,7 +35,7 @@ export class LoginScreen extends Component {
               <Text style={[c_styles.h2, c_styles.mb_3]}>
                 欢迎登陆
               </Text>
-              <Text style={[c_styles.h4,]} allowFontScaling={true}>安全生产信息化平台</Text>
+              <Text style={[c_styles.h4,]} allowFontScaling={true}>矿业公司矿山安全监测预警系统</Text>
             </View>
             <View style={[styles.forms]}>
               <Input
@@ -111,7 +111,9 @@ export class LoginScreen extends Component {
       .then( async (res) => {
         const arr1 = [
           {name: 'daily',value: 286, limit: false},
-          {name: 'issue',value: 288, limit: false}
+          {name: 'issue',value: 288, limit: false},
+          {name: 'cat',value: 390, limit: false},
+          {name: 'wheat',value: 391, limit: false}
           ];
         const arr = openTree(res.data).map((l) => l.id);
         arr1.forEach(item => {

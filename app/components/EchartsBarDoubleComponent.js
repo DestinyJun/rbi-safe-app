@@ -90,7 +90,8 @@ export default class EchartsBarDoubleComponent extends Component {
           value: item,
           symbolOffset: [0, 10],
         });
-      } else {
+      }
+      else {
         bardata.push({
           value: item,
           itemStyle: {
@@ -129,7 +130,6 @@ export default class EchartsBarDoubleComponent extends Component {
           symbolOffset: [0, -10],
         });
       }
-
     });
     return {
       tooltip: {
