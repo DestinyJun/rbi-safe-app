@@ -6,41 +6,75 @@
 import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {WebView} from 'react-native-webview';
-import {HTML} from "../util/Constant";
-import {renderChart} from "../util/ToolFunction";
 
 export default class EchartsBarDoubleComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.HTML = {
-      html: HTML,
-    };
+    this.timer = null;
+    this.webRef = React.createRef();
   }
 
   render() {
     const option =  this.chartsInit(this.props.option);
+    this.timer = setTimeout(() => {
+      clearInterval(this.timer);
+      this.webRef.current.reload();
+    }, 1000);
     return (
       <View style={styles.container}>
         <WebView
+          ref={this.webRef}
           originWhitelist={['*']}
-          source={this.HTML}
+          source={{html: `
+         <!DOCTYPE html>
+         <html>
+         <head>
+          <title>echarts</title>
+          <meta http-equiv="content-type" content="text/html; charset=utf-8">
+          <meta name="viewport" content="width=320, user-scalable=no">
+          <script src="https://libs.cdnjs.net/echarts/4.7.0/echarts.min.js"></script>
+          <style type="text/css">
+            body {
+              margin: 0;
+              padding: 0;
+            }
+            .line-box{
+              width: 100vw;
+              height: 100vh;
+            }
+          </style>
+         </head>
+         <body>
+         <div id="main" class="line-box" ></div>
+         </body>
+         </html>
+        `}}
           useWebKit={true}
           geolocationEnabled={true}
           mixedContentMode={'always'}
           scrollEnabled={false}
           allowUniversalAccessFromFileURLs={true}
           javaScriptEnabled={true}
-          injectedJavaScript={renderChart(this.props,option)}
+          injectedJavaScript={`
+           var data = ${JSON.stringify(option)};
+           var myChart = echarts.init(document.getElementById('main'));
+           myChart.setOption(${JSON.stringify(option)});
+           window.addEventListener("resize", function () {
+            myChart.resize();
+           });
+           window.ReactNativeWebView.postMessage(JSON.stringify(data))
+        `}
           startInLoadingState={true}
           automaticallyAdjustContentInsets={false}
           onMessage={(event) => {
-            console.log(event.nativeEvent.data);
+            // console.log(JSON.parse(event.nativeEvent.data));
           }}
         />
       </View>
     );
   }
+
   // eecharts初始化
   chartsInit(item) {
     const bardata = [];
@@ -90,8 +124,7 @@ export default class EchartsBarDoubleComponent extends Component {
           value: item,
           symbolOffset: [0, 10],
         });
-      }
-      else {
+      } else {
         bardata.push({
           value: item,
           itemStyle: {
@@ -269,8 +302,9 @@ export default class EchartsBarDoubleComponent extends Component {
           data: barTopData
         }
       ]
-    };
+    }
   }
+
 }
 
 const styles = StyleSheet.create({

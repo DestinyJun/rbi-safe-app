@@ -31,6 +31,7 @@ export class HomeScreen extends Component {
       safeEcharts: {},
       cat: false,
       wheat: false,
+      organizationId: null,
     };
   }
 
@@ -48,16 +49,20 @@ export class HomeScreen extends Component {
         />
         <View style={styles.content}>
           <ScrollView style={{flex: 1}}>
+            {/*综合监测预警*/}
             <View style={styles.imgBox}>
               <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>综合监测预警</Text>
               <View style={{height: 440}}>
                 {
                   Object.keys(this.state.troubleEcharts).length>0?
-                    <EchartsLinerComponent option={Object.keys(this.state.troubleEcharts).length>0?this.state.troubleEcharts: null} />:
+                    <EchartsLinerComponent chartClick={(data) => {
+                      this.monitorChartBarHttp({organizationId: this.state.organizationId, time: data});
+                    }} option={Object.keys(this.state.troubleEcharts).length>0?this.state.troubleEcharts: null} />:
                     <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>暂无统计数据！</Text>
                 }
               </View>
             </View>
+            {/*综合监测预警指标分类占比*/}
             <View style={styles.imgBox}>
               <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>综合监测预警指标分类占比</Text>
               <View style={{height: 440}}>
@@ -228,7 +233,9 @@ export class HomeScreen extends Component {
         this.setState({
           troubleEcharts: {
            xData: xData,
-           data: data}
+           data: data,
+          },
+          organizationId: res.data.organizationId,
         });
         this.monitorChartBarHttp({organizationId: res.data.organizationId, time: res.data.time})
       })

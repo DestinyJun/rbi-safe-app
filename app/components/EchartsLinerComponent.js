@@ -6,17 +6,12 @@
 import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {WebView} from 'react-native-webview';
-import {HTML} from "../util/Constant";
-import {renderChart} from "../util/ToolFunction";
 
 export default class EchartsLinerComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       option: {}
-    };
-    this.HTML = {
-      html: HTML,
     };
   }
 
@@ -26,24 +21,53 @@ export default class EchartsLinerComponent extends Component {
       <View style={styles.container}>
         <WebView
           originWhitelist={['*']}
-          source={this.HTML}
-          useWebKit={true}
-          geolocationEnabled={true}
+          source={{
+            html: `
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>综合监测预警</title>
+              <meta http-equiv="content-type" content="text/html; charset=utf-8">
+              <meta name="viewport" content="width=320, user-scalable=no">
+              <script src="https://libs.cdnjs.net/echarts/4.7.0/echarts.min.js"></script>
+              <style type="text/css">
+                body {
+                  margin: 0;
+                  padding: 0;
+                }
+                .line-box{
+                  width: 100vw;
+                  height: 100vh;
+                }
+              </style>
+            </head>
+            <body>
+              <div id="main" class="line-box"></div>
+            </body>
+            </html>
+            `
+          }}
           mixedContentMode={'always'}
-          scrollEnabled={false}
           allowUniversalAccessFromFileURLs={true}
+          injectedJavaScript={`
+            var myChart = echarts.init(document.getElementById('main'));
+            myChart.setOption(${JSON.stringify(option)});
+            window.addEventListener("resize", function () {
+              myChart.resize();
+            });
+            myChart.on('click', function (params) {
+              window.ReactNativeWebView.postMessage(params.name);
+            });
+          `}
           javaScriptEnabled={true}
-          injectedJavaScript={renderChart(this.props,option)}
           startInLoadingState={true}
-          automaticallyAdjustContentInsets={false}
           onMessage={(event) => {
-            console.log(event.nativeEvent.data);
+            this.props.chartClick(event.nativeEvent.data)
           }}
         />
       </View>
     );
   }
-
   chartsInit(data) {
     const series = [];
     const colors = ['#00FF00','#9F0099','#5B9BD5','#FFC000','#FF0000'];
