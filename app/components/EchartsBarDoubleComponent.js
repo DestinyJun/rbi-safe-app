@@ -33,7 +33,7 @@ export default class EchartsBarDoubleComponent extends Component {
           <title>echarts</title>
           <meta http-equiv="content-type" content="text/html; charset=utf-8">
           <meta name="viewport" content="width=320, user-scalable=no">
-          <script src="https://libs.cdnjs.net/echarts/4.7.0/echarts.min.js"></script>
+          <script src="https://s2.pstatp.com/cdn/expire-1-M/echarts/4.1.0/echarts.min.js" type="application/javascript"></script>
           <style type="text/css">
             body {
               margin: 0;
@@ -80,10 +80,11 @@ export default class EchartsBarDoubleComponent extends Component {
     const bardata = [];
     const barBottomData = [];
     const barTopData = [];
-    item.barData.forEach((item) => {
-      if (item < 0) {
+    const bardataTrans = [];
+    item.barData.forEach((val) => {
+      if (val < 0) {
         bardata.push({
-          value: item,
+          value: val,
           itemStyle: {
             normal: {
               color: {
@@ -103,16 +104,9 @@ export default class EchartsBarDoubleComponent extends Component {
               }
             }
           },
-          label: {
-            show: true,
-            color: '#448BFF',
-            position: item > -10 ? ['10%', 20] : ['10%', '150%'],
-            formatter: '{c}%',
-            fontSize: 8
-          },
         });
         barBottomData.push({
-          value: item,
+          value: val,
           symbolOffset: [0, -10],
           itemStyle: {
             normal: {
@@ -121,12 +115,29 @@ export default class EchartsBarDoubleComponent extends Component {
           },
         });
         barTopData.push({
-          value: item,
+          value: val,
           symbolOffset: [0, 10],
+        });
+        bardataTrans.push({
+          name: val,
+          value: val - 3,
+          itemStyle: {
+            normal: {
+              color: 'transparent'
+            }
+          },
+          label: {
+            normal: {
+              show: true,
+              color: '#448BFF',
+              position: 'bottom',
+              formatter: `${val}`
+            }
+          },
         });
       } else {
         bardata.push({
-          value: item,
+          value: val,
           itemStyle: {
             normal: {
               color: {
@@ -146,21 +157,31 @@ export default class EchartsBarDoubleComponent extends Component {
               }
             }
           },
-          label: {
-            show: true,
-            color: '#448BFF',
-            position: [0, -25],
-            formatter: '{c}%',
-            fontSize: 8
-          },
         });
         barBottomData.push({
-          value: item,
+          value: val,
           symbolOffset: [0, 10],
         });
         barTopData.push({
-          value: item,
+          value: val,
           symbolOffset: [0, -10],
+        });
+        bardataTrans.push({
+          name: val,
+          value: val + 2,
+          itemStyle: {
+            normal: {
+              color: 'transparent'
+            }
+          },
+          label: {
+            normal: {
+              show: true,
+              color: '#448BFF',
+              position: 'top',
+              formatter: `${val}`
+            }
+          }
         });
       }
     });
@@ -300,7 +321,20 @@ export default class EchartsBarDoubleComponent extends Component {
             }
           },
           data: barTopData
-        }
+        },
+        // 透明柱体
+        {
+          name: '',
+          type: 'bar',
+          barWidth: 20,
+          barGap: '-100%',
+          itemStyle: {
+            normal: {
+              color: 'yellow'
+            }
+          },
+          data: bardataTrans
+        },
       ]
     }
   }
