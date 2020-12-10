@@ -70,7 +70,7 @@ export default class EchartsLinerComponent extends Component {
   }
   chartsInit(data) {
     const series = [];
-    const colors = ['#00FF00','#9F0099','#5B9BD5','#FFC000','#FF0000'];
+    const colors = ['#00FF00','#9F0099','#5B9BD5','#FFC000','#ff6c6a'];
     data.data.forEach((item, index) => {
       if (index === 0) {
         series.push({
@@ -128,7 +128,7 @@ export default class EchartsLinerComponent extends Component {
           },
           stack: '阈值',
           areaStyle: {
-            color:  'rgb(0,0,255)',
+            color:  '#97b9fc',
             origin: 'start',
             opacity: 1
           },
@@ -154,7 +154,7 @@ export default class EchartsLinerComponent extends Component {
             }
           },
           areaStyle: {
-            color: 'rgb(255,255,0)',
+            color: '#fefe9f',
             opacity: 1
           },
           lineStyle: {
@@ -179,7 +179,7 @@ export default class EchartsLinerComponent extends Component {
             }
           },
           areaStyle: {
-            color: 'rgb(255,97,0)',
+            color: '#fea96d',
             opacity: 1
           },
           lineStyle: {
@@ -213,7 +213,8 @@ export default class EchartsLinerComponent extends Component {
         left: '2%',
         right: '3%',
         bottom: '8%',
-        containLabel: true,
+        show: false,
+        containLabel: false
       },
       legend: [
         {
@@ -254,8 +255,8 @@ export default class EchartsLinerComponent extends Component {
           right: '3%',
           height: 15,
           top: '94%',
-          start: 0,//滚动条的起始位置
-          end: 50 //滚动条的截止位置（按比例分割你的柱状图x轴长度）
+          start: 50,//滚动条的起始位置
+          end: 100 //滚动条的截止位置（按比例分割你的柱状图x轴长度）
         }
       ],
       xAxis: {
@@ -267,6 +268,12 @@ export default class EchartsLinerComponent extends Component {
           color: '#B8B8B8',
           fontSize: 8,
           width: 5
+        },
+        splitArea: {
+          show: true,
+          areaStyle: {
+            color: '#ff6c6a'
+          }
         },
         axisTick: {
           show: true,
@@ -298,7 +305,7 @@ export default class EchartsLinerComponent extends Component {
           splitArea: {
             show: true,
             areaStyle: {
-              color: 'red'
+              color: '#ff6c6a'
             }
           },
           axisTick: {

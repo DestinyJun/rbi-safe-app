@@ -216,8 +216,6 @@ export class HomeScreen extends Component {
     if (Platform.OS === 'android') {
       BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
     }
-    // showLoading();
-
     // 折线图
     post(HomeApi.ECHARTS_TROUBLE_MONTH, {})
       .then(res => {

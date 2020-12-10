@@ -135,7 +135,8 @@ export default class EchartsBarDoubleComponent extends Component {
             }
           },
         });
-      } else {
+      }
+      else {
         bardata.push({
           value: val,
           itemStyle: {
@@ -216,6 +217,7 @@ export default class EchartsBarDoubleComponent extends Component {
         type: 'category',
         boundaryGap: false,
         axisLabel: {
+          show: false,
           margin: 30,
           color: '#B8B8B8',
           fontSize: 8,
