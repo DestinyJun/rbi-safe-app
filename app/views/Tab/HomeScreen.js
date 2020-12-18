@@ -49,9 +49,9 @@ export class HomeScreen extends Component {
         />
         <View style={styles.content}>
           <ScrollView style={{flex: 1}}>
-            {/*综合监测预警*/}
+            {/*综合监测预警指数图*/}
             <View style={styles.imgBox}>
-              <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>综合监测预警</Text>
+              <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>综合监测预警指数图</Text>
               <View style={{height: 440}}>
                 {
                   Object.keys(this.state.troubleEcharts).length>0?
@@ -62,9 +62,9 @@ export class HomeScreen extends Component {
                 }
               </View>
             </View>
-            {/*综合监测预警指标分类占比*/}
+            {/*综合监测预警指标分类分值*/}
             <View style={styles.imgBox}>
-              <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>综合监测预警指标分类占比</Text>
+              <Text style={[c_styles.h5,c_styles.p_2,{color: '#555555'}]}>综合监测预警指标分类分值</Text>
               <View style={{height: 440}}>
                 {
                   Object.keys(this.state.safeEcharts).length>0?
@@ -105,7 +105,7 @@ export class HomeScreen extends Component {
                             <Text style={[c_styles.text_center, c_styles.text_danger]}>{item.value}</Text>
                           </View>
                         </View>
-                      )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前暂无监测预警！</Text>
+                      )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前无预警信息！</Text>
                     }
                   </>: null
                 }
@@ -144,7 +144,7 @@ export class HomeScreen extends Component {
                             <Text style={[c_styles.text_center, c_styles.text_danger]}>{item.value}</Text>
                           </View>
                         </View>
-                      )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前暂无监测预警！</Text>
+                      )):<Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>当前无预警信息！</Text>
                     }
                   </>: null
                 }
