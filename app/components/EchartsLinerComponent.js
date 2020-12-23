@@ -56,7 +56,7 @@ export default class EchartsLinerComponent extends Component {
               myChart.resize();
             });
             myChart.on('click', function (params) {
-              window.ReactNativeWebView.postMessage(params.name);
+              window.ReactNativeWebView.postMessage(params.dataIndex);
             });
           `}
           javaScriptEnabled={true}
@@ -69,128 +69,149 @@ export default class EchartsLinerComponent extends Component {
     );
   }
   chartsInit(data) {
-    const series = [];
     const colors = ['#00FF00','#9F0099','#5B9BD5','#FFC000','#ff6c6a'];
+    const line0 = {name: null, value: null, isShowDotted: null};
+    const line1 = {name: null, value: null, isShowDotted: null};
+    const bottoms = {name: null, value: null, isShowDotted: null};
+    const middle = {name: null, value: null, isShowDotted: null};
+    const top = {name: null, value: null, isShowDotted: null};
     data.data.forEach((item, index) => {
       if (index === 0) {
-        series.push({
-          name: item.name,
-          type: 'line',
-          smooth: true, // 是否平滑曲线显示
-          symbol: 'circle',
-          symbolSize: 8,
-          label: {
-            show: false,
-            position: 'top',
-            textStyle: {
-              color: '#fff',
-            }
-          },
-          lineStyle: {
-            type: item.isShowDotted ? 'dashed' : 'solid'
-          },
-          data: item.value,
-        });
+        line0.name = item.name;
+        line0.value = item.value;
+        line0.isShowDotted = item.isShowDotted;
       }
       else if (index === 1) {
-        series.push({
-          name: item.name,
-          type: 'line',
-          smooth: true, // 是否平滑曲线显示
-          symbol: 'circle',
-          symbolSize: 8,
-          label: {
-            show: false,
-            position: 'top',
-            textStyle: {
-              color: '#fff',
-            }
-          },
-          lineStyle: {
-            type: item.isShowDotted ? 'dashed' : 'solid'
-          },
-          data: item.value,
-        });
+        line1.name = item.name;
+        line1.value = item.value;
+        line1.isShowDotted = item.isShowDotted;
       }
       else if (index === 2) {
-        series.push({
-          name: item.name,
-          type: 'line',
-          smooth: true, // 是否平滑曲线显示
-          symbol: 'circle',
-          symbolSize: 8,
-          label: {
-            show: false,
-            position: 'top',
-            textStyle: {
-              color: '#fff',
-            }
-          },
-          stack: '阈值',
-          areaStyle: {
-            color:  '#97b9fc',
-            origin: 'start',
-            opacity: 1
-          },
-          lineStyle: {
-            type: item.isShowDotted ? 'dashed' : 'solid'
-          },
-          data: item.value,
-        });
+        bottoms.name = item.name;
+        bottoms.value = item.value;
+        bottoms.isShowDotted = item.isShowDotted;
       }
       else if (index === 3) {
-        series.push({
-          name: item.name,
-          type: 'line',
-          smooth: true, // 是否平滑曲线显示
-          symbol: 'circle',
-          stack: '阈值',
-          symbolSize: 8,
-          label: {
-            show: false,
-            position: 'top',
-            textStyle: {
-              color: '#fff',
-            }
-          },
-          areaStyle: {
-            color: '#fefe9f',
-            opacity: 1
-          },
-          lineStyle: {
-            type: item.isShowDotted ? 'dashed' : 'solid'
-          },
-          data: item.value,
-        });
+        middle.name = item.name;
+        middle.value = item.value;
+        middle.isShowDotted = item.isShowDotted;
       }
       else {
-        series.push({
-          name: item.name,
-          type: 'line',
-          smooth: true, // 是否平滑曲线显示
-          symbol: 'circle',
-          stack: '阈值',
-          symbolSize: 8,
-          label: {
-            show: false,
-            position: 'top',
-            textStyle: {
-              color: '#fff',
-            }
-          },
-          areaStyle: {
-            color: '#fea96d',
-            opacity: 1
-          },
-          lineStyle: {
-            type: item.isShowDotted ? 'dashed' : 'solid'
-          },
-          data: item.value,
-        });
+        top.name = item.name;
+        top.value = item.value;
+        top.isShowDotted = item.isShowDotted;
       }
     });
+    const series = [
+      {
+        name: top.name,
+        type: 'line',
+        smooth: true, // 是否平滑曲线显示
+        symbol: 'circle',
+        symbolSize: 8,
+        label: {
+          show: false,
+          position: 'top',
+          textStyle: {
+            color: '#fff',
+          }
+        },
+        lineStyle: {
+          type: top.isShowDotted ? 'dashed' : 'solid'
+        },
+        areaStyle: {
+          color: '#fea96d',
+          origin: 'start',
+          opacity: 1
+        },
+        data: top.value,
+      },
+      {
+        name: middle.name,
+        type: 'line',
+        smooth: true, // 是否平滑曲线显示
+        symbol: 'circle',
+        symbolSize: 8,
+        label: {
+          show: false,
+          position: 'top',
+          textStyle: {
+            color: '#fff',
+          }
+        },
+        lineStyle: {
+          type: middle.isShowDotted ? 'dashed' : 'solid'
+        },
+        areaStyle: {
+          color: '#fefe9f',
+          origin: 'start',
+          opacity: 1
+        },
+        data: middle.value,
+      },
+      {
+        name: bottoms.name,
+        type: 'line',
+        smooth: true, // 是否平滑曲线显示
+        symbol: 'circle',
+        symbolSize: 8,
+        label: {
+          show: false,
+          position: 'top',
+          textStyle: {
+            color: '#fff',
+          }
+        },
+        lineStyle: {
+          type: bottoms.isShowDotted ? 'dashed' : 'solid'
+        },
+        areaStyle: {
+          color: '#97b9fc',
+          origin: 'start',
+          shadowColor: '#F3F3F3',
+          shadowOffsetX: 1
+        },
+        data: bottoms.value,
+      },
+      {
+        name: line1.name,
+        type: 'line',
+        smooth: true, // 是否平滑曲线显示
+        symbol: 'circle',
+        symbolSize: 8,
+        label: {
+          show: false,
+          position: 'top',
+          textStyle: {
+            color: '#fff',
+          }
+        },
+        lineStyle: {
+          type: line1.isShowDotted ? 'dashed' : 'solid'
+        },
+        data: line1.value,
+      },
+      {
+        name: line0.name,
+        type: 'line',
+        smooth: true, // 是否平滑曲线显示
+        symbol: 'circle',
+        symbolSize: 8,
+        label: {
+          show: false,
+          position: 'top',
+          textStyle: {
+            color: '#fff',
+          }
+        },
+        lineStyle: {
+          type: line0.isShowDotted ? 'dashed' : 'solid'
+        },
+        data: line0.value,
+      }
+    ];
     return  {
-      color: colors,
+      color: colors.reverse(),
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -210,8 +231,8 @@ export default class EchartsLinerComponent extends Component {
       },
       grid: {
         top: '15%',
-        left: '2%',
-        right: '3%',
+        left: '7%',
+        right: '5%',
         bottom: '8%',
         show: false,
         containLabel: false
@@ -252,7 +273,7 @@ export default class EchartsLinerComponent extends Component {
           show: true, //flase直接隐藏图形
           xAxisIndex: [0],
           left: '3%', //滚动条靠左侧的百分比
-          right: '3%',
+          right: '6%',
           height: 15,
           top: '94%',
           start: 50,//滚动条的起始位置

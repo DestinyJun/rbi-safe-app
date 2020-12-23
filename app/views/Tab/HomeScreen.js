@@ -19,6 +19,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 
 export class HomeScreen extends Component {
+  monitorIds = [];
   constructor(props) {
     super(props);
     this.state = {
@@ -56,7 +57,9 @@ export class HomeScreen extends Component {
                 {
                   Object.keys(this.state.troubleEcharts).length>0?
                     <EchartsLinerComponent chartClick={(data) => {
-                      this.monitorChartBarHttp({organizationId: this.state.organizationId, time: data});
+                      if (this.monitorIds[data]) {
+                        this.monitorChartBarHttp({warningId: this.monitorIds[data]});
+                      }
                     }} option={Object.keys(this.state.troubleEcharts).length>0?this.state.troubleEcharts: null} />:
                     <Text style={[c_styles.pt_5,c_styles.text_center,c_styles.text_secondary,c_styles.h5]}>暂无统计数据！</Text>
                 }
@@ -220,6 +223,7 @@ export class HomeScreen extends Component {
     post(HomeApi.ECHARTS_TROUBLE_MONTH, {})
       .then(res => {
         hiddenLoading();
+        this.monitorIds = [...res.data.id];
         const xData = res.data.abscissa;
         const data = [
           {name: 'SPI实际值', value: res.data.value, isShowDotted: false},
@@ -235,7 +239,7 @@ export class HomeScreen extends Component {
           },
           organizationId: res.data.organizationId,
         });
-        this.monitorChartBarHttp({organizationId: res.data.organizationId, time: res.data.time})
+        this.monitorChartBarHttp({warningId: this.monitorIds[this.monitorIds.length - 1]})
       })
       .catch(err => {});
 
