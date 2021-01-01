@@ -6,6 +6,7 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import SplashScreen from 'react-native-splash-screen'
 import {Button} from 'react-native-elements'
 import Orientation from 'react-native-orientation';
+import * as WeChat from 'react-native-wechat';
 
 // 通知栏通知配置
 import PushNotification from 'react-native-push-notification';
@@ -90,6 +91,7 @@ export default class App extends React.Component {
         isLogin: Store.getState().isLogin
       })
     });
+    WeChat.registerApp('appid');
   }
 
   render() {
@@ -129,8 +131,28 @@ export default class App extends React.Component {
             </Stack.Navigator>
         }
         <Button title={'通知测试'} onPress={this.test.bind(this)} />
+        <Button title={'支付测试'} onPress={this.payTest.bind(this)} />
       </NavigationContainer>
     );
+  }
+  payTest() {
+    WeChat.openWXApp()
+      .then(res => {
+        console.log(res);
+      })
+    /*WeChat.isWXAppInstalled()
+      .then((res) => {
+        WeChat.pay({})
+          .then((payRes) => {
+            console.log(payRes);
+          })
+          .catch(payErr => {
+            console.log(payErr);
+          })
+      })
+      .catch((err) => {
+        console.log(err);
+      })*/
   }
   test() {
     PushNotification.localNotification({

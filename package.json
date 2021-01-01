@@ -1,5 +1,5 @@
 {
-  "name": "rbi-safe-app",
+  "name": "test-app",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -43,6 +43,7 @@
     "react-native-video": "^4.4.5",
     "react-native-video-controls": "^2.6.0",
     "react-native-webview": "^10.3.2",
+    "react-native-wechat": "^1.9.12",
     "react-native-wps-office": "^1.1.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",

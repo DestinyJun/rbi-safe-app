@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.rbisafeapp">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.testapp">
   <!-- 允许全部网络访问 -->
   <uses-permission android:name="android.permission.INTERNET" />
   <!-- 获取网络信息状态 -->

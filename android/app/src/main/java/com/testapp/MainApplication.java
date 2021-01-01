@@ -1,4 +1,4 @@
-package com.rbisafeapp;
+package com.testapp;
 
 
 import android.app.Application;
